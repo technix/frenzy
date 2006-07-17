@@ -1,0 +1,34 @@
+# === usb ====================================================================
+
+# USB support
+device		uhci		# UHCI PCI->USB interface
+device		ohci		# OHCI PCI->USB interface
+device		ehci		# EHCI PCI->USB interface (USB 2.0)
+device		usb		# USB Bus (required)
+#device		udbp		# USB Double Bulk Pipe devices
+device		ugen		# Generic
+device		uhid		# "Human Interface Devices"
+device		ukbd		# Keyboard
+device		ulpt		# Printer
+device		umass		# Disks/Mass storage - Requires scbus and da
+device		ums		# Mouse
+
+device		ufm	# USB Fm Radio
+device		umct	# Belkin F5U109 and Magic Control Technology serial adapters
+device		umodem	# USB modem support
+device		ucom	# USB serial support
+device		ubsa	# Belkin F5U103 and compatible serial adapters
+device		ubser	# BWCT console serial adapters
+device		uftdi	# serial adapters based on the FT8U100AX and FT8U232AM
+device		uplcom	# Prolific PL-2303 serial adapters
+
+# USB Ethernet, requires miibus
+device		aue		# ADMtek USB Ethernet
+device		axe		# ASIX Electronics USB Ethernet
+device		cdce		# Generic USB over Ethernet
+device		cue		# CATC USB Ethernet
+device		kue		# Kawasaki LSI USB Ethernet
+device		rue		# RealTek RTL8150 USB Ethernet
+
+device		ural		# Ralink Technology RT2500USB wireless NICs
+device		udav		# Davicom DM9160E USB to fast ethernet

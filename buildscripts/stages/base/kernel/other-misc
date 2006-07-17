@@ -1,0 +1,53 @@
+# === misc ===================================================================
+
+options 	IPX			#IPX/SPX communications protocols
+#options 	IPXIP			#IPX in IP encapsulation (not available)
+
+options 	NCP			#NetWare Core protocol
+
+
+
+device		snp		#Snoop device - to look at pty/vty/etc..
+
+# Kernel side iconv library
+options 	LIBICONV
+
+
+options 	VGA_WIDTH90		# support 90 column modes
+options		SC_PIXEL_MODE
+options		VESA
+
+device		splash			# Splash screen and screen saver support
+
+
+# PCI Universal Communications driver
+# Supports various single and multi port PCI serial cards. Maybe later
+# also the parallel ports on combination serial/parallel cards. New cards
+# can be added in src/sys/dev/puc/pucdata.c.
+#
+# If the PUC_FASTINTR option is used the driver will try to use fast
+# interrupts. The card must then be the only user of that interrupt.
+# Interrupts cannot be shared when using PUC_FASTINTR.
+device		puc
+options 	PUC_FASTINTR
+
+#
+# Miscellaneous hardware:
+#
+
+device		nmdm		# nullmodem terminal driver (see nmdm(4))
+
+# dcons support (Dumb Console Device)
+
+#device		dcons			# dumb console driver
+#device		dcons_crom		# FireWire attachment
+
+
+
+device		crypto
+device		cryptodev
+
+device		rndtest
+
+device		hifn
+device		ubsec

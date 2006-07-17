@@ -1,0 +1,38 @@
+#!/bin/sh
+# PROVIDE: iso-prepare
+# REQUIRE: system-patch
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "iso" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+MTREE="iso/cd.mtree"
+FLIST="iso/cd.filelist"
+ISOROOT="iso/isoroot"
+FCD="../${FRENZY_CD}"
+FFS="../${FRENZY_FS}"
+
+# creating directory structure
+mtree -eU -f ${MTREE} -p ${FCD} > /dev/null 2>&1
+# copying boot files
+for i in `cat ${FLIST}`
+do
+cp ${FFS}/${i} ${FCD}/${i}
+done
+
+# Copy boot loader
+cp boot/frenzyroot.gz ${FCD}/boot
+# Copy Frenzy patches for ISO
+cp -R ${ISOROOT}/* ${FCD}
+# gzipping kernel
+gzip ${FCD}/boot/kernel/kernel
+
+printf "$VERSION" > ${FFS}/boot/frenzy.version
+
+echo "[*] File structure for Frenzy ISO created."
+
+stage_done
+
+fi

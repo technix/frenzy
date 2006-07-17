@@ -1,0 +1,13 @@
+# === ata & atapi ============================================================
+
+# ATA and ATAPI devices
+device		ata
+device		atadisk		# ATA disk drives
+device		ataraid		# ATA RAID drives
+device		atapicd		# ATAPI CDROM drives
+device		atapifd		# ATAPI floppy drives
+##device		atapist		# ATAPI tape drives
+options 	ATA_STATIC_ID	# Static device numbering
+
+device		atapicam	# emulate ATAPI devices as SCSI ditto via CAM
+				# needs CAM to be present (scbus & pass)

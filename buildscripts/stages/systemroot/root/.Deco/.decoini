@@ -1,0 +1,133 @@
+# Configuration file for Deco
+
+# Full screen.
+FullScreen no
+
+# Double width.
+DoubleWidth no
+
+# Show hidden files.
+ShowHidden yes
+
+# Show files information.
+ShowInform yes
+
+# Left cut char.
+LeftCut {
+
+# Right cut char.
+RightCut }
+
+# Middle cut char.
+MiddleCut ~
+
+# Settings of left panel.
+
+# Listing mode (brief, long, full, info).
+LeftListMode brief
+
+# Status window.
+LeftStatusWindow no
+
+# Align extensions.
+LeftAlignExt no
+
+# Sorting (name, extension, time, size or unsorted).
+LeftSort name
+
+# Reverse sorting.
+LeftRevSort no
+
+# Sort by file types.
+LeftTypeSort yes
+
+# Pattern for file names.
+LeftPattern
+
+# Settings of right panel.
+
+# Listing mode (brief, long, full, info).
+RightListMode brief
+
+# Status window.
+RightStatusWindow no
+
+# Align extensions.
+RightAlignExt no
+
+# Sorting (name, extension, time, size or unsorted).
+RightSort name
+
+# Reverse sorting.
+RightRevSort no
+
+# Sort by file types.
+RightTypeSort yes
+
+# Pattern for file names.
+RightPattern
+
+# Use external shell 'Shell'.
+ExtShell no
+Shell
+
+# Use external editor 'Editor'.
+ExtEditor no
+Editor
+
+# Use external viewer 'Viewer'.
+ExtViewer no
+Viewer
+
+# View/edit any files.
+ViewAny no
+
+# View raw.
+ViewRaw no
+
+# View hex.
+ViewHex no
+
+# View tabs.
+ViewTabs no
+
+# The number of lines to remember in the history (0 - unlimited).
+HistSize 200
+
+# The number of unique lines in the history (0 - all).
+HistUnique 20
+
+# Auto save history.
+AutoSaveHist yes
+
+# Use history file with ttyname.
+UseTtyHist no
+
+# Don't beep after command.
+DontBeep no
+
+# Language (english, ukranian, german, france or russian).
+Language english
+
+# Codeset for russian language (koi8-r, cp866, windows-1251 or iso-8859-5).
+Codeset koi8-r
+
+# Colors (black, blue, green, cyan, red, magenta, yellow, white,
+# brightblack, brightblue, brightgreen, brightcyan,
+# brightred, brightmagenta, brightyellow or brightwhite).
+
+# Superuser.
+RootNormalColor white black
+RootNormalReverseColor white yellow
+RootBoldColor brightwhite black
+RootBoldReverseColor brightwhite yellow
+RootDimColor yellow black
+RootDimReverseColor black white
+
+# Ordinary user.
+NormalColor green black
+NormalReverseColor white yellow
+BoldColor brightwhite black
+BoldReverseColor brightwhite yellow
+DimColor white black
+DimReverseColor black white

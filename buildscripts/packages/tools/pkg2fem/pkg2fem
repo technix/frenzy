@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# Name    : Convert FreeBSD package to Frenzy extension module
+# Version : 0.1
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+DIRPKG=$1
+FEMNAME=$2
+
+if [ "${FEMNAME}" = "" ]; then
+FEMNAME=${DIRPKG}
+fi
+
+#FEMNAME="joe"
+#DIRPKG="pkg"
+DIRFEM="fem"
+CURRDIR=`pwd`
+BLOCKSIZE="130560"
+
+# stage 1 - installing packages
+echo "==> Installing packages for FEM module."
+cd ${DIRPKG}
+mkdir ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/fs > /dev/null 2>&1
+for pkgtype in tgz tbz
+do
+for pkgn in `ls *${pkgtype} 2>/dev/null`
+do
+echo "[*] ${pkgn}"
+EXTR="xzf"
+if [ "${pkgtype}" = "tbz" ]; then
+EXTR="xjf"
+fi
+tar ${EXTR} ${pkgn} \+CONTENTS
+PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g"`
+rm \+CONTENTS > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/fs/${PKGSUBDIR} > /dev/null 2>&1
+PKGNAME=`echo ${pkgn} | sed "s/\.${pkgtype}//g"`
+pkg_add -R -f -p ${CURRDIR}/${DIRPKG}/${FEMNAME}.${DIRFEM}/fs/${PKGSUBDIR} ${pkgn}  > /dev/null 2>&1
+done
+done
+
+ISOFEM="${FEMNAME}.${DIRFEM}.iso"
+
+# stage 2 - building ISO and compressed FEM
+echo "==> Creating temporary ISO."
+mkisofs -lRNU -quiet -ldots -o ${ISOFEM} ${FEMNAME}.${DIRFEM}  > /dev/null 2>&1
+echo "==> Compressing ISO."
+mkuzip -o ../${DIRFEM}/${FEMNAME}.${DIRFEM} -s ${BLOCKSIZE} ${ISOFEM}  > /dev/null 2>&1
+chmod 644 ../${DIRFEM}/${FEMNAME}.${DIRFEM}
+echo "==> Removing temporary data."
+rm -f ${ISOFEM} > /dev/null 2>&1
+rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
+echo "==> Done."
+cd ..
+

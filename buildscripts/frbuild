@@ -1,0 +1,10 @@
+#!/bin/sh
+PROGRESS=".progress"
+PARAM=$1
+
+# Parameters: build install frenzy iso
+
+for EXEC in `cd ./stages && rcorder -s nostart *`
+do
+(cd ./stages && ./$EXEC $PARAM)
+done

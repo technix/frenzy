@@ -1,0 +1,36 @@
+# tree: stages/boot
+/set type=dir uid=0 gid=0 mode=0755
+.
+Frenzy
+bin
+..
+boot
+..
+fs
+..
+mfs
+..
+ramdisk
+..
+..
+dev
+..
+etc
+..
+mnt
+..
+proc
+..
+root
+..
+var
+..
+..
+home	type=link link=/var/home
+tmp	type=link link=/var/tmp
+bin	type=link link=/Frenzy/fs/bin
+boot	type=link link=/Frenzy/fs/boot
+lib	type=link link=/Frenzy/fs/lib
+libexec	type=link link=/Frenzy/fs/libexec
+sbin	type=link link=/Frenzy/fs/sbin
+usr	type=link link=/Frenzy/fs/usr

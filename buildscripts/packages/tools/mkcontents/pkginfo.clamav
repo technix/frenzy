@@ -1,0 +1,3 @@
+PKG_NAME="clamav-db-1.0"
+ORIGIN="misc/clamav-db"
+BASEDIR="/var/db"

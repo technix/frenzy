@@ -1,0 +1,21 @@
+# tree: stages/iso
+/set type=dir uid=0 gid=0 mode=0755
+.
+boot
+defaults
+..
+kernel
+..
+modules
+..
+..
+frenzy
+backup
+..
+conf
+..
+fem
+..
+..
+readme
+..

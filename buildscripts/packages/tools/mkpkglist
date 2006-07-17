@@ -1,0 +1,30 @@
+#!/bin/sh
+MAXLEN="30"
+MAXLENX="30"
+
+for i in `ls $1`
+do
+NAME=`cat $1/$i/+CONTENTS | grep "\@name" | sed "s/\@name //g"`
+ORIGIN=`cat $1/$i/+CONTENTS | grep "\@comment ORIGIN" | sed "s/\@comment ORIGIN://g"`
+INFO=`cat $1/$i/+COMMENT`
+
+xl=0
+while [ ${xl} -lt ${MAXLEN} ];
+do
+ORIGIN="$ORIGIN "
+xl=`echo "${ORIGIN}" | awk '{print length}'`
+done
+
+xl=0
+NAME="(${NAME})"
+while [ ${xl} -lt ${MAXLENX} ];
+do
+NAME="$NAME "
+xl=`echo "${NAME}" | awk '{print length}'`
+done
+
+
+printf "$ORIGIN ${NAME} ${INFO}\n"
+done
+
+

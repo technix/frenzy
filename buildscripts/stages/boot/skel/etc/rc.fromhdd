@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# FromHDD loader
+#
+#
+
+fromhdd ()
+{
+FOUND=0
+printf "$mi ${MSG_booting_from_hdd} "
+
+for i in `ls /mnt` 
+do
+    hd_uzip="/mnt/$i/frenzy/${uzip_file}"
+    if [ -r "${hd_uzip}" ]; then
+	printf "$i [UZIP] .\n"
+	FOUND=1
+	break
+    fi
+    ISOIMAGE=`ls /mnt/${i}/frenzy/*frenzy*.iso 2> /dev/null`
+    if [ -r "${ISOIMAGE}" ]; then
+	printf "$i [ISO].\n"
+	mkdir /mnt/iso > /dev/null 2>&1
+	MDCD=`mdconfig -af ${ISOIMAGE} 2> /dev/null`
+	mount_cd9660 /dev/${MDCD} /mnt/iso > /dev/null 2>&1
+	hd_uzip="/mnt/iso/frenzy/${uzip_file}"
+	FOUND=1
+	break
+    fi
+done
+if [ ${FOUND} -eq 0 ]; then
+    printf "${MSG_image_not_found}\n"
+else
+    uzip_remount ${hd_uzip}
+fi
+}

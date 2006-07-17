@@ -1,0 +1,24 @@
+#!/bin/sh
+# PROVIDE: packages-lite-locales
+# REQUIRE: packages-install-freebsd packages-install-frenzy
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "frenzy" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+SCRIPTDIR="pkglite/locales"
+
+cp ${SCRIPTDIR}/rmlocales.sh ../${FRENZY_FS}
+cp ${SCRIPTDIR}/locales ../${FRENZY_FS}
+echo -n "[*] Removing locales from installed packages... "
+chroot ../${FRENZY_FS} sh /rmlocales.sh /usr/local/share/locale
+chroot ../${FRENZY_FS} sh /rmlocales.sh /usr/X11R6/share/locale
+echo "done."
+rm ../${FRENZY_FS}/rmlocales.sh
+rm ../${FRENZY_FS}/locales
+
+stage_done
+
+fi

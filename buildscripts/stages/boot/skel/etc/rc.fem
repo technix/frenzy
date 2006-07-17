@@ -1,0 +1,71 @@
+#!/bin/sh
+# Load Frenzy extension modules
+
+load_fem()
+{
+# relinking (no multiple union mounts)
+RELINK=0
+
+printf "${mi} ${MSG_fem_loading}\n"
+
+for d in `ls /mnt`
+do
+    DIRLIST="${DIRLIST} /mnt/${d}/frenzy/fem"
+done
+DIRLIST="${DIRLIST} ${ff}/fem"
+
+for i in ${DIRLIST} 
+do
+    if [ -d "${i}" ]; then
+	printf "${mp} ${MSG_fem_search}: ${i}\n"
+	CURRDIR=`pwd`
+	cd ${i}
+	for femfile in `ls`
+	do
+	    femname=`echo ${femfile} | sed "s/\.fem//g"`
+	    printf "    > ${femname}   "
+	    femfs="${femdir}/${femname}"
+	    #echo  "> Making directory ${femfs}"
+	    mkdir ${femfs}
+	    #echo "> mdconfig ${femfile}"
+	    FMD=`/sbin/mdconfig -af ${femfile} 2> /dev/null`
+	    sleep 1
+	    #echo "> mount_cd9660 ${femfs}"
+	    #echo "> ${FMD} -> ${femfs}"
+	    /sbin/mount_cd9660 /dev/${FMD}.uzip ${femfs}
+
+	    if [ "$RELINK" = 1 ]; then
+	        #echo "> relinking"    
+	        ffs="${femfs}/fs"
+	        for pkfile in `cd ${ffs} && find . -xdev | sed "s/\.\///"g`
+	        do
+		    if [ -d ${ffs}/${pkfile} ]; then
+	    		mkdir ${femdirmod}/${pkfile} > /dev/null 2>&1
+		    fi
+		    if [ -f ${ffs}/${pkfile} ]; then
+	    		ln -s ${ffs}/${pkfile} ${femdirmod}/${pkfile} > /dev/null 2>&1
+		    fi
+		    if [ -L ${ffs}/${pkfile} ]; then
+	    		ln -s ${ffs}/${pkfile} ${femdirmod}/${pkfile} > /dev/null 2>&1
+		    fi
+    		done
+	    else
+	    # We do not need relink since multiple union mount implemented
+		mount_unionfs -o noatime,ro -c transparent ${femfs}/fs /usr > /dev/null 2>&1
+	    fi
+	done
+    cd ${CURRDIR}
+    fi
+done
+
+
+if [ "$RELINK" = 1 ]; then
+    printf "${mi} ${MSG_fem_union}.\n"
+    mount_unionfs -o noatime,ro -c transparent ${femdirmod} /usr > /dev/null 2>&1
+fi
+
+printf "${mi} ${MSG_fem_loaded}\n"
+
+}
+
+

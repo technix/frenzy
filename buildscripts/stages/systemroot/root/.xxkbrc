@@ -1,0 +1,58 @@
+! put into /usr/X11R6/lib/X11/app-defaults
+! XXkb.xpm.path: /usr/X11R6/share/xxkb
+
+XXkb.xpm.path: /usr/local/frenzy/icons/xxkb/16/gray
+
+XXkb.group.base: 1
+XXkb.group.alt: 2
+
+XXkb.mainwindow.enable: yes
+XXkb.mainwindow.in_tray: KDE
+XXkb.mainwindow.appicon: yes
+XXkb.mainwindow.geometry: 16x16
+XXkb.mainwindow.xpm.1: en_16.xpm
+! XXkb.mainwindow.xpm.2: ru_16.xpm
+! XXkb.mainwindow.xpm.2: ua_16.xpm
+! XXkb.mainwindow.xpm.2: bg_16.xpm
+! XXkb.mainwindow.xpm.2: cz_16.xpm
+! XXkb.mainwindow.xpm.2: de_16.xpm
+! XXkb.mainwindow.xpm.2: es_16.xpm
+! XXkb.mainwindow.xpm.2: fr_16.xpm
+! XXkb.mainwindow.xpm.2: it_16.xpm
+! XXkb.mainwindow.xpm.2: pl_16.xpm
+! XXkb.mainwindow.xpm.2: sk_16.xpm
+! XXkb.mainwindow.xpm.3: ru_16.xpm
+! XXkb.mainwindow.xpm.3: ua_16.xpm
+
+
+
+! XXkb.mainwindow.xpm.4:
+
+XXkb.button.enable: no
+XXkb.button.geometry: 15x15-55+3
+XXkb.button.gravity: NorthEast
+XXkb.button.xpm.1: en24.xpm
+XXkb.button.xpm.2: ru24.xpm
+XXkb.button.xpm.3: ua24.xpm
+! XXkb.button.xpm.4:
+
+XXkb.controls.add_when_start: yes
+XXkb.controls.add_when_create: yes
+XXkb.controls.add_when_change: no
+XXkb.controls.focusout: no
+XXkb.controls.two_state: no
+XXkb.controls.button_delete: no
+
+XXkb.bell.enable: no
+XXkb.bell.percent: -50
+
+XXkb.ignore.reverse: no
+
+! XXkb.app_list.<match>.<action>: <list>
+! <match> is one of "wm_class_class", "wm_class_name", "wm_name"
+! <action> is one of "ignore", "start_alt", "alt_groupM" (M - 1..4) 
+! For example:
+!   XXkb.app_list.wm_class_class.ignore: *clock Fvwm*
+!   XXkb.app_list.wm_class_name.start_alt: licq
+
+XXkb.app_list.wm_class_class.ignore: xmms gkrellm Gkrellm *mplayer 

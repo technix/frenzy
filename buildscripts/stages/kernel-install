@@ -1,0 +1,24 @@
+#!/bin/sh
+# PROVIDE: kernel-install
+# REQUIRE: world-install
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "install" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+BASEDIR="${CURRDIR}/base"
+SOURCEDIR="${CURRDIR}/../${SRCDIR}"
+export __MAKE_CONF=${BASEDIR}/${MAKECONF}
+export KERNCONFDIR=${BASEDIR}
+export MAKEOBJDIRPREFIX="${CURRDIR}/../${FRENZY_BUILD}"
+
+cp ${SOURCEDIR}/sys/i386/conf/GENERIC.hints ${CURRDIR}/../${FRENZY_FS}/boot/device.hints
+
+cd ${SOURCEDIR}
+make installkernel KERNCONF=${KERNCONFNAME} DESTDIR=${CURRDIR}/../${FRENZY_FS}
+
+stage_done
+
+fi

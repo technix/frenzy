@@ -1,0 +1,7 @@
+/usr/X11R6/bin/fbsetroot -solid black
+
+fbsetbg /usr/local/frenzy/wallpapers/fusillade.jpg
+
+conky &
+xxkb &
+exec /usr/X11R6/bin/fluxbox

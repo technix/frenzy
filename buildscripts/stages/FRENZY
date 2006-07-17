@@ -1,0 +1,25 @@
+#!/bin/sh
+# PROVIDE: FRENZY
+echo "Build process started"
+
+. ../config
+
+# prepare locale
+if [ ${FRENZY_LANG} = "en" ]; then
+cp pkglite/locales/locales.en pkglite/locales/locales
+cp boot/skel/etc/rc_en boot/skel/etc/rc
+fi
+
+if [ ${FRENZY_LANG} = "ru" ]; then
+cp pkglite/locales/locales.ru pkglite/locales/locales
+cp boot/skel/etc/rc_ru boot/skel/etc/rc
+fi
+
+# translating menu
+for lng in en ru
+do
+(cd tools/mkmenu && ./mkmenu ${lng} ${FRENZY_TYPE} > menu.${lng})
+mv tools/mkmenu/menu.${lng} systemroot/root/.fluxbox/
+done
+
+cp systemroot/root/.fluxbox/menu.${FRENZY_LANG} systemroot/root/.fluxbox/menu

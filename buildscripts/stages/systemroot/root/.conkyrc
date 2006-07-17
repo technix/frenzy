@@ -1,0 +1,125 @@
+#
+# name    : Conky config 
+# version : 0.1
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+# set to yes if you want Conky to be forked in the background
+background no
+
+# Use Xft?
+use_xft yes
+
+# Set conky on the bottom of all other applications
+on_bottom yes
+
+# Xft font when Xft is enabled
+#xftfont Bitstream Vera Sans Mono:size=8
+xftfont Terminus:bold:size=12
+#xftfont Terminus:bold:size=16
+
+# Text alpha when using Xft
+xftalpha 0.8
+
+# Print everything to stdout?
+# out_to_console no
+
+# Print everything to console?
+# out_to_console no
+
+# mail spool
+mail_spool $MAIL
+
+# Update interval in seconds
+update_interval 5.0
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Create own window instead of using desktop (required in nautilus)
+own_window no
+
+# Use pseudo transparency with own_window?
+own_window_transparent yes
+
+# If own_window_transparent is set to no, you can set the background colour here
+own_window_colour hotpink
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+minimum_size 280 5
+
+# Draw shades?
+draw_shades yes
+
+# Draw outlines?
+draw_outline no
+
+# Draw borders around text
+#draw_borders yes
+
+# Stippled borders?
+#stippled_borders 8
+
+# border margins
+#border_margin 4
+
+# border width
+#border_width 1
+
+# Default colors and also border colors
+default_color darkgrey
+default_shade_color black
+default_outline_color black
+
+# Text alignment, other possible values are commented
+#alignment top_left
+#alignment top_right
+alignment bottom_left
+#alignment bottom_right
+#alignment none
+
+# Gap between borders of screen and text
+# same thing as passing -x at command line
+gap_x 12
+gap_y 28
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+# number of net samples to average
+# set to 1 to disable averaging
+net_avg_samples 2
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+use_spacer no
+
+# boinc (seti) dir
+# seti_dir /opt/seti
+
+# variable is given either in format $variable or in ${variable}. Latter
+# allows characters right after the variable and must be used in network
+# stuff because of an argument
+
+# stuff after 'TEXT' will be formatted on screen
+
+TEXT
+${color white}UP: $uptime ::: Load: $loadavg
+${color darkgrey}${cpubar 10,100} ${color white} CPU: $cpu% 
+${color darkgrey}${membar 10,100} ${color white} RAM: $mem/$memmax - $memperc%  
+${color darkgrey}${swapbar 10,100} ${color white} Swap: $swap/$swapmax - $swapperc% 
+${color white}PROC: $processes ::: RUN: $running_processes

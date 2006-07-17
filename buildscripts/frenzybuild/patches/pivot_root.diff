@@ -1,0 +1,317 @@
+
+--- ../src/sys/kern/init_sysent.c.OLD	Wed Jul  5 18:40:53 2006
++++ ../src/sys/kern/init_sysent.c	Wed Jul  5 18:44:43 2006
+@@ -485,4 +485,6 @@
+ 	{ SYF_MPSAFE | AS(auditctl_args), (sy_call_t *)auditctl, AUE_NULL },	/* 453 = auditctl */
+ 	{ SYF_MPSAFE | AS(_umtx_op_args), (sy_call_t *)_umtx_op, AUE_NULL },	/* 454 = _umtx_op */
+ 	{ SYF_MPSAFE | AS(thr_new_args), (sy_call_t *)thr_new, AUE_NULL },	/* 455 = thr_new */
++	{ SYF_MPSAFE | AS(pivot_root_args), (sy_call_t *)pivot_root, AUE_NULL },	/* 456 = pivot_root */
+ };
++
+
+--- ../src/sys/kern/syscalls.master.OLD	Wed Jul  5 18:41:02 2006
++++ ../src/sys/kern/syscalls.master	Wed Jul  5 18:45:33 2006
+@@ -793,6 +793,8 @@
+ 				    long id, void *uaddr, void *uaddr2); }
+ 455	AUE_NULL	MSTD	{ int thr_new(struct thr_param *param, \
+ 				    int param_size); }
++456	AUE_NULL	MSTD    { int pivot_root(const char *new_root,  \
++					const char *put_old); }
+ 
+ ; Please copy any additions and changes to the following compatability tables:
+ ; sys/compat/freebsd32/syscalls.master
+
+--- ../src/sys/sys/sysproto.h.OLD	Wed Jul  5 18:41:15 2006
++++ ../src/sys/sys/sysproto.h	Wed Jul  5 18:52:26 2006
+@@ -1365,6 +1365,11 @@
+ 	char param_l_[PADL_(struct thr_param *)]; struct thr_param * param; char param_r_[PADR_(struct thr_param *)];
+ 	char param_size_l_[PADL_(int)]; int param_size; char param_size_r_[PADR_(int)];
+ };
++struct pivot_root_args {
++	char new_root_l_[PADL_(const char *)]; const char * new_root; char new_root_r_[PADR_(const char *)];
++	char put_old_l_[PADL_(const char *)]; const char * put_old; char put_old_r_[PADR_(const char *)];
++};
++
+ int	nosys(struct thread *, struct nosys_args *);
+ void	sys_exit(struct thread *, struct sys_exit_args *);
+ int	fork(struct thread *, struct fork_args *);
+@@ -1674,6 +1679,7 @@
+ int	auditctl(struct thread *, struct auditctl_args *);
+ int	_umtx_op(struct thread *, struct _umtx_op_args *);
+ int	thr_new(struct thread *, struct thr_new_args *);
++int	pivot_root(struct thread *, struct pivot_root_args *);
+ 
+ #ifdef COMPAT_43
+ 
+
+--- ../src/sys/kern/vfs_mount.c.OLD	Wed Jul  5 18:41:05 2006
++++ ../src/sys/kern/vfs_mount.c	Sat May  6 11:10:11 2006
+@@ -1276,6 +1276,239 @@
+ }
+ 
+ /*
++ * pivot_root Semantics:
++ * Moves the root file system of the current process to the directory put_old,
++ * makes new_root as the new root file system of the current process, and sets
++ * root/cwd of all processes which had them on the current root to new_root.
++ *
++ * Restrictions:
++ * The new_root must be a mountpoint and not the current root; put_old must be
++ * under new_root and no other file system may be mounted on put_old.
++ *
++ */
++#ifndef _SYS_SYSPROTO_H_
++struct pivot_root_args {
++	const char *new_root,
++	const char *put_old
++};
++#endif
++/* ARGSUSED */
++int
++pivot_root(struct thread *td, struct pivot_root_args *uap)
++{
++	char *new_root = NULL, *put_old = NULL;
++	struct nameidata nd;
++	struct vnode *new_vp, *put_vp, *old_vp;
++	struct mount *new_mp, *put_mp, *mp;
++	int error, newlen, putlen, have_giant = 0;
++
++printf("pivot_root: enter\n");
++
++	/* check credentials */
++	if ((error = suser(td)) != 0) {
++		error = EOPNOTSUPP;
++		goto pivot_root_done;
++	}
++
++	/* are we jailed? */
++	if (jailed(td->td_ucred)) {
++		printf("pivot_root: jailed\n");
++		error = EOPNOTSUPP;
++		goto pivot_root_done;
++	}
++
++	/* check argument sanity */
++	new_root = malloc(MNAMELEN, M_TEMP, M_WAITOK);
++	error = copyinstr(uap->new_root, new_root, MNAMELEN, NULL);
++	if (error)
++		goto pivot_root_done;
++
++	put_old = malloc(MNAMELEN, M_TEMP, M_WAITOK);
++	error = copyinstr(uap->put_old, put_old, MNAMELEN, NULL);
++	if (error)
++		goto pivot_root_done;
++
++	mtx_lock(&Giant);
++	have_giant = 1;
++printf("pivot_root(%s, %s): locked Giant\n", new_root, put_old);
++
++	/* are we chrooted? */
++	NDINIT(&nd, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, "/", td);
++	error = namei(&nd);
++	if (error) {
++		printf("pivot_root: root lookup, error: %d\n", error);
++		goto pivot_root_done;
++	}
++	NDFREE(&nd, NDF_ONLY_PNBUF);
++	if (nd.ni_vp != rootvnode) {
++		vput(nd.ni_vp);
++		printf("pivot_root: chrooted\n");
++		error = EOPNOTSUPP;
++		goto pivot_root_done;
++	}
++	vput(nd.ni_vp);
++printf("pivot_root: not chrooted, now checking put_old\n");
++
++	/* put_old must be under new_root */
++	newlen = strlen(new_root);
++	putlen = strlen(put_old);
++	if ( (newlen+1 > putlen) || (put_old[newlen] != '/') ||
++		strncmp(put_old, new_root, newlen) ) {
++		error = EINVAL;
++		goto pivot_root_done;
++	}
++
++	/* make sure put_old hierarchy has no mount points */
++	mtx_lock(&mountlist_mtx);
++	TAILQ_FOREACH(mp, &mountlist, mnt_list) {
++		if (strncmp(mp->mnt_stat.f_mntonname, put_old, putlen) == 0) {
++			error = EBUSY;
++			break;
++		}
++	}
++	mtx_unlock(&mountlist_mtx);
++	if (error) {
++		goto pivot_root_done;
++	}
++printf("pivot_root: put_old ok (no mounts), lookup new_root '%s'\n", new_root);
++
++	/* lookup new_root, must be a mount point */
++	NDINIT(&nd, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, new_root, td);
++	if((error = namei(&nd)) != 0) {
++		printf("Lookup new_root '%s' error %d\n", new_root, error);
++		error = ENOENT;
++		goto pivot_root_done;
++	}
++	NDFREE(&nd, NDF_ONLY_PNBUF);
++	new_vp = nd.ni_vp;
++	if ((new_vp->v_vflag & VV_ROOT) == 0)
++		error = EINVAL;
++	else if (new_vp == rootvnode)
++		error = EBUSY;
++	else
++		error = vinvalbuf(new_vp, V_SAVE, td, 0, 0);
++	if (error) {
++		vput(new_vp);
++		goto pivot_root_done;
++	}
++	if (new_vp == rootvnode) {
++		vput(new_vp);
++		error = EBUSY;
++		goto pivot_root_done;
++	}
++
++printf("pivot_root: start lookup put_old '%s'\n", put_old);
++	/* lookup put_old, cannot be a mount point */
++	NDINIT(&nd, LOOKUP, FOLLOW | LOCKLEAF, UIO_SYSSPACE, put_old, td);
++	if((error = namei(&nd)) != 0) {
++		printf("Lookup put_old '%s' error %d\n", put_old, error);
++		error = ENOENT;
++		goto pivot_root_done;
++	}
++	NDFREE(&nd, NDF_ONLY_PNBUF);
++	put_vp = nd.ni_vp;
++	if (put_vp->v_type != VDIR)
++		error = ENOTDIR;
++	else if ((put_vp->v_vflag & VV_ROOT) != 0)
++		error = EOPNOTSUPP;
++	else
++		error = vinvalbuf(put_vp, V_SAVE, td, 0, 0);
++	if (error) {
++		vput(put_vp);
++		goto pivot_root_done;
++	}
++printf("pivot_root: rootvnode %p; put_vp %p new_vp %p\n",
++	rootvnode, put_vp, new_vp);
++
++	/* remove new_vp and reinsert it into head of mountlist */
++	put_mp = put_vp->v_mount;
++	new_mp = new_vp->v_mount;
++	mtx_lock(&mountlist_mtx);
++	TAILQ_REMOVE(&mountlist, new_mp, mnt_list);
++	cache_purgevfs(new_mp);
++	TAILQ_INSERT_HEAD(&mountlist, new_mp, mnt_list);
++printf("pivot_root: new_mp removed and reinserted in head of mountlist\n");
++
++	/* adjust all mount point structures */
++	old_vp = rootvnode;
++	TAILQ_FOREACH(mp, &mountlist, mnt_list) {
++		char mntonname[MNAMELEN];
++		if (strncmp(mp->mnt_stat.f_mntonname, new_root, newlen) == 0) {
++			if (mp == new_mp) {
++				strcpy(mntonname, "/");
++				VI_LOCK(put_vp);
++				put_vp->v_mountedhere = mp;
++				put_vp->v_vflag |= VV_ROOT;
++				put_vp->v_iflag |= VI_MOUNT;
++				VI_UNLOCK(put_vp);
++				mp->mnt_flag |= MNT_ROOTFS;
++				mp->mnt_vnodecovered = NULL;
++printf("pivot_root: new root adjusted\n");
++			} else {
++				strcpy(mntonname,
++					mp->mnt_stat.f_mntonname + newlen);
++printf("pivot_root: mountpoint %s under new root adjusted\n",
++	mp->mnt_stat.f_mntonname);
++			}
++		}
++		else {
++			strcpy(mntonname, put_old + newlen);
++			if (mp == old_vp->v_mount) {
++				VI_LOCK(old_vp);
++				old_vp->v_mountedhere = mp;
++				old_vp->v_vflag &= ~VV_ROOT;
++				old_vp->v_iflag |= VI_MOUNT;
++				VI_UNLOCK(old_vp);
++				mp->mnt_flag &= ~MNT_ROOTFS;
++				mp->mnt_vnodecovered = put_vp;
++printf("pivot_root: old root adjusted\n");
++			} else {
++				strlcat(mntonname,
++					mp->mnt_stat.f_mntonname, MNAMELEN);
++printf("pivot_root: mountpoint %s under old root adjusted\n",
++	mp->mnt_stat.f_mntonname);
++			}
++		}
++printf("pivot_root: f_mntonname %s => %s\n",
++	mp->mnt_stat.f_mntonname, mntonname);
++		strcpy(mp->mnt_stat.f_mntonname, mntonname);
++		cache_purgevfs(mp);
++	}
++	mtx_unlock(&mountlist_mtx);
++printf("pivot_root: mountlist adjustments done\n");
++
++	cache_purge(put_vp);
++	vput(put_vp);
++printf("pivot_root: put_vp done\n");
++
++	mountcheckdirs(old_vp, put_vp);
++	cache_purge(old_vp);
++	vrele(old_vp);
++printf("pivot_root: old_vp done\n");
++
++	/* redefine rootvnode */
++	mountcheckdirs(rootvnode, new_vp);
++	cache_purge(new_vp);
++	vput(new_vp);
++printf("pivot_root: new_vp done\n");
++
++	set_rootvnode(td);
++	cache_purgevfs(rootvnode->v_mount);
++	KASSERT(new_mp == rootvnode->v_mount,
++	    ("pivot_root: new_mp != rootvnode->v_mount after set_rootvnode"));
++
++pivot_root_done:
++	if ( have_giant )
++		mtx_unlock(&Giant);
++	if (put_old != NULL)
++		free(put_old, M_MOUNT);
++	if (new_root != NULL)
++		free(new_root, M_MOUNT);
++printf("pivot_root: leaving, error = %d\n", error);
++	return (error);
++}
++
++/*
+  * Surgically move our devfs to be mounted on /dev.
+  */
+ 
+
+--- ../src/sys/sys/syscall.h.OLD	Wed Jul  5 18:41:09 2006
++++ ../src/sys/sys/syscall.h	Wed Jul  5 18:50:08 2006
+@@ -371,4 +371,5 @@
+ #define	SYS_auditctl	453
+ #define	SYS__umtx_op	454
+ #define	SYS_thr_new	455
+-#define	SYS_MAXSYSCALL	456
++#define	SYS_pivot_root	456
++#define	SYS_MAXSYSCALL	457
+
+--- ../src/sys/sys/syscall.mk.OLD	Wed Jul  5 18:41:12 2006
++++ ../src/sys/sys/syscall.mk	Wed Jul  5 18:50:40 2006
+@@ -312,4 +312,5 @@
+ 	setaudit_addr.o \
+ 	auditctl.o \
+ 	_umtx_op.o \
+-	thr_new.o
++	thr_new.o \
++	pivot_root.o
+
+--- ../src/sys/kern/syscalls.c.OLD	Wed Jul  5 18:40:58 2006
++++ ../src/sys/kern/syscalls.c	Wed Jul  5 18:46:38 2006
+@@ -463,4 +463,5 @@
+ 	"auditctl",			/* 453 = auditctl */
+ 	"_umtx_op",			/* 454 = _umtx_op */
+ 	"thr_new",			/* 455 = thr_new */
++	"pivot_root",			/* 456 = pivot_root */
+ };

@@ -1,0 +1,85 @@
+# === sound ==================================================================
+
+#
+# Sound drivers
+#
+# sound: The generic sound driver.
+#
+
+device		sound
+
+#
+# snd_*: Device-specific drivers.
+#
+# The flags of the device tells the device a bit more info about the
+# device that normally is obtained through the PnP interface.
+#	bit  2..0   secondary DMA channel;
+#	bit  4      set if the board uses two dma channels;
+#	bit 15..8   board type, overrides autodetection; leave it
+#		    zero if don't know what to put in (and you don't,
+#		    since this is unsupported at the moment...).
+#
+# snd_als4000:		Avance Logic ALS4000 PCI.
+# snd_ad1816:		Analog Devices AD1816 ISA PnP/non-PnP.
+# snd_audiocs:		Crystal Semiconductor CS4231 SBus/EBus.
+# snd_cmi:		CMedia CMI8338/CMI8738 PCI.
+# snd_cs4281:		Crystal Semiconductor CS4281 PCI.
+# snd_csa:		Crystal Semiconductor CS461x/428x PCI. (except
+#			4281)
+# snd_ds1:		Yamaha DS-1 PCI.
+# snd_emu10k1:		Creative EMU10K1 PCI and EMU10K2 (Audigy) PCI.
+# snd_es137x:		Ensoniq AudioPCI ES137x PCI.
+# snd_ess:		Ensoniq ESS ISA PnP/non-PnP, to be used in
+#			conjunction with snd_sbc.
+# snd_fm801:		Forte Media FM801 PCI.
+# snd_gusc:		Gravis UltraSound ISA PnP/non-PnP.
+# snd_ich:		Intel ICH PCI and some more audio controllers
+#			embedded in a chipset.
+# snd_maestro:		ESS Technology Maestro-1/2x PCI.
+# snd_maestro3:		ESS Technology Maestro-3/Allegro PCI.
+# snd_mss:		Microsoft Sound System ISA PnP/non-PnP.
+# snd_neomagic:		Neomagic 256 AV/ZX PCI.
+# snd_sb16:		Creative SoundBlaster16, to be used in
+#			conjuction with snd_sbc.
+# snd_sb8:		Creative SoundBlaster (pre-16), to be used in
+#			conjuction with snd_sbc.
+# snd_sbc:		Creative SoundBlaster ISA PnP/non-PnP.
+#			Supports ESS and Avance ISA chips as well.
+# snd_solo:		ESS Solo-1x PCI.
+# snd_t4dwave:		Trident 4DWave PCI, Sis 7018 PCI and Acer Labs
+#			M5451 PCI.
+# snd_via8233:		VIA VT8233x PCI.
+# snd_via82c686:	VIA VT82C686A PCI.
+# snd_vibes:		S3 Sonicvibes PCI.
+# snd_uaudio:		USB audio.
+
+device		snd_ad1816
+device		snd_als4000
+#device		snd_au88x0  #
+#device		snd_audiocs #
+device		snd_atiixp
+device		snd_cmi
+device		snd_cs4281
+device		snd_csa
+device		snd_ds1
+device		snd_emu10k1
+device		snd_es137x
+device		snd_ess
+device		snd_fm801
+device		snd_gusc
+device		snd_ich
+device		snd_maestro
+device		snd_maestro3
+device		snd_mss
+device		snd_neomagic
+device		snd_sb16
+device		snd_sb8
+device		snd_sbc
+device		snd_solo
+device		snd_t4dwave
+device		snd_via8233
+device		snd_via82c686
+device		snd_vibes
+#device		snd_vortex1 #
+device		snd_uaudio
+
