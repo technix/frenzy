@@ -1,0 +1,83 @@
+#!/usr/local/bin/perl
+#
+# Name    : Device tree listing
+# Version : 0.1 
+# Author  : Vladimir Kurtukov (vk@vk.pp.ru)
+#         : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+use strict;
+use warnings;
+
+my $CMD = '/usr/sbin/pciconf -lv';
+my $verbose = grep(/^-v/, @ARGV);
+my $color = grep(/^-c/, @ARGV);
+
+my $cg="";
+my $cb="";
+my $cy="";
+my $ce="";
+
+if ($color > 0) {
+$cg="\033[0;40;38m";
+$cy="\033[1;40;33m";
+$cb="\033[1;40;38m";
+$ce="\033[0m";
+}
+
+if (!open(IN, "${CMD} |"))
+{
+  print STDERR "Error: can't open pipe to $CMD: $! \n";
+  exit 1;
+}
+
+my ($selector, $hwinfo, $vendor, $device, $class, $subclass);
+my %HWDATA = ();
+
+while (<IN>)
+{
+  if (/^(\S+\@\S+)\:\s*(class=.*)$/)
+  {
+    $selector = $1;
+    $hwinfo = $2;
+  }
+  elsif (/^\s*vendor\s*=\s*\'(.*)\'/)
+  {
+    $vendor = $1;
+  }
+  elsif (/^\s*device\s*=\s*\'(.*)\'/)
+  {
+    $device = $1;
+  }
+  elsif (/^\s*class\s*=\s*(.*)$/)
+  {
+    $class = $1;
+  }
+  elsif (/^\s*subclass\s*=\s*(.*)$/)
+  {
+    $subclass = $1;
+
+    if (defined($selector) && defined($vendor) && defined($device) &&
+        defined($class) && defined($subclass))
+    {
+      $HWDATA{$class}{$subclass}{$selector} = [ $device, $vendor ];
+    }
+  }
+}
+
+close(IN);
+
+foreach my $class (keys %HWDATA)
+{
+  print "$cg--|$ce $cy$class$ce \n";
+  foreach my $subclass (keys %{$HWDATA{$class}})
+  {
+    print "$cg  +-|$ce $cb$subclass$ce \n";
+    foreach my $selector (keys %{$HWDATA{$class}{$subclass}})
+    {
+      my ($device, $vendor) = @{$HWDATA{$class}{$subclass}{$selector}};
+      print "$cg    +--$ce $selector (${device})\n";
+      if ($verbose > 0) { print "        $vendor\n"; }
+    }
+  }
+}

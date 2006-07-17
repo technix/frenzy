@@ -1,0 +1,199 @@
+#!/usr/local/bin/perl
+#
+# name    : Frenzy VPN configurator (setup module)
+# version : 0.1
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+$MODID="vpn";
+$VERSION="0.1";
+$DV="----------------------------------------------";
+
+require "/usr/local/frenzy/lib/libcommon.mpl";
+require "/usr/local/frenzy/lib/libdialog.mpl";
+require "/usr/local/frenzy/lib/liblocale.mpl";
+
+&init_var;
+&locale;
+&dialog_init;
+
+
+# main
+
+$flag_exit = 0;
+while ( $flag_exit == 0 ) {
+
+&get_modules;
+$menuitems="";
+$menuitems .=	qq/"new" "${msg_vpn_new}" /;
+if ($modlist ne "") {
+$menuitems .=	qq/"" "-" /;
+$menuitems .=   qq/$modlist /;
+$menuitems .=	qq/"" "-" /;
+}
+$menuitems .=	qq/"${msg_quit}" "${msg_quitprog}" /;
+
+
+
+($status, $choice) = &d_menu ("", 15, 70, 7, "$menuitems");
+
+if ($status == 1) {$flag_exit = 1;}
+if ($status == 256) {$flag_exit = 1;}
+
+$noconn=0;
+if ($status == 0) {
+if ("$choice" eq "$msg_quit") {$flag_exit = 1; $noconn=1;}
+if ("$choice" eq "new") {&vpn_new_profile; $noconn=1;}
+if ("$choice" eq "") {$noconn=1;}
+# connect
+if ($noconn == 0) { &execute($choice); }
+}
+
+}
+
+&dialog_destroy;
+exit;
+
+
+sub vpn_new_profile
+{
+NP:{
+    $tmsg="\n $msg_vpn_profile";
+    ($status, $profile_name) = &d_inputbox ("$tmsg", 17, 50);
+    if (($status == 256)||($profile_name eq "")) {last NP;}
+    $tmsg="$tmsg $profile_name\n";
+
+    $tmsg="$tmsg $msg_vpn_server";
+    ($status, $vpn_server) = &d_inputbox ("$tmsg", 17, 50);
+    if (($status == 256)||($vpn_server eq "")) {last NP;}
+    $tmsg="$tmsg $vpn_server\n";
+
+    $tmsg="$tmsg $msg_vpn_login";
+    ($status, $login) = &d_inputbox ("$tmsg", 17, 50);
+    if (($status == 256)||($login eq "")) {last NP;}
+    $tmsg="$tmsg $login\n";
+
+    $tmsg="$tmsg $msg_vpn_password";
+    ($status, $password) = &d_passwordbox ("$tmsg", 17, 50);
+    if ($status == 256) {last NP;}
+    $tmsg="$tmsg *****\n";
+
+    $vpnparam="";
+    $vpnparam .= qq/ DefRoute "$msg_vpn_default" on/;
+    $vpnparam .= qq/ OrigAuth "$msg_vpn_orig_auth" off/;
+    $vpnparam .= qq/ Compr "$msg_vpn_compress" off/;
+    $vpnparam .= qq/ Enc "$msg_vpn_crypto" off/;
+
+    $tmsg="$tmsg $msg_vpn_params";
+    ($status, $params) = &d_checklist ("$tmsg", 17, 50, 4, "$vpnparam");
+    if (($status == 256)||($login eq "")) {last NP;}
+    $tmsg="$tmsg $params\n";
+
+    if ($params =~ m/DefRoute/) {$vpn_defroute=""} else {$vpn_defroute="#"}
+    if ($params =~ m/OrigAuth/) {$vpn_origauth=""} else {$vpn_origauth="#"}
+    if ($params =~ m/Compr/) 	{$vpn_compr=""} else {$vpn_compr="#"}
+    if ($params =~ m/Enc/) 	{$vpn_crypto=""} else {$vpn_crypto="#"}
+
+    $tmsg="$tmsg$DV\n $msg_vpn_save";
+    $res = &d_yesno ($tmsg, 16, 50);
+
+    if ($res == 0) {
+	&save_settings;
+	$msgx=$msg_vpn_done; $msgx=~s/%p%/$profile_name/;
+    	&d_msgbox ("\n $msgx",7,60);
+    }
+
+}
+}
+
+
+sub save_settings {
+    &vpn_scripts;
+
+    $vpnconf =~ s/%LOGIN%/$login/g;
+    $vpnconf =~ s/%PASSWORD%/$password/g;
+    $vpnconf =~ s/%DEFROUTE%/$vpn_defroute/g;
+    $vpnconf =~ s/%ORIG_AUTH%/$vpn_origauth/g;
+    $vpnconf =~ s/%COMPRESS%/$vpn_compr/g;
+    $vpnconf =~ s/%CRYPTO%/$vpn_crypto/g;
+
+    $vpnlink =~ s/%REMOTE_IP%/$vpn_server/g;
+
+    system ("mkdir $MPD_PATH/$profile_name");
+    open (PS, "> $MPD_PATH/$profile_name/mpd.conf");
+	print PS "$vpnconf";
+    close (PS);
+    open (PS, "> $MPD_PATH/$profile_name/mpd.links");
+	print PS "$vpnlink";
+    close (PS);
+
+    system ("chmod 600 $MPD_PATH/$profile_name/mpd.conf");
+    system ("chmod 600 $MPD_PATH/$profile_name/mpd.links");
+
+}
+
+
+sub vpn_scripts
+{
+
+$vpnconf="default: 
+    load vpn
+
+vpn: 
+    new -i ng0 vpn vpn
+    set iface disable on-demand
+    set iface idle 0
+    %DEFROUTE%set iface route default
+    #set bundle yes acfcomp protocomp
+    set bundle disable multilink
+    set auth authname \"%LOGIN%\"
+    set auth password \"%PASSWORD%\"
+    set link keep-alive 60 180 
+    set link disable chap pap
+    set link accept chap pap
+    set link keep-alive 10 75
+    # if remote machine is NT
+    %ORIG_AUTH%set link enable no-orig-auth
+    #
+    # compression
+    %COMPRESS%set bundle enable compression
+    %COMPRESS%set ccp yes mppc
+    %COMPRESS%set ccp yes mpp-e40
+    %COMPRESS%set ccp yes mpp-e128
+    # encryption
+    %CRYPTO%set bundle enable encryption
+    %CRYPTO%set bundle enable crypt-reqd
+    #
+    set ipcp yes vjcomp 
+    set ipcp enable req-pri-dns req-sec-dns
+    set iface up-script /usr/local/frenzy/scripts/vpn_up.sh
+    set iface down-script /usr/local/frenzy/scripts/vpn_down.sh
+    open
+";
+
+$vpnlink="vpn:
+    set link type pptp
+    set pptp peer %REMOTE_IP%
+    set pptp enable originate incoming outcall
+";
+
+}
+
+sub get_modules 
+{
+    $modlist="";
+    @dir=`cd $MPD_PATH && ls -l | grep "^d" | awk '{print \$9}'`;
+    foreach $entry (@dir) {
+	$entry =~ s/\n//g;
+	$desc = `cat $MPD_PATH/$entry/mpd.links | grep peer | awk '{print \$4}'`;
+	$desc =~ s/\n//g;
+	$modlist=qq/$modlist "$entry" "$msg_vpn_connect $desc"/;
+    }
+#print $modlist;
+}
+
+sub execute
+{
+$profname=$_[0];
+exec ("mpd4 -d $MPD_PATH/$profname");
+}

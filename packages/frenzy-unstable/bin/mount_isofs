@@ -1,0 +1,19 @@
+#!/bin/sh
+PROG=`basename $0`
+ISO_FILE=$1
+MOUNT_POINT=$2
+if [ -z "$1" -o -z "$2" ]; then
+echo "Usage: ${PROG} iso_file mount_point"
+exit
+fi
+if [ ! -f "$ISO_FILE" ]; then
+echo "Can't find iso file!"
+exit
+fi
+if [ ! -d "$MOUNT_POINT" ]; then
+echo "Can't find mount point!"
+exit
+fi
+
+MD=`mdconfig -a -t vnode -f ${ISO_FILE}`
+mount_cd9660 /dev/${MD} ${MOUNT_POINT}

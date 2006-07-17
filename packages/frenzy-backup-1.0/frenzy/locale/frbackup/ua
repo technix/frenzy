@@ -1,0 +1,33 @@
+$msg_yes=		"Так";
+$msg_no=		"Н╕";
+$msg_quitprog=		"Вих╕д";
+$msg_cancel= 		"В╕дмова";
+$msg_quit=		"<--";
+$msg_wait=		"Будьте ласкав╕, зачекайте...";
+
+# === Main ===
+
+$msg_backtitle{'frbackup'}= 	"Frenzy backup ${VERSION}";
+$msg_title{'frbackup'}=		"Резервна коп╕я налаштувань";
+
+$msg_fbk_create=	"Створити арх╕в налаштувань";
+$msg_fbk_restore=	"В╕дновити налаштування з арх╕ву";
+$msg_fbk_editlist=	"Редагувати список файл╕в";
+$msg_fbk_dobackup=	"Трива╓ створення арх╕ву налаштувань.";
+$msg_fbk_cpbackup=	"Трива╓ коп╕ювання арх╕ву налаштувань.";
+
+$msg_fbk_savebackup=	"Обер╕ть м╕сце для збереження налаштувань:";
+$msg_fbk_tofloppy=	"Дискета";
+$msg_fbk_tohdd=		"Жорсткий диск або USB Flash";
+$msg_fbk_toftp=		"FTP-сервер";
+$msg_fbk_tossh=		"SSH-сервер";
+$msg_fbk_tosmb=		"SMB-диск";
+
+$msg_fbk_insdisk=	"Вставте дискету у дисковод и натисн╕ть Enter.";
+
+$ssh_action=		"Коп╕ювання по SSH";
+$msg_fbk_ssh_host=	" $ssh_action \n ╤м'я хоста:";
+$msg_fbk_ssh_login=	" $ssh_action \n Логин:";
+$msg_fbk_ssh_path=	" $ssh_action \n Каталог на сервер╕:";
+
+$msg_fbk_finish=	"Резервне коп╕ювання завершено.";

@@ -1,0 +1,137 @@
+#!/usr/local/bin/perl
+#
+# name    : Frenzy console configurator (setup module)
+# version : 0.1
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+$MODID="cons";
+$VERSION="0.1";
+$DV="----------------------------------------------------";
+
+require "/usr/local/frenzy/lib/libcommon.mpl";
+require "/usr/local/frenzy/lib/libdialog.mpl";
+require "/usr/local/frenzy/lib/liblocale.mpl";
+
+&init_var;
+&locale;
+&dialog_init;
+
+# main
+
+$flag_exit = 0;
+while ( $flag_exit == 0 ) {
+
+$menuitems="";
+$menuitems .=	qq/"font" "$msg_cons_setfont [ $selected_font ]" /;
+$menuitems .=	qq/"keymap" "$msg_cons_setkeymap [ $selected_keymap ]" /;
+$menuitems .=	qq/"screenmap" "$msg_cons_setscrmap [ $selected_scrmap ]" /;
+$menuitems .=	qq/"SAVE" "$msg_cons_save" /;
+$menuitems .=	qq/"APPLY" "$msg_cons_apply" /;
+$menuitems .=	qq/"${msg_quit}" "${msg_quitprog}" /;
+
+($status, $choice) = &d_menu ("", 15, 70, 7, "$menuitems");
+
+if ($status == 1) {$flag_exit = 1;}
+if ($status == 256) {$flag_exit = 1;}
+
+if ($status == 0) {
+if ("$choice" eq "$msg_quit") {$flag_exit = 1;}
+if ("$choice" eq "font") {&set_font;}
+if ("$choice" eq "keymap") {&set_keymap;}
+if ("$choice" eq "screenmap") {&set_scrmap;}
+
+if ("$choice" eq "SAVE") {&save_settings; }
+if ("$choice" eq "APPLY") {&save_settings; &apply_settings; }
+}
+
+}
+
+&dialog_destroy;
+exit;
+
+
+sub set_font {
+    &d_infobox ("$msg_wait", 7, 50);
+    @fontlist=`cd ${path2fonts} && ls *.fnt | sed "s/\.fnt//g"`;
+    open (FI, "${path2fonts}/INDEX.fonts");
+        @fontindex=<FI>;
+    close (FI);
+    foreach $fontid (@fontindex) {
+	@fxx=split (":", $fontid);
+	if ($fxx[1] eq "en") {
+	    $fxx[2]=~s/\n//g;
+	    $fxx[0]=~s/\.fnt//g;
+	    $fontdesc{"$fxx[0]"}=$fxx[2];
+	}
+    }
+    $selectfont="";
+    foreach $i (@fontlist) {
+	$i=~s/\n//g;
+	$fd=$fontdesc{$i};
+	$selectfont=qq/$selectfont "$i" "$fd"/;
+    }
+    $selectfont=qq/$selectfont "" "NONE"/;    
+    ($status, $choice) = &d_menu ("$msg_cons_sel_font", 19, 75, 12, "$selectfont");
+    if ($status == 0) {$selected_font = $choice;}
+}
+
+sub set_keymap {
+    &d_infobox ("$msg_wait", 7, 50);
+    @keymaplist=`cd ${path2keymaps} && ls *.kbd | sed "s/\.kbd//g"`;
+    open (KI, "${path2keymaps}/INDEX.keymaps");
+        @keymapindex=<KI>;
+    close (KI);
+    foreach $keymapid (@keymapindex) {
+	@fxx=split (":", $keymapid);
+	if ($fxx[1] eq "en") {
+	    $fxx[2]=~s/\n//g;
+	    $fxx[0]=~s/\.kbd//g;
+	    $keymapdesc{"$fxx[0]"}=$fxx[2];
+	}
+    }
+    $selectkeymap="";
+    foreach $i (@keymaplist) {
+	$i=~s/\n//g;
+	$fd=$keymapdesc{$i};
+	$selectkeymap=qq/$selectkeymap "$i" "$fd"/;
+    }
+    $selectkeymap=qq/$selectkeymap "" "NONE"/;    
+    ($status, $choice) = &d_menu ("$msg_cons_sel_keymap", 19, 75, 12, "$selectkeymap");
+    if ($status == 0) {$selected_keymap = $choice;}
+}
+
+sub set_scrmap {
+    &d_infobox ("$msg_wait", 7, 50);
+    @scrmaplist=`cd ${path2scrmaps} && ls *.scm | sed "s/\.scm//g"`;
+    $selectscrmap="";
+    foreach $i (@scrmaplist) {
+	$i =~ s/\n//g;
+	$fd = $i;
+	$fd =~ s/2/ to /g;
+	$fd =~ s/_/ /g;
+	#$fd =~ s/_/ /g;
+	$selectscrmap=qq/$selectscrmap "$i" "$fd"/;
+    }
+    $selectscrmap=qq/$selectscrmap "" "NONE"/;
+    ($status, $choice) = &d_menu ("$msg_cons_sel_scrmap", 19, 75, 12, "$selectscrmap");
+    if ($status == 0) {$selected_scrmap = $choice;}
+}
+
+
+sub save_settings {
+    $timenow=`date "+%Y-%m-%d %H:%M"`;
+    $timenow=~ s/\n//g;
+    open (RC, ">> $RCCONF");
+	print RC qq/\n### $MODID # $timenow #\n#\n/;
+	if ($selected_font ne "") {print RC qq/font8x16="$selected_font"\n/;}
+	if ($selected_keymap ne "") {print RC qq/keymap="$selected_keymap"\n/;}
+	if ($selected_scrmap ne "") {print RC qq/scrnmap="$selected_scrmap"\n/;}
+	print RC qq/\n/;
+    close (RC);
+}
+
+
+sub apply_settings {
+    system ("/etc/rc.d/syscons restart");
+}
+

@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Name    : Graphical console mode selection 
+# Version : 0.1
+# Author  : Grayich
+#
+
+DIALOG=${DIALOG=/usr/local/bin/cdialog}
+tempfile="/tmp/mode.tmp.$$"
+rej=$(vidcontrol -i mode|egrep "x16 1|x32 1"|awk '{print "\""$1"\"","\""$2,$5,$7,$12"\""}')
+reset=$(vidcontrol -i mode|grep "80x25"|grep "8x16"|awk '{print "\""$1"\"","\"""Reset (text mode)""\""}')
+all="${rej} ${reset}"
+echo ${all} | xargs ${DIALOG} \
+--cancel-label "Exit" --title " MODE select " \
+--backtitle "Graphics console configuration " \
+--menu "Choose a demanded mode:" 15 70 7 2>/tmp/mode.tmp.$$
+retval=$?
+choice=$(cat $tempfile)
+rm  $tempfile
+case $retval in
+0)
+vidcontrol MODE_${choice};;
+1)
+;;
+255)
+;;
+esac
+

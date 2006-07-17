@@ -1,0 +1,121 @@
+#!/usr/local/bin/perl
+#
+# Name    : Remount partitions script
+# Version : 0.2
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+$MODID="remount";
+$VERSION="0.1";
+$DV="----------------------------------------------------";
+
+$fstab="/etc/fstab";
+
+require "/usr/local/frenzy/lib/libcommon.mpl";
+require "/usr/local/frenzy/lib/libdialog.mpl";
+require "/usr/local/frenzy/lib/liblocale.mpl";
+
+&init_var;
+&locale;
+&dialog_init;
+
+
+# main
+
+$flag_exit = 0;
+while ( $flag_exit == 0 ) {
+
+&read_fstab;
+
+$menuitems .=	qq/ "${msg_quit}" "${msg_quitprog}" /;
+
+($status, $choice) = &d_menu ("", 15, 70, 7, "$menuitems");
+
+if ($status == 1) {$flag_exit = 1;}
+if ($status == 256) {$flag_exit = 1;}
+
+if ($status == 0) {
+if ("$choice" eq "$msg_quit") {
+$flag_exit = 1;
+} else {
+&remount ($choice);
+}
+}
+
+}
+
+&dialog_destroy;
+exit;
+
+
+
+sub read_fstab
+{
+open (FT, "$fstab");
+@fstab_part=<FT>;
+close (FT);
+
+$menuitems="";
+foreach $ft (@fstab_part) {
+    @partinfo = split (" ", $ft);
+    if ($partinfo[0] eq "#") {next;}
+    if ($partinfo[0] eq "") {next;}
+    if ($partinfo[1] eq "none") {next;}
+    if ($partinfo[0] =~ m/md0/) {next;}
+    if ($partinfo[0] =~ m/cd[0-9]/) {next;}
+    if ($partinfo[0] =~ m/proc/) {next;}
+
+    $mnt_point=$partinfo[1];
+
+    $info_device{$mnt_point} = $partinfo[0];
+    $info_type{$mnt_point} = $partinfo[2];
+    $info_options{$mnt_point} = $partinfo[3];
+
+    if ($partinfo[3] =~ m/rw/) {$xmode = "rw ($info_type{$mnt_point})"}
+    if ($partinfo[3] =~ m/ro/) {$xmode = "ro ($info_type{$mnt_point})"}
+
+    $menuitems .= qq/ "$mnt_point" "$xmode"/; 
+}
+
+
+}
+
+
+sub remount {
+$mount_point=$_[0];
+if ($info_type{$mount_point} =~ m/ntfs|cd9660|reiserfs|procfs/)
+{
+    &d_msgbox ("Can't change mount type", 8, 50);
+} else {
+    system ("umount $mount_point");
+    if ($? != "0") {
+	&d_msgbox ("FAILED to unmount FS", 8, 50);
+    }
+    else
+    {
+    open (FT, "$fstab"); @fstab_part=<FT>; close (FT);
+    open (FT, "> ${fstab}.new");
+    foreach $ft (@fstab_part) {
+	@partinfo = split (" ", $ft);
+        $ftx = $ft;
+        if ($partinfo[1] eq "$mount_point") {
+	    if ($partinfo[3] =~ m/rw/) {$xmode = "rw"; $nmode = "ro"}
+	    if ($partinfo[3] =~ m/ro/) {$xmode = "ro"; $nmode = "rw"}
+	    $newopts = $partinfo[3];
+	    $newopts =~ s/$xmode/$nmode/g;
+	    $ftx =~ s/$partinfo[3]/$newopts/g;
+	}
+	print FT "$ftx";
+    }
+    close (FT);
+    system ("mv ${fstab}.new $fstab");
+    system ("mount $mount_point");
+    if ($? != "0") {
+        &d_msgbox ("FAILED to mount FS", 8, 50);
+    }
+    }
+}
+
+}
+
+

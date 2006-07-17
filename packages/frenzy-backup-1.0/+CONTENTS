@@ -1,0 +1,25 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzy-backup-1.0
+@comment ORIGIN:misc/frenzy-backup-1.0
+@cwd /usr/local
+bin/frbk-create
+@comment MD5:74b8b60957766cfe39dd17c419faf1b0
+bin/frbk-restore
+@comment MD5:e480f17fc7f6cf6fe3bc29288c07f185
+bin/frbk
+@comment MD5:80022277db6f24c716dc1326e82e9478
+bin/frestore
+@comment MD5:97c1361e02d9507f5a2a2b26478648a7
+etc/frbackup/backup.lst
+@comment MD5:9085a6da2a8cf0c28589d380aa230e98
+frenzy/locale/frbackup/ru
+@comment MD5:279c44e4ef5f8920f8db2bc5428e24a9
+frenzy/locale/frbackup/en
+@comment MD5:c5657f113210faeb472e9bd08cb7ef68
+frenzy/locale/frbackup/ua
+@comment MD5:76f0aab26f40e9ed123f39bb5f1cf74e
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

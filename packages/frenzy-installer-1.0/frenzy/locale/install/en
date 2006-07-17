@@ -1,0 +1,92 @@
+$msg_yes=		"Yes";
+$msg_no=		"No";
+$msg_quitprog=		"Quit";
+$msg_cancel= 		"Cancel";
+$msg_quit=		"<--";
+$msg_wait=		"Please wait...";
+
+# === Main ===
+
+$msg_backtitle{'install2hdd'}= 	"Frenzy HDD installer ${VERSION}";
+$msg_title{'install2hdd'}=	"Install Frenzy to HDD";
+
+$fr_passphrase="INSTALL";
+
+$msg_fri_warning  = "\n";
+$msg_fri_warning .= "                WARNING!	 \n";
+$msg_fri_warning .= "\n";
+$msg_fri_warning .= "All operations that will be done on the filesystem,\n";
+$msg_fri_warning .= "CANNOT BE CANCELLED. Changing disk partitioning \n";
+$msg_fri_warning .= "can lead to all your previously installed operating \n";
+$msg_fri_warning .= "systems wont start any more or your data may be lost!\n";
+$msg_fri_warning .= "\n";
+$msg_fri_warning .= "Read carefully  Frenzy install2hdd instructions\n";
+$msg_fri_warning .= "to avoid possible problems.\n";
+$msg_fri_warning .= "\n";
+$msg_fri_warning .= "If you are sure of what you are doing, \n";
+$msg_fri_warning .= "type '$fr_passphrase' in the field below. \n";
+$msg_fri_warning .= "\n";
+
+
+$msg_fri_part  = "FreeBSD partition creation utility is ready to run. \n";
+$msg_fri_part .= "All you need is: \n";
+$msg_fri_part .= "\n";
+$msg_fri_part .= "1) Point a cursor to a free disk space (Free space). \n";
+$msg_fri_part .= "2) Select an item 'New'. \n";
+$msg_fri_part .= "3) Select an item 'Primary'. \n";
+$msg_fri_part .= "4) Define disk space (you can use default values). \n";
+$msg_fri_part .= "5) Select an item 'Bootable' (if you don't plan \n";
+$msg_fri_part .= "   to use loader). \n";
+$msg_fri_part .= "6) Select an item 'Write' to save the changes. \n";
+$msg_fri_part .= "7) Select an item  'Quit' to quit the utility. \n";
+$msg_fri_part .= "\n";
+$msg_fri_part .= "WARNING! \n";
+$msg_fri_part .= "The required disk space to install Frenzy on HDD is at least 1Gb.";
+
+$msg_fri_seldisk=	"Select a HDD to instal Frenzy.";
+$msg_fri_hd=		"HDD";
+$msg_fri_selpart=	"Select a partition Frenzy will be installed to.";
+
+$msg_fri_selboot=	"Install boot manager.";
+$msg_fri_nobootman=	"Don't install boot manager";
+$msg_fri_stdboot=	"Install standart MBR";
+$msg_fri_fbsdbootman=	"Install FreeBSD loader";
+
+
+$msg_fri_mkpart=	"Disk partitioning";
+$msg_fri_newfs=		"Creating a filesystem";
+
+$msg_fri_copyfiles=	"Installing the system";
+$msg_fri_copykernel=	"Installing the core";
+
+$msg_fri_language=	"Select language";
+
+$msg_install_cancel=	"Frenzy installation canceled.";
+
+$msg_backtitle{'install2flash'}= 	"Frenzy USB Flash installer ${VERSION}";
+$msg_title{'install2flash'}=		"Frenzy to USB Flash";
+
+$msg_flash_warning  = "\n";
+$msg_flash_warning .= "                WARNING!	 \n";
+$msg_flash_warning .= "\n";
+$msg_flash_warning .= "All operations that will be done further on,\n";
+$msg_flash_warning .= "CANNOT BE CANCELLED. Changing USB Flash partitioning \n";
+$msg_flash_warning .= "can lead to all your data on the Flashdrive be lost! \n";
+$msg_flash_warning .= "\n";
+$msg_flash_warning .= "Read carefully Frenzy to USB Flash instructions\n";
+$msg_flash_warning .= "to avoid possible problems.\n";
+$msg_flash_warning .= "\n";
+$msg_flash_warning .= "If you are sure of what you are doing, \n";
+$msg_flash_warning .= "type '$fr_passphrase' in the field below. \n";
+$msg_flash_warning .= "\n";
+
+$msg_flash_seldisk=	"Choose Flash-diskto install Frenzy to.";
+$msg_flash_fd=		"Flash-disk";
+
+$msg_flash_flinit=	"Disk initialise";
+$msg_flash_mkpart=	"Partitioning";
+$msg_flash_format=	"Formatting partitions";
+$msg_flash_boot=	"Install loader";
+$msg_flash_copyfiles=	"Copying files";
+$msg_flash_complete=	"Frenzy installed successfully.";
+

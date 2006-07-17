@@ -1,0 +1,13 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzy-unstable
+@comment ORIGIN:misc/frenzy-unstable
+@cwd /usr/local
+bin/enc.sh
+@comment MD5:3e8321b4411d12f8dfeadb69919a1e6b
+bin/mount_isofs
+@comment MD5:fc5bf4d4650cd96fc02764504c16f9d6
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

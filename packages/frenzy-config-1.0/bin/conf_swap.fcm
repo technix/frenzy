@@ -1,0 +1,90 @@
+#!/usr/local/bin/perl
+#
+# name    : Frenzy swap configurator (setup module)
+# version : 0.1
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+$MODID="swap";
+$VERSION="0.1";
+$DV="----------------------------------------------------";
+
+require "/usr/local/frenzy/lib/libcommon.mpl";
+require "/usr/local/frenzy/lib/libdialog.mpl";
+require "/usr/local/frenzy/lib/liblocale.mpl";
+
+&init_var;
+&locale;
+&dialog_init;
+
+# main
+
+$flag_exit = 0;
+while ( $flag_exit == 0 ) {
+
+$menuitems="";
+$menuitems .=	qq/"view" "${msg_swap_viewswap}" /;
+$menuitems .=	qq/"create" "${msg_swap_createswap}" /;
+$menuitems .=	qq/"${msg_quit}" "${msg_quitprog}" /;
+
+($status, $choice) = &d_menu ("", 15, 70, 7, "$menuitems");
+
+if ($status == 1) {$flag_exit = 1;}
+if ($status == 256) {$flag_exit = 1;}
+
+if ($status == 0) {
+if ("$choice" eq "$msg_quit") {$flag_exit = 1;}
+if ("$choice" eq "view") {&view_swap_info;}
+if ("$choice" eq "create") {&create_swap_file;}
+}
+
+}
+
+&dialog_destroy;
+exit;
+
+sub view_swap_info
+{
+$swapinfo=`printf "\n"; swapinfo -k`;
+&d_msgbox ("$swapinfo", 15, 70);
+}
+
+
+sub create_swap_file
+{
+
+$memx = `sysctl -n hw.physmem`;
+$memory = int($memx / 1048576);
+$swap_size = int($memory / 2);
+if ($memory < 128) {$swap_size = $memory;}
+if ($memory < 64)  {$swap_size = $memory * 2;}
+
+$msg_SWAP="\n${msg_swap_swapsize} ${swap_size} Mb\n\n${msg_swap_swapinput}\n";
+($c1_status, $swap_size) = d_inputbox ("$msg_SWAP", 16, 50, "$swap_size");
+
+if ($c1_status == 0) {
+$msg_SWAP="\n${msg_swap_swappath}\n${msg_swap_swapexample}\n";
+($c2_status, $pathtoswap) = d_inputbox ("$msg_SWAP", 16, 50);
+
+if ($c2_status == 0) {
+$failed = 0;
+$MSG_touch=`touch $pathtoswap/$swpfile 2>&1`;
+unless (-e "$pathtoswap/$swpfile") {$failed=1;}
+$md_size = $swap_size . "m";
+$md_device=`mdconfig -a -t vnode -s $md_size -f $pathtoswap/$swpfile 2>&1`;
+if (-z "$pathtoswap/$swpfile") {$failed=1;}
+$MSG_newfs=`newfs -U /dev/$md_device 2>&1`;
+$MSG_swapon=`swapon /dev/$md_device 2>&1`;
+#$md_device="md0";
+$minfo=`swapinfo | grep "$md_device"`;
+if ($minfo eq "") {$failed=1;} 
+
+$msg_SWAP="\n$msg_swap_swapcreated\n($pathtoswap/$swpfile, $swap_size Mb)\n";
+
+if ($failed == 1) {
+$msg_SWAP="\n[!] $msg_swap_swapfailed \n$DV \n$MSG_touch \n$md_device \n$MSG_newfs \n$MSG_swapon \n $minfo \n$DV\n";
+}
+
+&d_msgbox ("$msg_SWAP", 12, 60);
+}
+}
+}

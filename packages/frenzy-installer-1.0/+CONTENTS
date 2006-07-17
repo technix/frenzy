@@ -1,0 +1,19 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzy-installer-1.0
+@comment ORIGIN:misc/frenzy-installer-1.0
+@cwd /usr/local
+bin/install2flash
+@comment MD5:1a9b556a0ffe26f3997a05c9805d907b
+bin/install2hdd
+@comment MD5:7cd30b66d11d00c39299bbe60f6d8639
+frenzy/locale/install/ru
+@comment MD5:bda2e70bf158642598eb44385114ac9e
+frenzy/locale/install/en
+@comment MD5:a4d5793c029c4d72ed3065f0a0546ca5
+frenzy/locale/install/ua
+@comment MD5:77797d01962075260c9a696386e5537c
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

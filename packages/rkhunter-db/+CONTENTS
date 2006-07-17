@@ -1,0 +1,23 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name rkhunter-db
+@comment ORIGIN:misc/rkhunter-db
+@cwd /usr/local
+lib/rkhunter/db-latest/backdoorports.dat
+@comment MD5:46f17b562d1b12aed6618824cfd697f7
+lib/rkhunter/db-latest/defaulthashes.dat
+@comment MD5:64c44367528929b2c3d54ed32cbc8f32
+lib/rkhunter/db-latest/md5blacklist.dat
+@comment MD5:780037c326ba646f3f602c65fbfb6093
+lib/rkhunter/db-latest/mirrors.dat
+@comment MD5:29c68f51f518aee3c86c851b60fa20bb
+lib/rkhunter/db-latest/os.dat
+@comment MD5:a53db62ab572c6c960b1c2d1610fa859
+lib/rkhunter/db-latest/programs_bad.dat
+@comment MD5:416a18fb1169772bcd9bc795d2c7e8e8
+lib/rkhunter/db-latest/programs_good.dat
+@comment MD5:03ea6b24e8ee96c5a418ac6cf845e880
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

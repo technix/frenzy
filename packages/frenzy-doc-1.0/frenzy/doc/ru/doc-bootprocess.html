@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc.html>doc</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Процесс загрузки Frenzy</font></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-54] -->
+<h2><font color=#990000>Этап kernel</font></h2>
+<div class="level2">
+
+<p>
+ Загрузка начинается с того, что BIOS передает управление загрузчику cdboot, находящемуся в загрузочной области компакт-диска. Он в свою очередь запускает BTX loader (/boot/loader). BTX loader читает файлы конфигурации, загружает ядро и необходимые модули и отображает меню загрузки (с логотипом). Затем идет загрузка ядра и определение им устройств.
+</p>
+
+<p>
+В конфигурации loader-а указано, что корневую файловую систему следует монтировать из сжатого образа /boot/frenzyroot.gz. После того, как ядро было загружено, из этого образа монтируется корневая файловая система и управление передается процессу /sbin/init, запущенному оттуда.
+</p>
+
+</div>
+<!-- SECTION [55-1166] -->
+<h2><font color=#990000>Этап frenzyroot</font></h2>
+<div class="level2">
+
+<p>
+ Образ frenzyroot содержит несколько базовых утилит:
+</p>
+
+<p>
+<code>cp sh test echo init mdconfig mount mount_cd9660 mount_nullfs umount sleep</code>
+</p>
+
+<p>
+Также в каталоге /etc находятся некоторые необходимые файлы, в том числе специально созданные для frenzy rc-скрипты. 
+</p>
+
+<p>
+Итак, /sbin/init запускает /etc/rc. Это нестандартный скрипт, который выполняет всю работу по начальной настройке и загрузке LiveCD.
+</p>
+
+</div>
+<!-- SECTION [1167-1795] -->
+<h3><font color=#990000>1. Поиск загрузочного устройства</font></h3>
+<div class="level3">
+
+<p>
+ Первым делом мы должны найти и смонтировать тот диск, с которого загружается система. Скрипт по очереди ищет файл frenzy.uzip на всех CD-ROM приводах и USB Flash дисках. Если такой файл был найден, диск с ним монтируется в каталог /Frenzy/boot.
+</p>
+
+</div>
+<!-- SECTION [1796-2276] -->
+<h3><font color=#990000>2. Монтирование сжатой файловой системы</font></h3>
+<div class="level3">
+
+<p>
+ Файл frenzy.uzip содержит сжатую файловую систему, которая будет использоваться в качестве корневой. Однако поскольку ее нельзя смонтировать поверх существующей корневой FS, мы поступаем следующим образом. Файловая система из frenzy.uzip монтируется в каталог /Frenzy/fs, после чего с помощью mount_nullfs поверх существующей корневой файловой системы мы монтируем из сжатого образа каталоги <code>bin, boot, lib, libexec, sbin, usr</code>.
+</p>
+
+</div>
+<!-- SECTION [2277-3085] -->
+<h3><font color=#990000>3. Установка локали</font></h3>
+<div class="level3">
+
+<p>
+ Подгружаем красивый шрифт и выставляем screenmap. Необходимо для того, чтобы загрузочное меню было на русском.
+</p>
+
+</div>
+<!-- SECTION [3086-3327] -->
+<h3><font color=#990000>4. Определение размера для RAM-диска</font></h3>
+<div class="level3">
+
+<p>
+ Определяем, какой объем памяти есть в системе. Исходя из этого, устанавливаем размер RAM-диска по умолчанию (10, 15, 30, 45 мегабайт).
+</p>
+
+</div>
+<!-- SECTION [3328-3633] -->
+<h3><font color=#990000>5. Меню загрузчика</font></h3>
+<div class="level3">
+
+<p>
+ На экран выводится меню загрузчика. Устанавливаем параметры загрузки (подробное их описание смотрите <a href="doc-boot.html" class="wikilink1" title="doc-boot.html">здесь</a>).
+</p>
+
+</div>
+<!-- SECTION [3634-3892] -->
+<h3><font color=#990000>6. Создание RAM-диска</font></h3>
+<div class="level3">
+
+<p>
+ Создаем RAM-диск указанного размера и монтируем его в /Frenzy/ramdisk. На RAM-диске будут храниться каталоги <code>etc, root, var, mnt</code>. Создаем эти каталоги, копируем в них файлы из соответствующих каталогов в /Frenzy/fs и с помощью mount_nullfs монтируем эти каталоги из RAM-диска поверх соотв. каталогов корневого каталога. Сохраняем в /etc/frenzy.boot настройки, выставленные в меню загрузчика.
+</p>
+
+</div>
+<!-- SECTION [3893-4587] -->
+<h3><font color=#990000>7. Загрузка патчей</font></h3>
+<div class="level3">
+
+<p>
+ Просматриваем каталог /Frenzy/boot/frenzy/conf. Если в нем содержатся скрипты с расширением .patch, выполняем их. Полезно в случае, если вы добавляете какие-то патчи для конфиг. файлов, но не хотите пересобирать сжатый образ.
+</p>
+
+</div>
+<!-- SECTION [4588-5016] -->
+<h3><font color=#990000>8. Режим загрузки toram (по выбору)</font></h3>
+<div class="level3">
+
+<p>
+ Если в загрузчике был выбран параметр <code>toram</code>, то начинаем загрузку в память:
+</p>
+<ul>
+<li class="level1"><div class="li"> Создаем RAM-диск достаточного объема (определяется динамически в зависимости от размера файла frenzy.uzip) и монтируем его в /Frenzy/mfs</div>
+</li>
+<li class="level1"><div class="li"> Копируем туда /Frenzy/boot/frenzy/frenzy.uzip, после чего перемонтируем /Frenzy/fs уже из этого файла.</div>
+</li>
+<li class="level1"><div class="li"> Перемонтируем файловые системы из новой /Frenzy/fs, как описано в пункте 2.</div>
+</li>
+</ul>
+
+<p>
+После загрузки в память CD-ROM освобождается и выдвигается лоток привода.
+</p>
+
+</div>
+<!-- SECTION [5017-5874] -->
+<h3><font color=#990000>8. Поиск разделов на жестком диске</font></h3>
+<div class="level3">
+
+<p>
+ Ищем разделы на жестком диске. По умолчанию все разделы монтируются в режиме &ldquo;только для чтения&rdquo;. В меню загрузки также доступны такие опции:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>hdrw</strong> - монтировать в режиме записи (только для FAT/UFS/EXT2FS)</div>
+</li>
+<li class="level1"><div class="li"> <strong>nohdmnt</strong> - производится поиск разделов, создание точек монтирования и обновляется fstab, но сами разделы не монтируются</div>
+</li>
+<li class="level1"><div class="li"> <strong>nohdd</strong> - поиск и монтирование разделов не производится.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [5875-6627] -->
+<h3><font color=#990000>9. Режим загрузки fromhdd (по выбору)</font></h3>
+<div class="level3">
+
+<p>
+ Если в загрузчике был выбран параметр <code>fromhdd</code>, то начинаем загрузку с образа на жестком диске:
+</p>
+<ul>
+<li class="level1"><div class="li"> На каждом смонтированном разделе ищем файл frenzy/frenzy.uzip</div>
+</li>
+<li class="level1"><div class="li"> Если файл был найден, то производятся операции, описанные в пункте 8 (перемонтирование сжатого образа и каталогов)</div>
+</li>
+</ul>
+
+<p>
+После загрузки образа с жесткого диска CD-ROM освобождается и выдвигается лоток привода.
+</p>
+
+</div>
+<!-- SECTION [6628-7343] -->
+<h3><font color=#990000>10. Разное</font></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Создается файл /tmp/.frenzy (наличие этого файла обрабатывается скриптами как признак загрузки с CD/Flash)</div>
+</li>
+<li class="level1"><div class="li"> Устанавливается язык системы с помощью утилиты /usr/local/bin/frlang (язык выбирается при загрузке)</div>
+</li>
+<li class="level1"><div class="li"> Производится восстановление резервных настроек с дискеты/жесткого диска/USB Flash/компакта (каталог frenzy/backup). Этот шаг можно отменить с помощью опции <strong>nobackup</strong>.</div>
+</li>
+</ul>
+
+<p>
+И наконец, мы запускаем системный /etc/rc.
+</p>
+
+</div>
+<!-- SECTION [7344-8084] -->
+<h2><font color=#990000>Этап base</font></h2>
+<div class="level2">
+
+<p>
+ Загрузка системных rc-скриптов почти ничем не отличается от стандартной FreeBSD. Различия следующие:
+</p>
+
+<p>
+1. Часть rc-скриптов подправлена таким образом, чтобы они не запускались при наличии файла <code>/tmp/.frenzy</code>. Это скрипты для монтирования разделов из fstab и проверки их fsck (они не нужны при загрузке с livecd, поскольку эту работу выполняют другие скрипты).
+</p>
+
+<p>
+2. После загрузки всех rc-скриптов запускается скрипт <code>/etc/rc.d/FRENZY</code>, который выполняет следующие операции:
+</p>
+<ul>
+<li class="level1"><div class="li"> Запуск утилиты автоопределения мыши (<code>/usr/local/bin/mouse-detect</code>)</div>
+</li>
+<li class="level1"><div class="li"> Запуск утилиты сбора информации о системе (если при загрузке была выбрана опция <strong>hwinfo</strong>)</div>
+</li>
+<li class="level1"><div class="li"> Включение автологина на первой консоли (всегда включено, если загружаться с CD/Flash)</div>
+</li>
+<li class="level1"><div class="li"> Запуск графической оболочки (если при загрузке была выбрана опция <strong>gui</strong>)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [8085-] --></td></tr></table>
+<br>
+</body>
+</html>

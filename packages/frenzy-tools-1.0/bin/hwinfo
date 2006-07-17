@@ -1,0 +1,510 @@
+#!/usr/local/bin/perl
+#
+# Name    : Hardware information tool
+# Version : 0.2
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+# 
+# Requirements: sysutils/x86info, sysutils/dmidecode, sysutils/pciconf
+#
+
+$version="Frenzy hardware information tool v0.2";
+
+$prog_x86info="/usr/local/bin/x86info";
+$prog_dmidecode="/usr/local/sbin/dmidecode";
+$prog_lspci="/usr/local/bin/lspci";
+$prog_pciconf="/usr/sbin/pciconf";
+
+
+$MODE="short";
+$html_out=0;
+$all_modes=1;
+
+
+foreach $arg (@ARGV) {
+if ($arg =~ m/html/) {$html_out=1;}
+if ($arg =~ m/text/) {$html_out=0;}
+if ($arg =~ m/full/) {$MODE="full";}
+if ($arg =~ m/help/) {&showhelp; exit;}
+}
+
+&sysinfo("cpu");
+&sysinfo("bios");
+&sysinfo("dmesg");
+&sysinfo("pci");
+
+foreach $arg (@ARGV) {
+if ($arg =~ m/cpu/) {$all_modes=0; &info_cpu;}
+if ($arg =~ m/bios/) {$all_modes=0; &info_bios;}
+if ($arg =~ m/mem/) {$all_modes=0; &info_mem;}
+if ($arg =~ m/mctrl/) {$all_modes=0; &info_mem_controller;}
+if ($arg =~ m/mb/) {$all_modes=0; &info_mb;}
+if ($arg =~ m/onboard/) {$all_modes=0; &info_onboard;}
+if ($arg =~ m/hdd/) {$all_modes=0; &info_hdd;}
+if ($arg =~ m/cdrom/) {$all_modes=0; &info_cdrom;}
+if ($arg =~ m/floppy/) {$all_modes=0; &info_floppy;}
+if ($arg =~ m/pci/) {$all_modes=0; &info_pci;}
+}
+
+if ($all_modes == 1) {
+&info_cpu;
+&info_bios;
+&info_mem;
+&info_mem_controller;
+&info_mb;
+&info_onboard;
+&info_hdd;
+&info_cdrom;
+&info_floppy;
+&info_pci;
+}
+
+#
+if ($html_out == 1) {&out_html;} else {&out_txt;} 
+
+exit;
+
+# ---------------------------------------
+sub showhelp {
+
+$usage_info = <<USAGE
+$version
+
+Usage: hwinfo [-html] [-full] [hw_options] > report_file
+Available options:
+-help     this manual
+-html     html output
+-full     detailed hardware info
+Default is text output.
+
+You may view only certain hardware info, using following hw_options:
+-cpu      CPU
+-bios     BIOS information
+-mem      Memory info
+-mctrl    Memory Controller (use with option -full)
+-mb       Motherboard info
+-onboard  Onboard ports
+-hdd      Hard disk drives and USB drives
+-cdrom    CD-ROM drives
+-floppy   Floppy drives
+-pci      PCI and AGP devices
+
+USAGE
+;
+
+
+$rlang = $ENV{LANG};
+if ($rlang eq "ru_RU.KOI8-R") {
+$usage_info = <<USAGER
+$version
+
+Использование: hwinfo [-html] [-full] [hw_options] > report_file
+Параметры:
+-help     эта помощь
+-html     вывод в HTML
+-full     детальная информация об оборудовании
+По умолчанию информация выводится в текстовом формате.
+
+Вы можете просмотреть информацию только по некоторому оборудованию,
+используя такие параметры (hw_options):
+-cpu      процессор
+-bios     информация о BIOS
+-mem      память
+-mctrl    контроллер памяти (вместе с опцией -full)
+-mb       материнская плата
+-onboard  оборудование на материнской плате
+-hdd      жесткие и USB диски
+-cdrom    дисководы CD-ROM
+-floppy   дисководы
+-pci      устройства PCI и AGP
+
+USAGER
+;
+}
+
+
+print $usage_info;
+}
+# ---------------------------------------
+
+sub out_html {
+
+print <<HEAD
+<html>
+<head>
+<title>Hardware information</title>
+</head>
+<body>
+<h1>Hardware information</h1>
+<table border=1 cellpadding=5 cellspacing=0>
+<tr>
+<td>Class</td>
+<td>Description</td>
+</tr>
+HEAD
+;
+
+foreach $ixx (sort keys %show_devclass) {
+$show_devclass{$ixx} = htmlize($show_devclass{$ixx});
+$show_devfile{$ixx} = htmlize($show_devfile{$ixx});
+$show_devvendor{$ixx} = htmlize($show_devvendor{$ixx});
+$show_devshortdesc{$ixx} = htmlize($show_devshortdesc{$ixx});
+$show_devfulldesc{$ixx} = htmlize($show_devfulldesc{$ixx});
+print "<tr>\n";
+print "<td valign=top align=left><b>$show_devclass{$ixx}</b><br>$show_devfile{$ixx}</td>\n";
+print "<td valign=top align=left><p><b>$show_devvendor{$ixx} <br> $show_devshortdesc{$ixx}</b></p>\n";
+if ($MODE eq "full") {print "<pre>$show_devfulldesc{$ixx}</pre>";}
+print "</td></tr>\n";
+}
+print <<FOOT
+</table>
+<p><i>$version</i></p>
+</body>
+</html>
+FOOT
+;
+
+}
+
+#--------------------
+
+sub out_txt {
+
+print <<HEADTXT
+$version
+
+======================================================================
+HEADTXT
+;
+foreach $ixx (sort keys %show_devclass) {
+$show_devvendor{$ixx} =~ s/\n//g;
+$show_devshortdesc{$ixx} =~ s/\n//g;
+if ($show_devfile{$ixx} ne "") {$show_devfile{$ixx} = "($show_devfile{$ixx})";}
+print "*** $show_devclass{$ixx} $show_devfile{$ixx} \n";
+print "--  \n";
+print "--  $show_devvendor{$ixx} \n";
+print "--  $show_devshortdesc{$ixx} \n";
+print "--  \n";
+print "-----\n";
+if ($MODE eq "full") {print "$show_devfulldesc{$ixx}";}
+print "\n\n======================================================================\n";
+}
+
+}
+
+
+#--------------------
+
+sub sysinfo {
+my $what2get = $_[0];
+
+SWITCH:
+{
+if ($what2get eq "cpu" ) {
+open (CPU, "$prog_x86info |");
+@cpu = <CPU>;
+close (CPU);
+last SWITCH; 
+}
+
+if ($what2get eq "bios" ) {
+open (BIOS, "$prog_dmidecode |");
+@bios = <BIOS>;
+close (BIOS);
+last SWITCH; 
+}
+
+if ($what2get eq "dmesg" ) {
+open (DMESG, "/var/run/dmesg.boot");
+@dmesg = <DMESG>;
+close (DMESG);
+last SWITCH; 
+}
+
+if ($what2get eq "pci" ) {
+open (PC, "$prog_pciconf -lv |");
+@pcc = <PC>;
+close (PC);
+open (LSP, "$prog_lspci -v |");
+@lsp = <LSP>;
+close (LSP);
+last SWITCH; 
+}
+
+}
+} #sysinfo
+
+
+#--------------------
+
+sub info_cpu {
+$ident="000000"; # CPU
+$show_devclass{$ident}="CPU";
+$startinfo=0;
+foreach $cpu (@cpu)
+{
+if ($startinfo == 1) {
+if ($cpu =~ m/CPU Model/) {@x1 = split(":", $cpu); $show_devshortdesc{$ident}=$x1[1];}
+if ($cpu =~ m/Processor name/) {@x1 = split(":", $cpu); $show_devvendor{$ident}=$x1[1];}
+$show_devfulldesc{$ident} .= $cpu;
+}
+if ($cpu =~ m/-----/) {$startinfo=1}
+}
+} #info_cpu
+
+#--------------------
+
+sub info_mem {
+$ident="000001"; # memory
+$show_devclass{$ident}="Memory";
+@mem = grep ($_ =~ m/real memory/, @dmesg);
+$show_devvendor{$ident}=$mem[0];
+
+
+$mem_found = 0;
+foreach $biosline (@bios) {
+$biosline =~ s/\t/ /g;
+if ($biosline =~ m/Handle /) {$mem_found=0;}
+if ($mem_found == 1) {
+$show_devfulldesc{$ident} .= $biosline;
+}
+if (($biosline =~ m/Memory Device/)&&(!($biosline =~ m/Mapped/))) {$mem_found=1; $show_devfulldesc{$ident} .= "\n";}
+}
+
+}
+
+#--------------------
+
+sub info_mem_controller {
+$ident="000002"; # memory controller
+$show_devclass{$ident}="Memory controller";
+$show_devvendor{$ident} = $show_devclass{$ident};
+$mem_found = 0;
+foreach $biosline (@bios) {
+$biosline =~ s/\t/ /g;
+if ($biosline =~ m/Handle /) {$mem_found=0;}
+if ($mem_found == 1) {
+$show_devfulldesc{$ident} .= $biosline;
+}
+if ($biosline =~ m/Memory Controller Information/) {$mem_found=1;}
+}
+
+} #info_mem_controller
+
+#--------------------
+
+sub info_bios {
+$ident="000004"; # bios
+$show_devclass{$ident}="BIOS";
+$bios_found = 0;
+foreach $biosline (@bios) {
+$biosline =~ s/\t/ /g;
+if ($biosline =~ m/Handle /) {$bios_found=0;}
+if ($bios_found == 1) {
+if (($biosline =~ m/Vendor/)||($biosline =~ m/Version/)) {
+@xx = split(":", $biosline);
+$show_devvendor{$ident} .= $xx[1];
+}
+$show_devfulldesc{$ident} .= $biosline;
+}
+if ($biosline =~ m/BIOS Information/) {$bios_found=1;}
+}
+} #info_bios
+
+#--------------------
+
+sub info_mb {
+$ident="000007"; # motherboard
+$show_devclass{$ident}="Motherboard";
+$mb_found = 0;
+foreach $biosline (@bios) {
+$biosline =~ s/\t/ /g;
+if ($biosline =~ m/Handle /) {$mb_found=0;}
+if ($mb_found == 1) {
+if (($biosline =~ m/Manufacturer/)||($biosline =~ m/Product Name/)) {
+@xx = split(":", $biosline);
+$show_devvendor{$ident} .= $xx[1];
+}
+$show_devfulldesc{$ident} .= $biosline;
+}
+if ($biosline =~ m/Base Board Information/) {$mb_found=1;}
+}
+} #info_mb
+
+#--------------------
+
+sub info_onboard {
+$ident="000011"; # onboard
+$show_devclass{$ident}="Onboard devices";
+
+$port_found = $attached = 0;
+$port_designator = "";
+foreach $biosline (@bios) {
+$biosline =~ s/\t/ /g;
+if ($biosline =~ m/Handle /) {
+ $port_found=0;
+ if ($port_designator ne "") {$show_devvendor{$ident} .= "$port_designator,";}
+ $show_devfulldesc{$ident} = $port_fulldesc;
+ $port_designator = ""; $attached = 0; 
+ #$port_fulldesc = "";
+}
+if ($port_found == 1) {
+ if (($biosline =~ m/Reference Designator/)&&(!($biosline =~ m/Not Specified/))) {
+  @xx = split(":", $biosline);
+  if ($attached == 0) {$port_designator="$xx[1]"; $attached=1}
+ }
+ if ((!($biosline =~ m/None/))&&(!($biosline =~ m/Not Specified/))&&(!($biosline =~ m/Other/)))
+ {
+  $port_fulldesc .= $biosline;
+ }
+}
+if ($biosline =~ m/Port Connector Information/) {$port_found=1; $port_fulldesc .= "\n";}
+}
+
+}
+
+#--------------------
+
+sub info_hdd {
+# hard disk drives
+$kern_disks = `sysctl -n kern.disks`;
+$kern_disks =~ s/md0//g;
+@drives = split (" ", $kern_disks);
+$cnt=1;
+foreach $hdrive (sort @drives) {
+$ident="00010$cnt";
+$show_devfile{$ident}=$hdrive;
+@hdd = grep ($_ =~ m/$hdrive:/, @dmesg);
+foreach $hdd (@hdd) {
+@hdd_name = split(":", $hdd);
+$hdd_name[1] =~ s/</_/g;
+$hdd_name[1] =~ s/>/_/g;
+@hdd_name2 = split("_", $hdd_name[1]);
+if ($hdd_name2[1] ne "") {$show_devvendor{$ident} = $hdd_name2[1];}
+$hdd_x1 = $hdd;
+$hdd_x1 =~ s/$hdrive://g;
+$show_devfulldesc{$ident} .= $hdd_x1;
+}
+$show_devclass{$ident}="HDD";
+if ($show_devvendor{$ident} =~ m/FLASH/) {$show_devclass{$ident}="USB Flash";}
+
+
+$cnt++;
+}
+}
+
+#--------------------
+
+sub info_cdrom {
+@cd = grep ($_ =~ m/CD/, @dmesg);
+$cnt=1;
+foreach $cd (@cd) {
+$ident="00020$cnt";
+$show_devclass{$ident}="CD-ROM";
+
+@cd_name = split(":", $cd);
+$show_devfile{$ident}=$cd_name[0];
+$cd_name[0] =~ s/\(//g;
+$cd_name[0] =~ s/\)//g;
+$cd_name[1] =~ s/</_/g;
+$cd_name[1] =~ s/>/_/g;
+@cd_name2 = split("_", $cd_name[1]);
+$show_devvendor{$ident}=$cd_name2[1];
+$cd_x1 = $cd;
+$cd_x1 =~ s/$cd_name[0]://g;
+$show_devfulldesc{$ident} = $cd_x1;
+
+$cnt++;
+}
+
+}
+#--------------------
+
+sub info_floppy {
+$ident="000400";
+$show_devclass{$ident}="Floppy";
+@flop = grep ($_ =~ m/fdc/, @dmesg);
+@flop_name = split(":", $flop[0]);
+$flop_name[1] =~ s/</_/g;
+$flop_name[1] =~ s/>/_/g;
+@flop_name2 = split("_", $flop_name[1]);
+$show_devvendor{$ident}=$flop_name2[1];
+foreach $flop (@flop)
+{
+ $show_devfulldesc{$ident} .= $flop;
+}
+
+}
+#--------------------
+
+
+sub info_pci {
+foreach $pcc (@pcc)
+{
+@nl = split (/\@/, $pcc);
+if ($nl[1] ne "") {
+# full description
+@dev_s = split (" ",$nl[1]);
+$pci_ident = $dev_s[0];
+$pci_ident =~ s/pci//g;
+$lp = pciconf2lspci($pci_ident);
+$show_devfile{$lp} = $nl[0];
+}
+else
+{
+($type, $value) = get_eq($nl[0]);
+if ($type =~ m/vendor/g) {$devvendor=$value; $devvendor =~ s/\n//g; $devvendor =~ s/'//g;}
+if ($type =~ m/ class /g) {$devclass=$value; $devclass =~ s/\n//g;}
+if ($type =~ m/subclass/g) {$devsubclass=$value; $devsubclass =~ s/\n//g;}
+}
+$show_devclass{$lp} = "$devclass / $devsubclass";
+$show_devvendor{$lp} = "$devvendor";
+}
+
+foreach $lsp (@lsp)
+{
+ @dev2 = split (" ", $lsp);
+ $isident = 0;
+ foreach $pci_ident (sort keys %show_devclass)
+ {
+  if ($dev2[0] eq $pci_ident) {
+   $my_ident = $pci_ident; $isident = 1; 
+   $devnamex=$lsp; $devnamex =~ s/\n//g; $devnamex =~ s/'//g;
+   $devnamex =~ s/$my_ident//g;
+   $show_devshortdesc{$my_ident} = $devnamex;
+  }
+ }
+ if ($isident == 0) {
+  $lsp =~ s/\t/ /g;
+  $show_devfulldesc{$my_ident} .= $lsp;
+ }
+}
+} # info_pci
+
+
+
+
+#-------------------------------
+
+sub get_eq {
+my @xz;
+my $s=$_[0];
+@xz=split("=", $s);
+$xz[1] =~ s/\n//g;
+return $xz[0], $xz[1];
+}
+
+sub pciconf2lspci {
+my @pxx, $lspci, $s;
+my $pciconf = $_[0];
+@pxx=split (":", $pciconf);
+$s = sprintf ("%02x", $pxx[1]);
+$lspci = "0$pxx[0]:$s.$pxx[2]";
+return $lspci;
+}
+
+sub htmlize {
+my $strx = $_[0];
+$strx =~ s/</&lt;/g;
+$strx =~ s/>/&gt;/g;
+return $strx;
+}

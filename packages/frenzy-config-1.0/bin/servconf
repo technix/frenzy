@@ -1,0 +1,86 @@
+#!/usr/local/bin/perl
+# 
+# name    : Frenzy setup engine (servers main module)
+# version : 0.1
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+$MODID="servconf";
+$VERSION="0.1";
+
+require "/usr/local/frenzy/lib/libcommon.mpl";
+require "/usr/local/frenzy/lib/libdialog.mpl";
+require "/usr/local/frenzy/lib/liblocale.mpl";
+
+&init_var;
+&locale;
+&get_modules;
+&dialog_init;
+
+#print @ARGV;
+#exit;
+
+if ($ARGV[0] ne "") {
+&get_modules_print;
+
+if ($ARGV[0] =~ m/help/) {
+print <<MSG
+$msg_backtitle{$MODID}
+$msg_frconf_select:
+$modlist
+MSG
+;
+} else {
+&execute($ARGV[0]);
+}
+
+} else {
+# Dialog mode
+    $flag_exit = 0;
+    while ( $flag_exit == 0 ) {
+	($status, $choice) = &d_menu ("$msg_frconf_select", 16, 60, 9, "$modlist");
+	if ($status == 1) {$flag_exit = 1;}  
+	if ($status == 256) {$flag_exit = 1;}
+	if ($status == 0) {
+	    if ("$choice" eq "$msg_quit") {$flag_exit = 1;}
+	    if ("$choice" ne "$msg_quit") {&execute($choice);}
+	}
+    }
+}
+
+
+&dialog_destroy;
+exit;
+
+
+
+sub get_modules 
+{
+    $modlist="";
+    @dir=`cd $Module_dir && ls *$Module_ext_srv | sed "s/$Module_ext_srv//g"`;
+    foreach $entry (@dir) {
+	$entry =~ s/\n//g;
+	$entry =~ s/$Module_pref//g;
+	$desc = $msg_title{"$entry"};
+	$modlist=qq/$modlist "$entry" "$desc"/;
+    }
+    $modlist=qq/$modlist "$msg_quit" "$msg_quitprog"/;
+}
+
+sub get_modules_print
+{
+    $modlist="";
+    @dir=`cd $Module_dir && ls *$Module_ext_srv | sed "s/$Module_ext_srv//g"`;
+    foreach $entry (@dir) {
+	$entry =~ s/\n//g;
+	$entry =~ s/$Module_pref//g;
+	$desc = $msg_title{"$entry"};
+	$modlist=qq/$modlist $entry \t $desc\n/;
+    }
+}
+
+sub execute
+{
+$modname=$_[0];
+
+system ("$Module_dir/$Module_pref$modname$Module_ext_srv");
+}

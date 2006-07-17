@@ -1,0 +1,88 @@
+#!/usr/local/bin/perl
+#
+# Name    : Remount partition script (cli)
+# Version : 0.2
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+$fstab="/etc/fstab";
+
+# main
+$choice = $ARGV[0];
+$mountmode = $ARGV[1];
+if ($choice eq "") {
+print "USAGE: remountp [mountpoint] [ro|rw|switch]\n\n";
+} else {
+&read_fstab;
+&remount ($choice);
+}
+exit;
+
+
+sub read_fstab
+{
+open (FT, "$fstab");
+@fstab_part=<FT>;
+close (FT);
+
+foreach $ft (@fstab_part) {
+    @partinfo = split (" ", $ft);
+    if ($partinfo[0] eq "#") {next;}
+    if ($partinfo[0] eq "") {next;}
+    if ($partinfo[1] eq "none") {next;}
+    if ($partinfo[0] =~ m/md0/) {next;}
+    if ($partinfo[0] =~ m/cd[0-9]/) {next;}
+    if ($partinfo[0] =~ m/proc/) {next;}
+
+    $mnt_point=$partinfo[1];
+
+    $info_device{$mnt_point} = $partinfo[0];
+    $info_type{$mnt_point} = $partinfo[2];
+    $info_options{$mnt_point} = $partinfo[3];
+
+}
+
+
+}
+
+
+sub remount {
+$mount_point=$_[0];
+if ($info_type{$mount_point} =~ m/ntfs|cd9660|reiserfs|procfs/)
+{
+    print "Can't change mount type.\n";
+} else {
+    system ("umount $mount_point");
+    if ($? != "0") {
+	print "FAILED to unmount FS.\n";
+    }
+    else
+    {
+    open (FT, "$fstab"); @fstab_part=<FT>; close (FT);
+    open (FT, "> ${fstab}.new");
+    foreach $ft (@fstab_part) {
+	@partinfo = split (" ", $ft);
+        $ftx = $ft;
+        if ($partinfo[1] eq "$mount_point") {
+	    if ($partinfo[3] =~ m/rw/) {$xmode = "rw"; $nmode = "ro"}
+	    if ($partinfo[3] =~ m/ro/) {$xmode = "ro"; $nmode = "rw"}
+	    if ($mountmode eq "rw") {$nmode = "rw";}
+	    if ($mountmode eq "ro") {$nmode = "ro";}
+	    $newopts = $partinfo[3];
+	    $newopts =~ s/$xmode/$nmode/g;
+	    $ftx =~ s/$partinfo[3]/$newopts/g;
+	}
+	print FT "$ftx";
+    }
+    close (FT);
+    system ("mv ${fstab}.new $fstab");
+    system ("mount $mount_point");
+    if ($? != "0") {
+        print "FAILED to mount FS\n";
+    }
+    }
+}
+
+}
+
+

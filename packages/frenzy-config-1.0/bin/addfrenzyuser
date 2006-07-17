@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# Name    : Adding Frenzy 1.0 user
+# Version : 0.2
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua) 
+#
+
+FR_USER="frenzy"
+FR_USER_HOMEDIR="/var/home/frenzy"
+PWFILE="/root/${FR_USER}.pwd"
+
+echo "${FR_USER}" > ${PWFILE}
+mkdir ${FR_USER_HOMEDIR}
+
+echo -n "Adding user \"${FR_USER}\"... "
+
+pw useradd ${FR_USER} -d ${FR_USER_HOMEDIR} -g wheel \
+-L russian -s /bin/tcsh -w random >> ${PWFILE}
+
+chown -R ${FR_USER} ${FR_USER_HOMEDIR}
+echo "done, password in ${PWFILE}." 

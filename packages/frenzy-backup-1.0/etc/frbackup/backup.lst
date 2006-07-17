@@ -1,0 +1,29 @@
+# List of directories for backup.
+# Set "-" sign before directories, which must be excluded from backup.
+#
+# Список каталогов для бэкапа. 
+# Перед каталогами и файлами, которые не надо бэкапить, поставьте "-".
+#
+
+## system config
+/etc
+-/etc/frenzy/lang
+-/etc/frenzy.boot
+-/etc/fstab
+-/etc/X11/xorg.conf
+
+/var/etc_X11R6
+/var/etc_local
+/var/local_var
+
+## personal settings
+/root
+-/root/.opera/cache4
+
+## antivirs
+/var/db/clamav
+
+## logs
+/var/log
+
+## user defined

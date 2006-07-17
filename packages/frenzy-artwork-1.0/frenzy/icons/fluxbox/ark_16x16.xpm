@@ -1,0 +1,27 @@
+/* XPM */
+static char *ark_16x16[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 5 1",
+"  c black",
+". c red",
+"X c #ff8000",
+"o c #ffdca8",
+"O c None",
+/* pixels */
+"OOOOOOO..OOOOOOO",
+"OOOOOOOOOOOOOOOO",
+"OOOOOO....OOOOOO",
+"OOOOOOOOOOOOOOOO",
+"OOOOO .... OOOOO",
+"OOO  ...... OOOO",
+"O  XXo....XX  OO",
+"OO  ooo..XXXX  O",
+"O oo  oXXXX  o O",
+" ooooo  X  ooo O",
+"O  oooo  ooo  OO",
+"OO   o Xo   o OO",
+"OO XX XXooooo OO",
+"OO  XXXXooo  OOO",
+"OOOO  XXo  OOOOO",
+"OOOOOO   OOOOOOO"
+};

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc.html>doc</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>X Window system</font></h1>
+<div class="level1">
+
+<p>
+ Графическая оболочка может быть запущена автоматически при старте системы, если указать опцию <code>gui</code> в меню  загрузчика. В уже загруженной системе запустить графическую оболочку можно командой <code>startx</code>.
+</p>
+
+<p>
+В качестве графической оболочки используется <code>fluxbox</code>. Щелчок правой кнопкой мыши по рабочему столу вызывает меню приложений.
+</p>
+
+<p>
+Переключение раскладки клавиатуры производится комбинацией клавиш <code>Ctrl+Shift</code>. Для переключения доступны два языка - английский и национальный язык, выбранный при загрузке (если вы выбрали <code>lang=en</code>, то язык будет только один). Если включен язык, отличный от английского, загорается индикатор ScrollLock.
+</p>
+
+<p>
+Чтобы переключиться в текстовый режим, нажмите <code>Ctrl+Alt+Fn</code> (F1-F8). Чтобы вернуться в графическую оболочку, нажмите <code>Alt+F9</code>. Для принудительного завершения графической оболочки нажмите <code>Ctrl+Alt+Backspace</code>.
+</p>
+
+</div>
+<!-- SECTION [1-1518] -->
+<h2><font color=#990000>Горячие клавиши</font></h2>
+<div class="level2">
+<table border=1 cellpadding=3 cellspacing=0 class="inline">
+	<tr>
+		<th> Комбинация клавиш </th><th> Действие </th>
+	</tr>
+	<tr>
+		<td> Alt+F1, Alt+F2, Alt+F3, Alt+F4 </td><td> Переключение рабочих столов </td>
+	</tr>
+	<tr>
+		<td> Winkey, Ctrl+Esc </td><td> Вызов меню приложений </td>
+	</tr>
+	<tr>
+		<td> Alt+Esc </td><td> Вызов меню рабочего стола </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Стрелки доп. клавиатуры </td><td> Переместить окно </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+Стрелки доп. клавиатуры </td><td> Изменить размер окна </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+R </td><td> Утилита запуска приложений </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+O </td><td> Запустить Opera </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+L </td><td> Запустить Sylpheed </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+Q </td><td> Запустить GQview </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+T </td><td> Запустить терминал rxvt </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+S </td><td> Снять скриншот (картинка будет сохранена в /root/MyFiles) </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+Esc </td><td> Вызвать xkill для завершения программы </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [1519-2474] -->
+<h2><font color=#990000>Проблемы при запуске</font></h2>
+<div class="level2">
+
+<p>
+ В случае возникновения проблем при запуске графической оболочки с настройками по умолчанию попробуйте удалить /etc/X11/xorg.conf и запустите утилиту xautoconf самостоятельно:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>xautoconf safe</strong> - использует в качестве видеодрайвера стандартный VESA-драйвер.</div>
+</li>
+<li class="level1"><div class="li"> <strong>xautoconf safemon</strong> - использует найденный видеодрайвер, но настройки монитора берет стандартные. Это полезно, когда монитор возвращает неверные данные о частоте развертки.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [2475-] --></td></tr></table>
+<br>
+</body>
+</html>
