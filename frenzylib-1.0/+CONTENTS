@@ -1,0 +1,13 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzylib-1.0
+@comment ORIGIN:misc/frenzylib-1.0
+@cwd /usr/local
+frenzy/lib/libdialog.mpl
+@comment MD5:be98de560496604b338516be59096af8
+frenzy/lib/liblocale.mpl
+@comment MD5:b8e3a7a71f22445bb15ff68913f70ebf
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

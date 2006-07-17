@@ -1,0 +1,240 @@
+#!/bin/sh
+#
+# Name    : Partition search and mounting script
+# Version : 0.3
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#           Ilya V. Guy (Daemon)
+#
+# [!] sysutils/linuxfdisk required
+# [!] sysutils/disktype required
+#
+
+trap : 2
+
+mi="\033[1;40;32m[*]\033[0m" # info
+mx="\033[0;40;32m[i]\033[0m" # process 
+mw="\033[0;40;31m[!]\033[0m" # warning
+ind="    "
+
+# Get list of HDD drives
+get_drivelist ()
+{
+DRIVELIST=`sysctl -b kern.disks | awk -F" " '{print $10, $9, $8, $7, $6, $5, $4, $3, $2, $1}' | sed "s/ cd[0-9]//g"`
+# checking for ATA RAID
+if [ -n "`echo ${DRIVELIST} | grep ar`" ]; then
+RAIDLIST=""
+# searching for ATA RAID drives
+for DISK in ${DRIVELIST}
+do
+if [ -n "`echo ${DISK} | grep "ar"`" ]; then
+# get drives names from ATA RAID
+ATA=`atacontrol status ${DISK} | awk -F":" '{print $3}' | sed "s/status//g"`
+RAIDLIST="$RAIDLIST ${ATA}"
+fi
+done
+# removing disks from ATA RAID from common list
+for DISK in ${RAIDLIST}
+do
+DRIVELIST=`echo ${DRIVELIST} | sed "s/${DISK}//g"`
+done
+fi
+}
+
+get_partlist ()
+{
+DISK=$1
+PARTLIST=`/usr/local/sbin/sfdisk-linux -l /dev/${DISK} | grep "dev" | grep -v "Disk" | sed "s/\*//g" | awk -F" " '{printf "%s-%s\n", $1, $6}'`
+
+for INPUT in ${PARTLIST}
+do
+PNAME=`echo "${INPUT}" | awk -F"-" '{print $1}'` # partition name
+PTYPE=`echo "${INPUT}" | awk -F"-" '{print $2}'` # partition type
+MPT=`echo "${PNAME}" | sed "s/\/dev\///g"`       # mountpoint
+EXIST=`printf "$FSTAB" | grep "$PNAME"`
+
+# select mount type
+case ${PTYPE} in
+1|4|6|b|c|e|11|14|16|1b|1c|1e)
+# MSDOS
+ MPTR="${MPT}.fat"
+ FSTAB_ENTRY="${PNAME}    /mnt/${MPTR}   msdos   ${MOUNTMODE},noauto,longnames,-Lru_RU.KOI8-R,-Dcp866     0       0"
+ if [ -z "${EXIST}" ]; then
+  FSTAB_NEW=`printf "${FSTAB_NEW}\n${FSTAB_ENTRY}"`
+  if [ -n "${VERBOSE}" ]; then
+   VTYPE="fat"
+   VMPT="/mnt/${MPTR}"
+   printf "${ind}${PNAME} (${VTYPE})\t==>\t${VMPT}\n" 
+  fi
+ fi 
+ ;;
+7|17)
+ # NTFS
+ MPTR="${MPT}.ntfs"
+ FSTAB_ENTRY="${PNAME}    /mnt/${MPTR}   ntfs   ro,noauto,-CKOI8-R     0       0"
+ if [ -z "${EXIST}" ]; then
+  FSTAB_NEW=`printf "${FSTAB_NEW}\n${FSTAB_ENTRY}"`
+  if [ -n "${VERBOSE}" ]; then
+   VTYPE="ntfs"
+   VMPT="/mnt/${MPTR}"
+   printf "${ind}${PNAME} (${VTYPE})\t==>\t${VMPT}\n" 
+  fi
+ fi 
+ ;;
+83|85)
+ # EXT2FS or ReiserFS
+ if [ "`/usr/local/bin/disktype ${PNAME} | grep system | awk '{print $1}'`" = "ReiserFS" ]; then
+  PFILESYS="reiserfs"
+  TMOUNTMODE="ro"
+ else
+  PFILESYS="ext2fs"
+  TMOUNTMODE=${MOUNTMODE}
+ fi
+ MPTR="${MPT}.${PFILESYS}"
+ FSTAB_ENTRY="${PNAME}    /mnt/${MPTR}   ${PFILESYS}   ${TMOUNTMODE},noauto     0       0"
+ if [ -z "${EXIST}" ]; then
+  FSTAB_NEW=`printf "${FSTAB_NEW}\n${FSTAB_ENTRY}"`
+  if [ -n "${VERBOSE}" ]; then
+   VTYPE="${PFILESYS}"
+   VMPT="/mnt/${MPTR}"
+   printf "${ind}${PNAME} (${VTYPE})\t==>\t${VMPT}\n" 
+  fi
+ fi 
+ ;;
+a5)
+ # UFS
+ MPTI=".ufs"
+ for bsd in `bsdlabel -r "${PNAME}" | grep BSD | awk '{print substr($1,1,1)}'`
+ do
+  FSTAB_ENTRY="${PNAME}${bsd}    /mnt/${MPT}${bsd}${MPTI}   ufs   ${MOUNTMODE},noauto     0       0"
+  if [ -z "${EXIST}" ]; then
+   FSTAB_NEW=`printf "${FSTAB_NEW}\n${FSTAB_ENTRY}"`
+   if [ -n "${VERBOSE}" ]; then
+    VTYPE="ufs"
+    VMPT="/mnt/${MPT}${bsd}${MPTI}"
+    printf "${ind}${PNAME}${bsd} (${VTYPE})\t==>\t${VMPT}\n" 
+   fi
+  fi 
+ done
+ 
+ for bsds in `bsdlabel -r "${PNAME}" | grep swap | awk '{print substr($1,1,1)}'`
+ do
+  FSTAB_ENTRY="${PNAME}${bsds}    none   swap   sw     0       0"
+  if [ -z "${EXIST}" ]; then
+   FSTAB_NEW=`printf "${FSTAB_NEW}\n${FSTAB_ENTRY}"`
+   if [ -n "${VERBOSE}" ]; then
+    VTYPE="SWAP"
+    VMPT="swap"
+    printf "${ind}${PNAME}${bsds} (${VTYPE})\t==>\t${VMPT}\n" 
+   fi
+  fi 
+ done
+ ;;
+esac
+done
+}
+
+get_fstab ()
+{
+FSTAB=`cat ${FSTAB_FILE} | grep dev | awk '{print $1}'`
+}
+
+update_fstab ()
+{
+printf "${FSTAB_NEW}\n\n" >> ${FSTAB_FILE}
+}
+
+create_mountpoints ()
+{
+for i in `printf "${FSTAB_NEW}" | awk '{print $1 "-" $2}'`
+do
+MDEV=`echo "${i}" | awk -F"-" '{print $1}'` # device name
+MPOINT=`echo "${i}" | awk -F"-" '{print $2}'` # mount point
+if [ -e "${MDEV}" ]; then
+ if [ "${MPOINT}" != "none" ]; then
+  mkdir ${MPOINT} > /dev/null 2>&1
+ fi
+fi
+done
+}
+
+
+mount_partitions () 
+{
+for i in `printf "${FSTAB_NEW}" | awk '{print $1 "-" $2}'`
+do
+MDEV=`echo "${i}" | awk -F"-" '{print $1}'` # device name
+MPOINT=`echo "${i}" | awk -F"-" '{print $2}'` # mount point
+if [ -e "${MDEV}" ]; then
+ if [ "${MPOINT}" != "none" ]; then
+  mount ${MPOINT} > /dev/null 2>&1
+ else
+  # this is swap
+  swapon ${MDEV} > /dev/null 2>&1
+ fi
+fi
+printf "."
+done
+}
+
+check_depends ()
+{
+EXIT=""
+if [ ! -f /usr/local/sbin/sfdisk-linux ]; then
+printf "$mw Utility 'sfdisk-linux' not found.\n"
+EXIT=1
+fi
+if [ ! -f /usr/local/bin/disktype ]; then
+printf "$mw Utility 'disktype' not found.\n"
+EXIT=1
+fi
+if [ -n "${EXIT}" ]; then
+exit
+fi
+}
+
+
+
+
+#
+# MAIN
+#
+
+check_depends
+
+printf "$mx Searching for HDD slices.\n"
+
+FSTAB_FILE="/etc/fstab"
+FSTAB_NEW=""
+MOUNTMODE="ro"
+AUTOMOUNT=""
+VERBOSE=""
+
+PARAMS="$1 $2 $3"
+if [ -n "`echo ${PARAMS} | grep "rw"`" ]; then
+MOUNTMODE="rw"
+fi
+if [ -n "`echo ${PARAMS} | grep "auto"`" ]; then
+AUTOMOUNT="YES"
+fi
+if [ -n "`echo ${PARAMS} | grep "v"`" ]; then
+VERBOSE="YES"
+fi
+
+
+get_fstab		# read current fstab state
+get_drivelist		# get list of disk drives
+for DISK in ${DRIVELIST}
+do
+get_partlist ${DISK}	# get list of partitions
+done
+update_fstab		# update /etc/fstab
+create_mountpoints	# create mount points in /mnt
+if [ -n "${AUTOMOUNT}" ]; then
+printf "$mx Mounting partitions: ["
+mount_partitions	# mount all new partitions
+printf "] done.\n"
+fi
+
+exit 0;
+
+

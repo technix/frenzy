@@ -1,0 +1,177 @@
+OS id:OS Description:Location of md5:Local binary dir:
+000:version:2006051200:
+100:Red Hat Linux release 7.2 (Enigma):/usr/bin/md5sum:/bin:
+101:Red Hat Linux release 7.1 (Seawolf):/usr/bin/md5sum:/bin:
+102:Debian testing/unstable (i386):/usr/bin/md5sum:/bin:
+103:Debian 2.2 (i386):/usr/bin/md5sum:/bin:
+105:Debian 3.0 (i386):/usr/bin/md5sum:/bin:
+106:SuSE Linux 6.1 (i386):/usr/bin/md5sum:/bin:
+107:SuSE Linux 6.2 (i386):/usr/bin/md5sum:/bin:
+108:SuSE Linux 6.3 (i386):/usr/bin/md5sum:/bin:
+109:SuSE Linux 6.4 (i386):/usr/bin/md5sum:/bin:
+110:SuSE SLES-7 (s390x):/usr/bin/md5sum:/bin:
+111:SuSE Linux 7.1 (i386):/usr/bin/md5sum:/bin:
+112:SuSE Linux 7.2 (i386):/usr/bin/md5sum:/bin:
+113:SuSE Linux 7.3 (i386):/usr/bin/md5sum:/bin:
+114:SuSE Linux 8.0 (i386):/usr/bin/md5sum:/bin:
+115:SuSE Linux 8.2 (i386):/usr/bin/md5sum:/bin:
+115:SuSE Linux 8.2 (i586):/usr/bin/md5sum:/bin:
+116:Red Hat Linux release 9 (Shrike):/usr/bin/md5sum:/bin:
+117:Mandrake Linux release 9.2 (FiveStar) for i586:/usr/bin/md5sum:/bin:
+118:Fedora Core release 1 (Yarrow) (i386):/usr/bin/md5sum:/bin:
+119:Gentoo Linux 1.4 (i386):/usr/bin/md5sum:/bin:
+120:Red Hat Linux release 7.3 (Valhalla):/usr/bin/md5sum:/bin:
+121:Aurora SPARC Project release 1.0 (Ansel):/usr/bin/md5sum:/bin:
+122:Red Hat Linux release 7.0 (Guinness):/usr/bin/md5sum:/bin:
+123:SuSE Linux 8.1 (i386):/usr/bin/md5sum:/bin:
+124:SuSE Linux 8.1 (i586):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux WS release 3 (Taroon):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux AS release 3 (Taroon):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 1):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 2):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 3):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux WS release 3 (Taroon Update 3):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 4):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux WS release 3 (Taroon Update 4):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux AS release 3 (Taroon Update 4):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 5):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux WS release 3 (Taroon Update 5):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux AS release 3 (Taroon Update 5):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 6):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux WS release 3 (Taroon Update 6):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux AS release 3 (Taroon Update 6):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux ES release 3 (Taroon Update 7):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux WS release 3 (Taroon Update 7):/usr/bin/md5sum:/bin:
+125:Red Hat Enterprise Linux AS release 3 (Taroon Update 7):/usr/bin/md5sum:/bin:
+126:Red Hat Linux release 8.0 (Psyche):/usr/bin/md5sum:/bin:
+127:SuSE Linux 9.0 (i386):/usr/bin/md5sum:/bin:
+127:SuSE Linux 9.0 (i586):/usr/bin/md5sum:/bin:
+128:Trustix Secure Linux release 1.5 (MiddleWhere):/usr/bin/md5sum:/bin:
+129:Mandrake Linux release 10.0 (Community) for i586:/usr/bin/md5sum:/bin:
+129:Mandrake Linux release 10.0 (Official) for i586:/usr/bin/md5sum:/bin:
+130:CentOS release 3.1 (final):/usr/bin/md5sum:/bin:
+131:White Box Enterprise Linux release 3.0 (Liberation):/usr/bin/md5sum:/bin:
+132:CPUBuilders OS 3.0:/usr/bin/md5sum:/bin:
+133:Yellow Dog Linux release 3.0 (Sirius):/usr/bin/md5sum:/bin
+134:Slackware 9.1.0:/usr/bin/md5sum:/bin
+135:Red Hat Enterprise Linux ES release 2.1 (Panama):/usr/bin/md5sum:/bin:
+136:SuSE Linux 9.1 (i586):/usr/bin/md5sum:/bin:
+137:Fedora Core release 2 (Tettnang) (i386):/usr/bin/md5sum:/bin:
+138:pclinuxos Linux release 2004 (Texstar) for i586:/usr/bin/md5sum:/bin:
+139:Red Hat Linux Advanced Server release 2.1AS (Pensacola):/usr/bin/md5sum:/bin:
+140:Slackware 9.0.0:/usr/bin/md5sum:/bin
+141:Trustix Secure Linux release 2.0 (Cloud):/usr/bin/md5sum:/bin:
+142:Debian testing/unstable (sparc64):/usr/bin/md5sum:/bin:
+143:Mandrake Linux release 8.2 (Bluebird) for i586:/usr/bin/md5sum:/bin:
+144:Mandrake Linux release 9.0 (dolphin) for i586:/usr/bin/md5sum:/bin:
+145:Mandrake Linux release 9.1 (Bamboo) for i586:/usr/bin/md5sum:/bin:
+146:Red Hat Enterprise Linux AS release 3 (Taroon Update 1):/usr/bin/md5sum:/bin:
+146:Red Hat Enterprise Linux AS release 3 (Taroon Update 2):/usr/bin/md5sum:/bin:
+147:Slackware 10.0.0:/usr/bin/md5sum:/bin
+148:Gentoo Linux 1.4 (powerpc):/usr/bin/md5sum:/bin:
+149:Gentoo Linux 1.5 (i386):/usr/bin/md5sum:/bin:
+150:Gentoo Linux 1.5 (powerpc):/usr/bin/md5sum:/bin:
+151:1.99 PLD Linux (Ac) (i386):/usr/bin/md5sum:/bin:
+152:SuSE SLES-8 (i386):/usr/bin/md5sum:/bin:
+153:SuSE Linux Openexchange Server 4.1.1 (i586):/usr/bin/md5sum:/bin:
+154:Fedora Core release 2 (Tettnang) (x86_64):/usr/bin/md5sum:/bin:
+155:White Box Enterprise Linux release 3.0 (Liberation Respin 1):/usr/bin/md5sum:/bin
+156:Debian 3.1 (i386):/usr/bin/md5sum:/bin:
+157:SuSE Linux 9.1 (x86-64):/usr/bin/md5sum:/bin:
+158:Red Hat Linux release 6.2 (Zoot):/usr/bin/md5sum:/bin:
+159:SuSE SLES-8 (i386):/usr/bin/md5sum:/bin:
+160:SUSE LINUX Enterprise Server 9 (i586):/usr/bin/md5sum:/bin:
+161:Gentoo Linux 1.6 (i386):/usr/bin/md5sum:/bin:
+162:Gentoo Linux 1.6 (powerpc):/usr/bin/md5sum:/bin:
+163:SuSE Linux 9.2 (i586):/usr/bin/md5sum:/bin:
+164:Fedora Core release 3 (Heidelberg) (i386):/usr/bin/md5sum:/bin:
+165:CentOS release 3.3 (final):/usr/bin/md5sum:/bin: 
+165:CentOS release 3.3 (Final):/usr/bin/md5sum:/bin: 
+166:CentOS release 3.4 (final):/usr/bin/md5sum:/bin: 
+167:Mandrake Linux release 8.1 (Vitamin) for i586:/usr/bin/md5sum:/bin:
+168:Slackware 10.1.0:/usr/bin/md5sum:/bin
+169:Mandrakelinux release 10.1 (Community) for i586:/usr/bin/md5sum:/bin:
+169:Mandrakelinux release 10.1 (Official) for i586:/usr/bin/md5sum:/bin:
+170:SuSE Linux 9.2 (x86-64):/usr/bin/md5sum:/bin:
+171:Mitel Networks server 6.0:/usr/bin/md5sum:/bin:
+172:Cobalt Linux release 6.5.1 (Monterey):/usr/bin/md5sum:/bin:
+173:Tao Linux release 1 (Mooch Update 4):/usr/bin/md5sum:/bin:
+174:Trustix Secure Linux release 2.2 (Sunchild):/usr/bin/md5sum:/bin:
+175:CentOS release 4.0 (Final):/usr/bin/md5sum:/bin:
+176:Mandrakelinux release 10.2 (Limited Edition 2005) for i586:/usr/bin/md5sum:/bin:
+177:SME Server 6.0.1-01:/usr/bin/md5sum:/bin:
+178:CentOS release 3.5 (Final):/usr/bin/md5sum:/bin:
+179:Debian 3.1 (x86_64):/usr/bin/md5sum:/bin:
+180:Fedora Core release 4 (Stentz) (i386):/usr/bin/md5sum:/bin:
+181:CentOS release 4.1 (Final):/usr/bin/md5sum:/bin:
+182:Red Hat Enterprise Linux WS release 4 (Nahant Update 1):/usr/bin/md5sum:/bin:
+182:Red Hat Enterprise Linux WS release 4 (Nahant Update 2):/usr/bin/md5sum:/bin:
+183:CentOS release 4.2 (Final):/usr/bin/md5sum:/bin:
+184:Slackware 10.2.0:/usr/bin/md5sum:/bin
+185:SuSE Linux 9.3 (i386):/usr/bin/md5sum:/bin:
+186:SuSE Linux 9.3 (i586):/usr/bin/md5sum:/bin:
+187:SuSE Linux 9.3 (x86-64):/usr/bin/md5sum:/bin:
+188:OpenSuSE 10.0 (i586):/usr/bin/md5sum:/bin:
+189:CentOS release 3.6 (Final):/usr/bin/md5sum:/bin:
+200:FreeBSD 5.0 (i386):/sbin/md5 -q:/usr/local/bin:
+201:FreeBSD 4.7 (i386):/sbin/md5 -q:/usr/local/bin:
+202:FreeBSD 5.1 (i386):/sbin/md5 -q:/usr/local/bin:
+203:FreeBSD 4.3 (i386):/sbin/md5 -q:/usr/local/bin:
+204:FreeBSD 4.8 (i386):/sbin/md5 -q:/usr/local/bin:
+205:FreeBSD 4.4 (i386):/sbin/md5 -q:/usr/local/bin:
+206:OpenBSD 3.3 (i386):/bin/md5:/usr/local/bin:
+207:OpenBSD 3.4 (i386):/bin/md5:/usr/local/bin:
+208:FreeBSD 4.9 (i386):/sbin/md5 -q:/usr/local/bin:
+209:FreeBSD 5.2.1 (i386):/sbin/md5 -q:/usr/local/bin:
+210:FreeBSD 4.10 (i386):/sbin/md5 -q:/usr/local/bin:
+211:OpenBSD 3.5 (i386):/bin/md5:/usr/local/bin:
+212:OpenBSD 3.5 (sparc64):/bin/md5:/usr/local/bin:
+213:FreeBSD 4.10 (alpha):/sbin/md5 -q:/usr/local/bin:
+214:FreeBSD 5.3 (i386):/sbin/md5 -q:/usr/local/bin:
+215:FreeBSD 4.11 (i386):/sbin/md5 -q:/usr/local/bin:
+216:FreeBSD 4.5 (i386):/sbin/md5 -q:/usr/local/bin:
+217:FreeBSD 4.6 (i386):/sbin/md5 -q:/usr/local/bin:
+218:FreeBSD 5.4 (i386):/sbin/md5 -q:/usr/local/bin:
+219:FreeBSD 5.4 (sparc64):/sbin/md5 -q:/usr/local/bin:
+220:FreeBSD 5.4 (alpha):/sbin/md5 -q:/usr/local/bin:
+221:FreeBSD 5.4 (amd64):/sbin/md5 -q:/usr/local/bin:
+222:FreeBSD 5.3 (sparc64):/sbin/md5 -q:/usr/local/bin:
+223:FreeBSD 5.3 (alpha):/sbin/md5 -q:/usr/local/bin:
+224:FreeBSD 5.3 (amd64):/sbin/md5 -q:/usr/local/bin:
+225:FreeBSD 5.2 (sparc64):/sbin/md5 -q:/usr/local/bin:
+226:FreeBSD 5.2 (amd64):/sbin/md5 -q:/usr/local/bin:
+227:FreeBSD 5.2 (alpha):/sbin/md5 -q:/usr/local/bin:
+228:FreeBSD 4.11 (alpha):/sbin/md5 -q:/usr/local/bin:
+229:FreeBSD 6.0 (i386):/sbin/md5 -q:/usr/local/bin:
+300:Sun Solaris 8 (sparc):/bin/ls:/bin:
+301:Sun Solaris 9 (sparc):/bin/ls:/bin:
+400:IBM AIX 5.4:/bin/ls:/bin:
+401:IBM AIX 5.3:/bin/ls:/bin:
+402:IBM AIX 5.2:/bin/ls:/bin:
+403:IBM AIX 5.1:/bin/ls:/bin:
+404:IBM AIX 4.3.3:/bin/ls:/bin:
+405:IBM AIX 4.3.2:/bin/ls:/bin:
+500:Mac OS X:/sbin/md5:/bin:
+700:ALT Linux Master 2.2 (Orange):/usr/bin/md5sum:/bin:
+701:ALT Linux Master 2.4 (Citron):/usr/bin/md5sum:/bin:
+702:Gentoo Linux 1.6 (sparc):/usr/bin/md5sum:/bin:
+703:Gentoo Linux 1.6 (sparc64):/usr/bin/md5sum:/bin:
+704:Gentoo Linux 1.6 (x86_64):/usr/bin/md5sum:/bin:
+705:Mandriva Linux release 2006.0 (Community) for i586:/usr/bin/md5sum:/bin:
+706:Debian testing/unstable (x86_64):/usr/bin/md5sum:/bin:
+707:Mandriva Linux release 2006.0 (Official) for i586:/usr/bin/md5sum:/bin:
+708:CentOS release 4.3 (Final):/usr/bin/md5sum:/bin:
+709:Red Hat Enterprise Linux WS release 4 (Nahant Update 3):/usr/bin/md5sum:/bin:
+710:Debian testing/unstable (powerpc):/usr/bin/md5sum:/bin:
+711:Debian testing/unstable (alpha):/usr/bin/md5sum:/bin:
+712:Debian testing/unstable (arm):/usr/bin/md5sum:/bin:
+713:Debian testing/unstable (hppa):/usr/bin/md5sum:/bin:
+714:Debian testing/unstable (ia64):/usr/bin/md5sum:/bin:
+715:Debian testing/unstable (mips):/usr/bin/md5sum:/bin:
+716:Debian testing/unstable (mipsel):/usr/bin/md5sum:/bin:
+717:Debian testing/unstable (s390):/usr/bin/md5sum:/bin:
+718:Debian testing/unstable (sparc):/usr/bin/md5sum:/bin:
+719:SUSE LINUX Enterprise Server 9 (x86_64):/usr/bin/md5sum:/bin:
+720:SUSE LINUX 10.0 (i586):/usr/bin/md5sum:/bin:
+721:Fedora Core release 5 (Bordeaux) (i386):/usr/bin/md5sum:/bin:

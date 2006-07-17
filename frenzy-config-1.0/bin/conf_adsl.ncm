@@ -1,0 +1,178 @@
+#!/usr/local/bin/perl
+#
+# name    : Frenzy ADSL configurator (setup module)
+# version : 0.1
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+$MODID="adsl";
+$VERSION="0.1";
+$DV="----------------------------------------------";
+
+require "/usr/local/frenzy/lib/libcommon.mpl";
+require "/usr/local/frenzy/lib/libdialog.mpl";
+require "/usr/local/frenzy/lib/liblocale.mpl";
+
+&init_var;
+&locale;
+&dialog_init;
+
+
+# main
+
+$flag_exit = 0;
+while ( $flag_exit == 0 ) {
+
+&get_modules;
+$menuitems="";
+$menuitems .=	qq/"new" "${msg_adsl_new}" /;
+if ($modlist ne "") {
+$menuitems .=	qq/"" "-" /;
+$menuitems .=   qq/$modlist /;
+$menuitems .=	qq/"" "-" /;
+}
+$menuitems .=	qq/"${msg_quit}" "${msg_quitprog}" /;
+
+
+
+($status, $choice) = &d_menu ("", 15, 70, 7, "$menuitems");
+
+if ($status == 1) {$flag_exit = 1;}
+if ($status == 256) {$flag_exit = 1;}
+
+$noconn=0;
+if ($status == 0) {
+if ("$choice" eq "$msg_quit") {$flag_exit = 1; $noconn=1;}
+if ("$choice" eq "new") {&adsl_new_profile; $noconn=1;}
+if ("$choice" eq "") {$noconn=1;}
+# connect
+if ($noconn == 0) { &execute($choice); }
+}
+
+}
+
+&dialog_destroy;
+exit;
+
+
+sub adsl_new_profile
+{
+NP:{
+    $tmsg="\n $msg_adsl_profile";
+    ($status, $profile_name) = &d_inputbox ("$tmsg", 17, 50);
+    if (($status == 256)||($profile_name eq "")) {last NP;}
+    $tmsg="$tmsg $profile_name\n";
+
+    $tmsg="$tmsg $msg_adsl_interface";
+    @list_if=split(" ", `ifconfig -l ether`);
+    $iflist="";
+    foreach $iface (@list_if)
+    {
+    $iflist .= qq/"$iface" "$msg_network_card $iface" /;
+    }
+    ($status, $adsl_interface) = &d_menu ("$tmsg", 17, 50, 5, $iflist);
+    if ($status == 256) {last NP;}
+    $tmsg="$tmsg $adsl_interface\n";
+
+    $tmsg="$tmsg $msg_adsl_login";
+    ($status, $login) = &d_inputbox ("$tmsg", 17, 50);
+    if (($status == 256)||($login eq "")) {last NP;}
+    $tmsg="$tmsg $login\n";
+
+    $tmsg="$tmsg $msg_adsl_password";
+    ($status, $password) = &d_passwordbox ("$tmsg", 17, 50);
+    if ($status == 256) {last NP;}
+    $tmsg="$tmsg *****\n";
+
+    $adslparam="";
+    $adslparam .= qq/ DefRoute "$msg_adsl_default" on/;
+    $adslparam .= qq/ DNS "$msg_adsl_dns" on/;
+    $adslparam .= qq/ NAT "$msg_adsl_nat" off/;
+
+    $tmsg="$tmsg $msg_adsl_params";
+    ($status, $params) = &d_checklist ("$tmsg", 17, 50, 4, "$adslparam");
+    if (($status == 256)||($login eq "")) {last NP;}
+    $tmsg="$tmsg $params\n";
+
+    if ($params =~ m/DefRoute/) {$adsl_defroute=""} else {$adsl_defroute="#"}
+    if ($params =~ m/DNS/) 	{$adsl_dns=""} else {$adsl_dns="#"}
+    if ($params =~ m/NAT/) 	{$adsl_nat=""} else {$adsl_nat="#"}
+
+    $tmsg="$tmsg$DV\n $msg_adsl_save";
+    $res = &d_yesno ($tmsg, 16, 50);
+
+    if ($res == 0) {
+	&save_settings;
+	$msgx=$msg_adsl_done; $msgx=~s/%p%/$profile_name/;
+    	&d_msgbox ("\n $msgx",7,60);
+    }
+
+}
+}
+
+
+sub save_settings {
+    &adsl_scripts;
+
+    $adslconf =~ s/%PROFILE%/$profile_name/g;
+    $adslconf =~ s/%IFACE%/$adsl_interface/g;
+    $adslconf =~ s/%LOGIN%/$login/g;
+    $adslconf =~ s/%PASSWORD%/$password/g;
+    $adslconf =~ s/%DEFROUTE%/$adsl_defroute/g;
+    $adslconf =~ s/%DNS%/$adsl_dns/g;
+    $adslconf =~ s/%NAT%/$adsl_nat/g;
+
+
+    #system ("mkdir $PPP_PATH/$profile_name");
+    open (PS, ">> $PPP_PATH/ppp.conf");
+	print PS "$adslconf";
+    close (PS);
+
+}
+
+
+sub adsl_scripts
+{
+
+$adslconf="
+
+%PROFILE%:
+ set device PPPoE:%IFACE%:%PROFILE%
+ set authname %LOGIN%
+ set authkey %PASSWORD%
+ enable lqr
+ %DNS%enable dns  
+ %DEFROUTE%add default HISADDR
+ disable vjcomp
+ disable deflate
+ disable pred1
+ set cd 10
+ set dial 
+ set login
+ set redial 0 0
+ set speed sync
+ %NAT%nat enable yes
+ %NAT%nat same_ports yes
+ %NAT%nat use_sockets yes
+
+";
+
+}
+
+sub get_modules 
+{
+    $modlist="";
+    @dir=`cat $PPP_PATH/ppp.conf | grep "[a-z]:" | grep -v "default" | grep -v "papchap"`;
+    foreach $entry (@dir) {
+	$entry =~ s/:\n//g;
+	$desc = $entry;
+	$modlist=qq/$modlist "$entry" "$msg_adsl_connect $desc"/;
+    }
+}
+
+sub execute
+{
+$profname=$_[0];
+exec ("/usr/sbin/ppp -ddial $profname");
+}
+

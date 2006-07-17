@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Name    : Quick SSHD start
+# Version : 0.1
+# Author  : Grayich
+#
+
+#
+if [ ! $1 ] 
+        then
+                pass="yznerf"
+        else
+                pass=$1
+fi
+#
+addfrenzyuser
+#
+echo 'sshd_enable="YES"' >> /etc/rc.conf
+#
+echo $pass | pw usermod frenzy -h 0
+#
+iface=$(ifconfig -l ether|awk '{print $1}')
+ifconfig $iface 192.0.2.1 netmask 255.255.255.0
+#
+/etc/rc.d/sshd start
+#
+exit 0

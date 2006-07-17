@@ -1,0 +1,157 @@
+$msg_yes=			"Так";
+$msg_no=			"Н╕";
+$msg_quitprog=			"Вих╕д";
+$msg_cancel= 			"В╕дмова";
+$msg_quit=			"<--";
+$msg_wait=			"Будьте ласкав╕, зачекайте...";
+
+# === Main ===
+
+$msg_backtitle{'frconf'}=	"FrenzyConf $VERSION";
+$msg_title{'frconf'}=		"Центр керування Frenzy";
+$msg_frconf_select=		"Вибер╕ть модуль";
+
+$msg_backtitle{'netconf'}=	"FrenzyNetConf $VERSION";
+$msg_title{'netconf'}=		"Центр налаштування мереж╕ Frenzy";
+
+$msg_backtitle{'servconf'}=	"FrenzyServConf $VERSION";
+$msg_title{'servconf'}=		"Налаштування сервер╕в";
+
+$msg_netconf=			"Налаштування мережних з'╓днань";
+$msg_servconf=			"Налаштування сервер╕в";
+
+# === SWAP ===
+
+$msg_backtitle{'swap'}=		"FrenzyConf $VERSION > Налаштування файла п╕дкачки";
+$msg_title{'swap'}= 		"Файл п╕дкачки";
+
+$msg_swap_createswap=		"Створити файл п╕дкачки";
+$msg_swap_viewswap=		"╤нформац╕я про файл п╕дкачки";
+$msg_swap_swapinput=		"Вкаж╕ть розм╕р файла п╕дкачки (в Мб)";
+$msg_swap_swapsize=		"Рекомендований розм╕р:";
+$msg_swap_swappath=		"Вкаж╕ть шлях до файла п╕дкачки:";
+$msg_swap_swapexample=		"(наприкладу, /mnt/ad0s1.fat)";
+$msg_swap_swapcreated=		"Файл п╕дкачки створено.";
+$msg_swap_swapfailed=		"Помилка при створенн╕ файла п╕дкачки.";
+
+
+# === LAN ===
+
+$msg_backtitle{'lan'}=		"FrenzyNetConf $VERSION > Налаштування локально╖ мереж╕";
+$msg_title{'lan'}=		"Локальна мережа";
+
+$msg_lan_iflist=		"Вкаж╕ть мережний ╕нтерфейс:";
+$msg_lan_noif=			"Мережн╕ ╕нтерфейси не знайдено!";
+$msg_lan_setparam=		"Налаштування мережного ╕нтерфейсу";
+$msg_lan_ipaddr=		"IP адреса ...............";
+$msg_lan_netmask=		"Маска п╕дмереж╕ .........";
+$msg_lan_defaultrouter=		"Роутинг за замовчуванням.";
+$msg_lan_dns1=			"Основний DNS сервер .....";
+$msg_lan_dns2= 			"Вторинний DNS сервер ....";
+$msg_lan_domain= 		"Домен ...................";
+$msg_lan_apply=			"Застосувати ц╕ налаштування?";
+$msg_lan_done=			"Мережу було налаштовано.";
+
+# === console ===
+
+$msg_backtitle{'cons'}=		"FrenzyConf $VERSION > Налаштування терм╕нала";
+$msg_title{'cons'}= 		"Терм╕нал";
+
+$msg_cons_setfont=		"Шрифт         ";
+$msg_cons_setkeymap=		"Клав╕атура    ";
+$msg_cons_setscrmap=		"Скр╕нмап      ";
+$msg_cons_save=			"Зберегти налаштування";
+$msg_cons_apply=		"Застосувати та зберегти налаштування";
+$msg_cons_sel_font=		"Вибрати шрифт для терм╕нала";
+$msg_cons_sel_keymap=		"Вибрати розкладку клав╕атури";
+$msg_cons_sel_scrmap=		"Вибрати скр╕нмап";
+$msg_cons_done=			"Налаштування збережено";
+
+# === PPP ===
+
+$msg_backtitle{'ppp'}=		"FrenzyNetConf $VERSION > Налаштування РРР з'╓днання";
+$msg_title{'ppp'}= 		"РРР з'╓днання";
+
+$msg_ppp_new=			"Новий проф╕ль";
+$msg_ppp_edit=			"Редагувати налаштування";
+$msg_ppp_profile=		"Назва з'╓днання ...:";
+$msg_ppp_modemport=		"Порт модема .......:";
+$msg_ppp_authtype=		"Тип авторизац╕╖ ...:";
+$msg_ppp_login=			"Псевдо ............:";
+$msg_ppp_password=		"Гасло .............:";
+$msg_ppp_phones=		"Телефон(и) ........:";
+$msg_ppp_blank=			"                    ";
+$msg_ppp_save=			"Зберегти ц╕ налаштування?";
+$msg_ppp_done=			"Проф╕ль '%p%' було збережено.";
+$msg_ppp_loginbased=		"Login-based";
+$msg_ppp_papchap=		"PAP/CHAP";
+$msg_ppp_connect=		"З'╓днання з:";
+
+# === VPN ===
+
+$msg_backtitle{'vpn'}=		"FrenzyNetConf $VERSION > VPN з'╓днання";
+$msg_title{'vpn'}= 		"VPN з'╓днання";
+
+$msg_vpn_new=			"Новий проф╕ль";
+$msg_vpn_profile=		"Назва проф╕лю .....:";
+$msg_vpn_server=		"VPN сервер ........:";
+$msg_vpn_login=			"Псевдо ............:";
+$msg_vpn_password=		"Гасло .............:";
+$msg_vpn_params=		"Параметри .........:";
+$msg_vpn_save=			"Зберегти ц╕ налаштування?";
+$msg_vpn_done=			"Проф╕ль '%p%' було збережено.";
+$msg_vpn_default=		"Використовувати, як шлях за замовчуванням";
+$msg_vpn_orig_auth=		"Use orig-auth";
+$msg_vpn_compress=		"Зтиснення";
+$msg_vpn_crypto=		"Шифрування";
+$msg_vpn_connect=		"З'╓днання з:";
+
+# === ADSL ===
+
+$msg_backtitle{'adsl'}=		"FrenzyNetConf $VERSION > ADSL з'╓днання";
+$msg_title{'adsl'}= 		"ADSL з'╓днання";
+
+$msg_adsl_new=			"Новий проф╕ль";
+$msg_adsl_profile=		"Назва проф╕лю ...........:";
+$msg_adsl_interface=		"╤нтерфейс ADSL модема ...:";
+$msg_adsl_login=		"Псевдо ..................:";
+$msg_adsl_password=		"Гасло ...................:";
+$msg_adsl_params=		"Параметри .............:";
+$msg_adsl_save=			"Зберегти ц╕ налаштування?";
+$msg_adsl_done=			"Проф╕ль '%p%' було збережено.";
+$msg_adsl_default=		"Роутинг за замовчуванням";
+$msg_adsl_dns=			"Ув╕мкнути DNS";
+$msg_adsl_nat=			"Ув╕мкнути NAT";
+$msg_adsl_connect=		"З'╓днання з:";
+
+
+# === SERVCONF ===
+
+$msg_srv_start=		"Запустити сервер";
+$msg_srv_stop=		"Зупинити сервер";
+$msg_srv_restart=	"Перезапустити сервер";
+$msg_srv_status=	"Стан:";
+$msg_srv_state{'on'}=	"працю╓";
+$msg_srv_state{'off'}=	"в╕дключено";
+
+$msg_srvname{'sshd'}= 	"SSH сервер";
+$msg_srvname{'ftpd'}= 	"FTP сервер";
+$msg_srvname{'httpd'}= 	"WEB сервер";
+$msg_srvname{'smbd'}= 	"Samba сервер";
+
+$msg_title{'sshd'}=	$msg_srvname{'sshd'};
+$msg_title{'ftpd'}=	$msg_srvname{'ftpd'};
+$msg_title{'httpd'}=	$msg_srvname{'httpd'};
+$msg_title{'smbd'}=	$msg_srvname{'smbd'};
+
+$msg_backtitle{'sshd'}=	"FrenzyServConf $VERSION > $msg_srvname{sshd}";
+$msg_backtitle{'ftpd'}=	"FrenzyServConf $VERSION > $msg_srvname{ftpd}";
+$msg_backtitle{'hddpd'}= "FrenzyServConf $VERSION > $msg_srvname{httpd}";
+$msg_backtitle{'smbd'}=	"FrenzyServConf $VERSION > $msg_srvname{smbd}";
+
+$msg_srv_sshuser=	"Створити користувача для ssh";	
+$msg_srv_smbuser=	"Створити користувача для samba";	
+$msg_srv_ftpuser=	"Створити анон╕мний вх╕д по FTP";
+
+$msg_workgroup=		"Вкаж╕ть робочу групу:";
+$msg_netbiosname=	"Вкаж╕ть ╕м'я комп'ютера:";

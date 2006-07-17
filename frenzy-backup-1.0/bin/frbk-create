@@ -1,0 +1,123 @@
+#!/bin/sh
+#
+# name    : Frenzy backup script - create backup
+# version : 2.0
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+
+# COMMON VARS
+
+TMP="/tmp"			# temporary dir
+MNTDIR="/mnt"			# mount directory
+DIR_FS="/Frenzy/fs"		# dir with original FS
+
+ARCHDIR="${TMP}/backup_arch"
+ARCHNAME=`date "+frbk_%Y%m%d_%H%M"`
+ARCHIVE="${ARCHDIR}/${ARCHNAME}.tbz"
+
+F_LIST_ORIG="${TMP}/list-dir-orig"
+F_LIST_TARGET="${TMP}/list-dir-target"
+F_LIST_DIFFER="${TMP}/list-dir-diff"
+F_LIST_2ARCH="${TMP}/archive-list"
+F_EXCLUDE_T="${TMP}/exclude"
+F_ARCHFILE="${TMP}/backup_file"
+SPC="--%--"
+
+F_CONFIG="/usr/local/etc/frbackup/backup.lst"
+
+# LOCALE
+
+######################################################################
+# SUBS
+
+# make file list for archiving
+makearchlist()
+{
+for bkdir in `cat ${F_CONFIG} | grep -v "#" | grep -v "^-"`
+do
+makelist ${DIR_FS}${bkdir} ${bkdir}
+done
+}
+
+makelist()
+{
+DIR_ORIG=$1
+DIR_TARGET=$2
+# building file list
+if [ -d ${DIR_ORIG} ]; then
+(cd ${DIR_ORIG} && find . -type f) | sort > ${F_LIST_ORIG}
+fi
+if [ -d ${DIR_TARGET} ]; then
+(cd ${DIR_TARGET} && find . -type f) | sort > ${F_LIST_TARGET}
+fi
+# merge filelist
+cat ${F_LIST_ORIG} ${F_LIST_TARGET} | sed "s/\.//" | sort | uniq > ${F_LIST_DIFFER}
+
+xl=`cat ${F_LIST_DIFFER} | wc | awk '{print $1}'`
+onep=`expr $xl / 20`
+nl=0
+
+SPACER="     "
+zl=0
+while [ ${zl} -lt 25 ]; do
+SPACER="$SPACER "
+zl=`echo "${DIR_TARGET} ${SPACER}" | awk '{print length}'`
+done
+
+printf "${DIR_TARGET} ${SPACER} <"
+# compare files
+for fl in `cat ${F_LIST_DIFFER}`
+do
+flx=`echo ${fl} | sed "s/${SPC}/ /g"`
+dff=`diff --brief "${DIR_ORIG}${flx}" "${DIR_TARGET}${flx}" 2>&1`
+if [ -n "${dff}" ]; then
+echo "${DIR_TARGET}${flx}" >> ${F_LIST_2ARCH}
+fi
+nl=`expr ${nl} + 1`
+if [ ${nl} -gt ${onep} ]; then
+printf "."
+nl=0
+fi
+done
+printf ">\n"
+}
+
+# exclude files dirs which must not be packed
+exclude()
+{
+cat ${F_CONFIG} | grep -v "#" | grep "^-" | sed 's/^-//g' > ${F_EXCLUDE_T}
+cp ${F_LIST_2ARCH} ${F_LIST_2ARCH}.XXX
+cat ${F_LIST_2ARCH}.XXX | grep -v -f ${F_EXCLUDE_T} > ${F_LIST_2ARCH}
+rm ${F_LIST_2ARCH}.XXX
+rm ${F_EXCLUDE_T}
+}
+
+# create archive and put it to tmp dir
+mkarch()
+{
+printf "Making archive... "
+mkdir ${ARCHDIR} > /dev/null 2>&1
+tar cypf ${ARCHIVE} -I ${F_LIST_2ARCH} >/dev/null 2>&1
+printf "done.\n"
+}
+
+# remove temporary files
+clean()
+{
+rm $F_LIST_ORIG > /dev/null 2>&1
+rm $F_LIST_TARGET > /dev/null 2>&1
+rm $F_LIST_DIFFER > /dev/null 2>&1
+rm $F_LIST_2ARCH > /dev/null 2>&1
+}
+
+
+## MAIN
+#
+clean
+makearchlist
+exclude
+mkarch
+clean
+# return archive filename
+echo "${ARCHIVE}" > ${F_ARCHFILE}

@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Name    : Application launcher
+# Version : 0.1
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+USER=`whoami`
+XSHELL=`cat /etc/passwd | grep "${USER}:\*" | awk -F":" '{print $7}'`
+printf "\033]0; $1 \007"
+echo "# $1 $2 $3 $4 $5"
+$1 $2 $3 $4 $5
+$XSHELL

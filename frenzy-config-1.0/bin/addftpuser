@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Name    : Adding Frenzy 1.0 ftp user
+# Version : 0.1
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+FTP_USER="ftp"
+FTP_USER_HOMEDIR="/var/ftp"
+
+mkdir ${FTP_USER_HOMEDIR}
+
+echo -n "Adding user \"${FTP_USER}\"... "
+
+pw useradd ${FTP_USER} -d ${FTP_USER_HOMEDIR} -g wheel \
+-s /sbin/nologin -w none
+
+echo "done." 

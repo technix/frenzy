@@ -1,0 +1,219 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzy-doc-1.0
+@comment ORIGIN:misc/frenzy-doc-1.0
+@cwd /usr/local
+frenzy/doc/ru/images/bullet.gif
+@comment MD5:119070a1502443a3d5796ef15a9c5e5c
+frenzy/doc/ru/images/button-cc.gif
+@comment MD5:dedcde0a387abe746d4cc458d14f18be
+frenzy/doc/ru/images/button-css.png
+@comment MD5:385fa1b1dd6376de6cac2d10c178b99e
+frenzy/doc/ru/images/button-donate.gif
+@comment MD5:b33c2b7214e1b4e31a1ebf1669762971
+frenzy/doc/ru/images/button-dw.png
+@comment MD5:62dc4b20e909bb85efb8ed0f19f186f4
+frenzy/doc/ru/images/button-php.gif
+@comment MD5:fcbe0ee84e302835eeba652e13548206
+frenzy/doc/ru/images/button-rss.png
+@comment MD5:2945b4c62c4593c3dff1a098c6a8e689
+frenzy/doc/ru/images/button-xhtml.png
+@comment MD5:5367fcf59fcbe7a44140d48e673efa11
+frenzy/doc/ru/images/closed.gif
+@comment MD5:17a250c0bdcc7d4f8df427af2dcb4823
+frenzy/doc/ru/images/frenzy.png
+@comment MD5:58c44b2b2680abd9fa7c09ed79f7a249
+frenzy/doc/ru/images/interwiki/amazon.de.gif
+@comment MD5:0fa44b09e648360b80998cece5131d1e
+frenzy/doc/ru/images/interwiki/amazon.gif
+@comment MD5:0fa44b09e648360b80998cece5131d1e
+frenzy/doc/ru/images/interwiki/amazon.uk.gif
+@comment MD5:0fa44b09e648360b80998cece5131d1e
+frenzy/doc/ru/images/interwiki/bug.gif
+@comment MD5:c3b563c7fa92340619ed68ce94ebe89c
+frenzy/doc/ru/images/interwiki/coral.gif
+@comment MD5:9142b39ff42468d8049c0e8e88aa07f6
+frenzy/doc/ru/images/interwiki/doku.gif
+@comment MD5:60c606894098902a0feda0a684f28eba
+frenzy/doc/ru/images/interwiki/google.gif
+@comment MD5:2a79b72b134e6c553685242f75344452
+frenzy/doc/ru/images/interwiki/meatball.gif
+@comment MD5:bbff44d8b0498892277bfc9571fab8ac
+frenzy/doc/ru/images/interwiki/phpfn.gif
+@comment MD5:6b83da4bd62b76c90f7f5a11965f1894
+frenzy/doc/ru/images/interwiki/sb.gif
+@comment MD5:09050121e16a639358ddc531acff6703
+frenzy/doc/ru/images/interwiki/wiki.gif
+@comment MD5:6e4089d4ddad0523f006728051482bc3
+frenzy/doc/ru/images/interwiki/wp.gif
+@comment MD5:0d159fc3acfddf53682088f9a9e2ce2c
+frenzy/doc/ru/images/interwiki/wpde.gif
+@comment MD5:0d159fc3acfddf53682088f9a9e2ce2c
+frenzy/doc/ru/images/interwiki/wpmeta.gif
+@comment MD5:0d159fc3acfddf53682088f9a9e2ce2c
+frenzy/doc/ru/images/interwiki.png
+@comment MD5:5af963c88d872bb17fb0e3c5c3ec4bad
+frenzy/doc/ru/images/link_icon.gif
+@comment MD5:b6a7a24983a73f036bab46091219978d
+frenzy/doc/ru/images/mail_icon.gif
+@comment MD5:265e5d8bb700c8c344312a98e7850d60
+frenzy/doc/ru/images/open.gif
+@comment MD5:a83901fe7732f3a4faf56b707e5b9f30
+frenzy/doc/ru/images/smileys/delete.gif
+@comment MD5:109f24e5ae13842daf3e390b8e2c67a5
+frenzy/doc/ru/images/smileys/fixme.gif
+@comment MD5:c724c6de6a149a1fcb02510291069ac3
+frenzy/doc/ru/images/smileys/icon_arrow.gif
+@comment MD5:394bffa679f650b7d2f22aa263cc06ba
+frenzy/doc/ru/images/smileys/icon_biggrin.gif
+@comment MD5:f970a6591668c625e4b9dbd3b7a450d7
+frenzy/doc/ru/images/smileys/icon_confused.gif
+@comment MD5:4affed1b55e5f73c9f0675ae7d0ad823
+frenzy/doc/ru/images/smileys/icon_cool.gif
+@comment MD5:25c83ea511f206e88f214719dad9c88c
+frenzy/doc/ru/images/smileys/icon_cry.gif
+@comment MD5:7605eca95aaeda46e641745ef6f0e0b0
+frenzy/doc/ru/images/smileys/icon_doubt.gif
+@comment MD5:ecc53a0f53d4f4e144ea0cf710003566
+frenzy/doc/ru/images/smileys/icon_doubt2.gif
+@comment MD5:0d788003eb5c618566d9d04e9569c4ea
+frenzy/doc/ru/images/smileys/icon_eek.gif
+@comment MD5:52e43743e38a67d5d28845a104ca8c7d
+frenzy/doc/ru/images/smileys/icon_evil.gif
+@comment MD5:178255bb3fe2c3aa790c1f8ec8738504
+frenzy/doc/ru/images/smileys/icon_exclaim.gif
+@comment MD5:da86bbf377f97d06047aa781a582c52f
+frenzy/doc/ru/images/smileys/icon_frown.gif
+@comment MD5:5a50535a06def9d01076772e5e9d235b
+frenzy/doc/ru/images/smileys/icon_fun.gif
+@comment MD5:ed6b5455f4a26e67d9fbda3b2aa3c29d
+frenzy/doc/ru/images/smileys/icon_idea.gif
+@comment MD5:aaebc9c048367118ba65e1da46bc3e08
+frenzy/doc/ru/images/smileys/icon_kaddi.gif
+@comment MD5:53805cf0ed3740339a97725b27f48fa6
+frenzy/doc/ru/images/smileys/icon_lol.gif
+@comment MD5:b76e7729d43c4a49182d020741285bef
+frenzy/doc/ru/images/smileys/icon_mrgreen.gif
+@comment MD5:54e8505227edae1e583cf2f9554abc3a
+frenzy/doc/ru/images/smileys/icon_neutral.gif
+@comment MD5:4e8b7a51c7f60a2362a4f67fbbc937e7
+frenzy/doc/ru/images/smileys/icon_question.gif
+@comment MD5:0518596a4eb94c32a2b2ed898bdc3549
+frenzy/doc/ru/images/smileys/icon_razz.gif
+@comment MD5:7aec68426aa06f01e2b1ac250e5aee62
+frenzy/doc/ru/images/smileys/icon_redface.gif
+@comment MD5:d7e9d095432cbcf09375ffc782c30c23
+frenzy/doc/ru/images/smileys/icon_rolleyes.gif
+@comment MD5:19071b1af987946e96dcef6ce0611c6b
+frenzy/doc/ru/images/smileys/icon_sad.gif
+@comment MD5:5a50535a06def9d01076772e5e9d235b
+frenzy/doc/ru/images/smileys/icon_silenced.gif
+@comment MD5:f0d041ecd9aeec95dd41a517f31ce7b1
+frenzy/doc/ru/images/smileys/icon_smile.gif
+@comment MD5:9ee646ffab71107d1a11407be52f33a5
+frenzy/doc/ru/images/smileys/icon_smile2.gif
+@comment MD5:b57d2cdcb1bcf69764b668ceaf86c628
+frenzy/doc/ru/images/smileys/icon_surprised.gif
+@comment MD5:ae735b5dd659dc4b3b0f249ce59bef79
+frenzy/doc/ru/images/smileys/icon_twisted.gif
+@comment MD5:c9c3d12da1e9da699e490b86d24eee85
+frenzy/doc/ru/images/smileys/icon_wink.gif
+@comment MD5:f058206bb8ff732dbe8e7aa10d74c9cd
+frenzy/doc/ru/images/tocdot2.gif
+@comment MD5:8e169277062a4b920f1c28f40341b750
+frenzy/doc/ru/images/windows.gif
+@comment MD5:fd3e015f5d402ae10f9937ed5ed537b0
+frenzy/doc/ru/media/mypic/frenzy-backup.png
+@comment MD5:a87b8df456724240b730828f1e483a45
+frenzy/doc/ru/media/mypic/frenzy-bootmenu.png
+@comment MD5:91c9aeb019df7bd98bbd9f6b6b3bb904
+frenzy/doc/ru/media/mypic/frenzy-frconf.png
+@comment MD5:5c9bc366bcbc2e5596fb99d1b188f5a0
+frenzy/doc/ru/media/mypic/frenzy-lion.jpg
+@comment MD5:a82a3ea9627eb2cd2dd6c2657f8f878c
+frenzy/doc/ru/media/mypic/frenzy-loadermenu.png
+@comment MD5:7848e4603b45de7f9e6da729327a3c8a
+frenzy/doc/ru/media/mypic/frenzy-netconf.png
+@comment MD5:78c50a921299be1df961a4c5a644364a
+frenzy/doc/ru/media/mypic/frenzy-servconf.png
+@comment MD5:0839fffe98859ade5ed45fabfd42b922
+frenzy/doc/ru/media/mypic/install2hdd_pic_1.jpg
+@comment MD5:9218303d559088cebf9cd7861631f918
+frenzy/doc/ru/media/mypic/install2hdd_pic_2.jpg
+@comment MD5:d8dd826d402d5c23c826297b1d55d6a4
+frenzy/doc/ru/media/mypic/install2hdd_pic_3.jpg
+@comment MD5:0fd04bba0ad4055cad9b368b3cf303ba
+frenzy/doc/ru/media/mypic/install2hdd_pic_4.jpg
+@comment MD5:dabf58ba5540cfa09d8c5700144cd1ec
+frenzy/doc/ru/media/mypic/install2hdd_pic_5.jpg
+@comment MD5:9e452428b6794cc492e75ac82a66f768
+frenzy/doc/ru/media/mypic/install2hdd_pic_6.jpg
+@comment MD5:f13b2eb52a07f2e452a9158518adcb35
+frenzy/doc/ru/media/mypic/install2hdd_pic_7.jpg
+@comment MD5:43e2ae3552b0703b0609510c6d3891db
+frenzy/doc/ru/media/mypic/install2hdd_pic_8.jpg
+@comment MD5:a60a152c6506a9b34bf6e234085e5761
+frenzy/doc/ru/media/mypic/install2hdd_pic_9.jpg
+@comment MD5:29df0776cf4daf11fe22c888a4052baa
+frenzy/doc/ru/media/wiki/dokuwiki-128.png
+@comment MD5:4eecb1d82294524607d8764bee3dd39c
+frenzy/doc/ru/design.css
+@comment MD5:92e0c1a8a843fde7a49536add85dbab9
+frenzy/doc/ru/doc-about.html
+@comment MD5:e2acda2c3a1f808c7d59560c5f142f60
+frenzy/doc/ru/doc-backup.html
+@comment MD5:80c60fb15ae76df6180169358655ff04
+frenzy/doc/ru/doc-boot.html
+@comment MD5:a9083544358456e4d9d450ae2ef8f66f
+frenzy/doc/ru/doc-bootprocess.html
+@comment MD5:3fafc7573a72b2a05a423f056fd4e943
+frenzy/doc/ru/doc-cons.html
+@comment MD5:50993f6dc8b7cad62223e51888827325
+frenzy/doc/ru/doc-contents.html
+@comment MD5:0861088ce7610e039b7e02d38f829d82
+frenzy/doc/ru/doc-credits.html
+@comment MD5:64498efac87b86d90ae7bae2c99eb9ac
+frenzy/doc/ru/doc-docs.html
+@comment MD5:74bf31e685a39bb919b9b5b3eb10818e
+frenzy/doc/ru/doc-frconf.html
+@comment MD5:0aa57c4a66dbe97785f99e38f68c61f8
+frenzy/doc/ru/doc-fs.html
+@comment MD5:d98e8adb7a141a3f42eabebaa336dade
+frenzy/doc/ru/doc-get.html
+@comment MD5:1cf1e42f1bc411c41cc745a1fe545ab5
+frenzy/doc/ru/doc-install2flash.html
+@comment MD5:4d874ba6c0b57293a524d2dfcfa3eba0
+frenzy/doc/ru/doc-install2hdd.html
+@comment MD5:18c0b34fe441ff321f5dc2f2306437cd
+frenzy/doc/ru/doc-netconf.html
+@comment MD5:e3fc1583657ab2f3f8ed90db06623ce8
+frenzy/doc/ru/doc-sdk.html
+@comment MD5:d9c007f4a889bae605cfb85f35a4649e
+frenzy/doc/ru/doc-servconf.html
+@comment MD5:c0abb6cbb0c7085f46bddb2cfd444d68
+frenzy/doc/ru/doc-soft-ext.html
+@comment MD5:76c8e420aa39d99234727f6aace4afaa
+frenzy/doc/ru/doc-soft-freebsd.html
+@comment MD5:aa57c01d2f1f0b439be48ee06c66057f
+frenzy/doc/ru/doc-soft-std.html
+@comment MD5:e51a0560dbed98ede953c62e33b61fe0
+frenzy/doc/ru/doc-soft.html
+@comment MD5:74f70ae8ea21e6dce70b333bea1c8eb0
+frenzy/doc/ru/doc-xorg.html
+@comment MD5:ae06632230a103e5b4aa6f16ae4f0bd9
+frenzy/doc/ru/doc.html
+@comment MD5:fc3008019d7a2ced3e9e55f270838ea4
+frenzy/doc/ru/index.html
+@comment MD5:fc3008019d7a2ced3e9e55f270838ea4
+frenzy/doc/ru/print.css
+@comment MD5:7ee4e64bf7a914bf0b5ee6e837889b64
+frenzy/doc/ru/style.css
+@comment MD5:a8a6886fcfb1ec96385ee2cdd05432af
+frenzy/doc/en/index.html
+@comment MD5:18ac1a113a1e5d4426967a5194b537d5
+bin/help
+@comment MD5:b8f832c4f517fcee96b60e87258f8aa3
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

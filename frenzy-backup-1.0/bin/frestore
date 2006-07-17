@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# name    : Frenzy backup script - restore from file
+# version : 2.0
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+# file with backup
+i=$1 
+
+if [ -z "$i" ]; then
+progname=`basename $0`
+echo "Usage: $progname archive-name"
+echo
+exit
+fi
+
+mx="\033[0;40;32m[i]\033[0m" # process 
+
+printf "${mx} ${i} \n"
+tar -C / -xypf ${i}
+
+exit 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+

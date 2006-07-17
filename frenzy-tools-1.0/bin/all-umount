@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Name    : Unmount all partitions defined in /mnt
+# Version : 0.1
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+for i in `ls /mnt`
+do
+umount /mnt/$i > /dev/null 2>&1
+done

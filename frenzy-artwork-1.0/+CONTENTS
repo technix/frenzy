@@ -1,0 +1,303 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzy-artwork-1.0
+@comment ORIGIN:misc/frenzy-artwork-1.0
+@cwd /usr/local
+frenzy/wallpapers/frenzy_lion_black.jpg
+@comment MD5:c656a41c6d8f52226b56f8d75284a433
+frenzy/wallpapers/frenzy_lion_yellow.jpg
+@comment MD5:2db2a140b172277ed7f3bff082dae3ab
+frenzy/wallpapers/frenzy_orange.jpg
+@comment MD5:26f9b3452c4cf50d62b91b2a22e4b687
+frenzy/wallpapers/fusillade.jpg
+@comment MD5:16b60ae7f9c55592e45a27a71c86f5f0
+frenzy/icons/xxkb/16/blue/bg_16.xpm
+@comment MD5:a3068337d78fc7bc1428378ad2adb710
+frenzy/icons/xxkb/16/blue/cz_16.xpm
+@comment MD5:63ba91a1c6ada7b68337e76c1be77250
+frenzy/icons/xxkb/16/blue/de_16.xpm
+@comment MD5:072e84640cd873fcd227d236b52dc1b8
+frenzy/icons/xxkb/16/blue/en_16.xpm
+@comment MD5:2744e6e865ffbfb333b3bf088550e6c9
+frenzy/icons/xxkb/16/blue/es_16.xpm
+@comment MD5:bfb3184a0d56f402792cef700f38b050
+frenzy/icons/xxkb/16/blue/fr_16.xpm
+@comment MD5:f4b1481b8ca163669f5e30d5bf1a22e8
+frenzy/icons/xxkb/16/blue/it_16.xpm
+@comment MD5:beb8f1abf11fd87a386ec3e24ba1a270
+frenzy/icons/xxkb/16/blue/pl_16.xpm
+@comment MD5:8f85da80c9314b6b89f7a0f84b6978f8
+frenzy/icons/xxkb/16/blue/ru_16.xpm
+@comment MD5:a4eadff04ec9ec7402254e207475ac6a
+frenzy/icons/xxkb/16/blue/sk_16.xpm
+@comment MD5:a98817db9b60f11ea3e6e6f506ac7f2c
+frenzy/icons/xxkb/16/blue/ua_16.xpm
+@comment MD5:4f77cfa42d3f17a638478a9c3c29458a
+frenzy/icons/xxkb/16/red/bg_16.xpm
+@comment MD5:e89104f667b869db65213df2abe8d8c3
+frenzy/icons/xxkb/16/red/cz_16.xpm
+@comment MD5:1022526d5dc8f3ee0b2618deb108ca2f
+frenzy/icons/xxkb/16/red/de_16.xpm
+@comment MD5:5384e05594cb00690023e9e4bd7e36ff
+frenzy/icons/xxkb/16/red/en_16.xpm
+@comment MD5:e525b790f45943d2077247e4ae6b2cf0
+frenzy/icons/xxkb/16/red/es_16.xpm
+@comment MD5:480767fc16d22ead8e7a8e3694827cfa
+frenzy/icons/xxkb/16/red/fr_16.xpm
+@comment MD5:b57714e2f703f772b7a530918d166fc9
+frenzy/icons/xxkb/16/red/it_16.xpm
+@comment MD5:2f4540189326b8c95e055278c4863c13
+frenzy/icons/xxkb/16/red/pl_16.xpm
+@comment MD5:9aafa773a0a31b05a7c62712034c9423
+frenzy/icons/xxkb/16/red/ru_16.xpm
+@comment MD5:25522cebe6dc728f05af52e556922067
+frenzy/icons/xxkb/16/red/sk_16.xpm
+@comment MD5:614870bcf96827e02849b0a7fb796aa5
+frenzy/icons/xxkb/16/red/ua_16.xpm
+@comment MD5:6beeeedf684aca0efaa49152def58dac
+frenzy/icons/xxkb/16/gray/bg_16.xpm
+@comment MD5:32512f3ba29c93af963807f6425250e8
+frenzy/icons/xxkb/16/gray/cz_16.xpm
+@comment MD5:209e002e56d0c6ffbca27d7712ae4ea4
+frenzy/icons/xxkb/16/gray/de_16.xpm
+@comment MD5:3ea11f0d12e4e83e97bdd395c605b924
+frenzy/icons/xxkb/16/gray/en_16.xpm
+@comment MD5:b2e1281805d8a2a86f2b0fe96590f90a
+frenzy/icons/xxkb/16/gray/es_16.xpm
+@comment MD5:5f396010f7fd0d60608271c4ce61d0ee
+frenzy/icons/xxkb/16/gray/fr_16.xpm
+@comment MD5:dabb50ae22f2c39b57d470405f7f3408
+frenzy/icons/xxkb/16/gray/it_16.xpm
+@comment MD5:02fc918885d46ce34116b8b25d76e85c
+frenzy/icons/xxkb/16/gray/pl_16.xpm
+@comment MD5:852359421b786c4cc7f184e25af0660d
+frenzy/icons/xxkb/16/gray/ru_16.xpm
+@comment MD5:74972718dd4af94e5a5ed6dccd1728bc
+frenzy/icons/xxkb/16/gray/sk_16.xpm
+@comment MD5:bf75dbe523f905c43335b505ff926dcb
+frenzy/icons/xxkb/16/gray/ua_16.xpm
+@comment MD5:c6148b1790f27d357c85dd6889907481
+frenzy/icons/xxkb/24/blue/de.xpm
+@comment MD5:6525a74b326ae97de2670bf37a52637e
+frenzy/icons/xxkb/24/blue/en.xpm
+@comment MD5:c399c48c4ec0aba059e71166196b0890
+frenzy/icons/xxkb/24/blue/es.xpm
+@comment MD5:096b5b7c426d69971b0277266844f33e
+frenzy/icons/xxkb/24/blue/fr.xpm
+@comment MD5:6fbd2238f71bb2915e112ca6cff39e76
+frenzy/icons/xxkb/24/blue/it.xpm
+@comment MD5:b3c459965dfb1839324e8d4902e441b8
+frenzy/icons/xxkb/24/blue/ru.xpm
+@comment MD5:ddecb57911d2fd6920345359f0fce78a
+frenzy/icons/xxkb/24/blue/ua.xpm
+@comment MD5:7245e1b963faf114a12cc8b6dc250e51
+frenzy/icons/xxkb/24/red/de.xpm
+@comment MD5:8d638974b239f3745f60956626ebea10
+frenzy/icons/xxkb/24/red/en.xpm
+@comment MD5:d38da8648090e478d5f38e68b91f820f
+frenzy/icons/xxkb/24/red/es.xpm
+@comment MD5:8faa8ef2d0fcf93742be50460d9df0ab
+frenzy/icons/xxkb/24/red/fr.xpm
+@comment MD5:32a75771c7980c248af68be26b1fd550
+frenzy/icons/xxkb/24/red/it.xpm
+@comment MD5:68dce1dfd4633b049bfb517445b95b40
+frenzy/icons/xxkb/24/red/ru.xpm
+@comment MD5:42fb263e2f5a0168119b649a7655680d
+frenzy/icons/xxkb/24/red/ua.xpm
+@comment MD5:d5b9008090f07626be91e173b9f9c30a
+frenzy/icons/fluxbox/app2_16x16.xpm
+@comment MD5:1d4375dd7ce3a1f0c4489ba6c4fea90a
+frenzy/icons/fluxbox/app3_16x16.xpm
+@comment MD5:a0c9658e946632adb9d7c82291a8133d
+frenzy/icons/fluxbox/app_16x16.xpm
+@comment MD5:0bec5dbb2b31a7b5ed530cc508e69e1e
+frenzy/icons/fluxbox/ark_16x16.xpm
+@comment MD5:8459b1d1ba9c8235a2d9f5a060894e7b
+frenzy/icons/fluxbox/bomb_16x16.xpm
+@comment MD5:1b4acb5e38893be13ce115ea9cd49bae
+frenzy/icons/fluxbox/card_16x16.xpm
+@comment MD5:8b3b252d1466144b7bc1d277c8c2f378
+frenzy/icons/fluxbox/clanbomber_16x16.xpm
+@comment MD5:2674e6cfd543fff9239dd2af01d28aff
+frenzy/icons/fluxbox/clip_16x16.xpm
+@comment MD5:f5dc64f8b92cb53cea46b3035bd1f890
+frenzy/icons/fluxbox/clock_16x16.xpm
+@comment MD5:4af3da2d60ffef0f9f10379a4892e920
+frenzy/icons/fluxbox/install_16x16.xpm
+@comment MD5:abea148c5fdda97addd88c9ed0fdec15
+frenzy/icons/fluxbox/floppy_16x16.xpm
+@comment MD5:fb552cf6e2d486f6713b0659998d9cbd
+frenzy/icons/fluxbox/folder_grey.png
+@comment MD5:fb657bbaa60963126fd21f85501a620d
+frenzy/icons/fluxbox/gqview_16x16.xpm
+@comment MD5:a0b2a758c101017f840a55f7bde3f4e4
+frenzy/icons/fluxbox/hwinfo_16x16.xpm
+@comment MD5:747d8e8348ce27e4a5fc6f4ed6fc9122
+frenzy/icons/fluxbox/icq_16x16.xpm
+@comment MD5:856cbd30450422d82cd3ab89a5ac0296
+frenzy/icons/fluxbox/isp_16x16.xpm
+@comment MD5:9b75a6caf8c0fcdf79a1c5dee1c3e95a
+frenzy/icons/fluxbox/konqueror_16x16.xpm
+@comment MD5:be2bb1fe82905ff33b897a713da7d42a
+frenzy/icons/fluxbox/mplayer_16x16.xpm
+@comment MD5:aa0b0fb43dd5fed4680dc3ecc62bf5e3
+frenzy/icons/fluxbox/multimedia_16x16.xpm
+@comment MD5:a235173046f686da6fade4a5d80997aa
+frenzy/icons/fluxbox/notepad_16x16.xpm
+@comment MD5:479ae494d307fa7ff3f44e9fbedadf32
+frenzy/icons/fluxbox/notes_16x16.xpm
+@comment MD5:62b123ceab362ef1cdce3a8a1d5d3199
+frenzy/icons/fluxbox/opera_16x16.xpm
+@comment MD5:9f6c66fb97bfbfad1d517ffcaee744d5
+frenzy/icons/fluxbox/pdf_16x16.xpm
+@comment MD5:6bae9c4c03900ad4503eb88daa29c546
+frenzy/icons/fluxbox/psi_16x16.xpm
+@comment MD5:f0a3f35cafbf0308b77dfdad93131261
+frenzy/icons/fluxbox/remote_16x16.xpm
+@comment MD5:e299ee1bb86b3bbb32315eacd1a87ea1
+frenzy/icons/fluxbox/samba_16x16.xpm
+@comment MD5:95472bf79aa7cb8edbe6703c8e560011
+frenzy/icons/fluxbox/screenshot_16x16.xpm
+@comment MD5:81fe3b3489a6588d5b9e5ed0d36e500f
+frenzy/icons/fluxbox/sketch_16x16.xpm
+@comment MD5:c82b29f6d478d367f1840cd47a46a7d1
+frenzy/icons/fluxbox/terminal3_16x16.xpm
+@comment MD5:c7e2319f33b89b395bf53bc94d97a888
+frenzy/icons/fluxbox/terminal_16x16.xpm
+@comment MD5:2ebc29ec30eb77aaa3b977e0046a401e
+frenzy/icons/fluxbox/texteditor_16x16.xpm
+@comment MD5:b04085dd1a952f2ed0d18d483bfb9862
+frenzy/icons/fluxbox/usb_16x16.xpm
+@comment MD5:75c0ff9557c1f5631e505b77aed4baa5
+frenzy/icons/fluxbox/vim_16x16.xpm
+@comment MD5:cd6c99ecdfa077c70377d6c523a53549
+frenzy/icons/fluxbox/window_list_16x16.xpm
+@comment MD5:0a69cc94216ce29e3cf5e165a7067a2e
+frenzy/icons/fluxbox/windows_16x16.xpm
+@comment MD5:16320087533be45e87373584403a0490
+frenzy/icons/fluxbox/x_16x16.xpm
+@comment MD5:0125810f7f3097ae805bef9ec3ed94d0
+frenzy/icons/fluxbox/xcalc_16x16.xpm
+@comment MD5:93c4fe1756d32500709aa9388e59d71c
+frenzy/icons/fluxbox/xchat3_16x16.xpm
+@comment MD5:e551e481ce06734ecc1f8cf96778bfe3
+frenzy/icons/fluxbox/xclip_16x16.xpm
+@comment MD5:f5dc64f8b92cb53cea46b3035bd1f890
+frenzy/icons/fluxbox/xclipboard_16x16.xpm
+@comment MD5:31a7f5ee9ab61b71d937f616c50cc59e
+frenzy/icons/fluxbox/xclock_16x16.xpm
+@comment MD5:640fdd9a253fa945ad98f8e60b6ad1bc
+frenzy/icons/fluxbox/xconsole_16x16.xpm
+@comment MD5:b861dea3e1debf9e60de100b3606d3e9
+frenzy/icons/fluxbox/xedit_16x16.xpm
+@comment MD5:d3ff3805d4ab8ca81cabe55630cb6106
+frenzy/icons/fluxbox/xfontsel_16x16.xpm
+@comment MD5:edeaf0269b967f7d1670b35575f65390
+frenzy/icons/fluxbox/xisp_16x16.xpm
+@comment MD5:f62520811fb35a52f08e65fd1457bfad
+frenzy/icons/fluxbox/xmms_16x16.xpm
+@comment MD5:0248526a9f5ec3d8560f51e6bdb82509
+frenzy/icons/fluxbox/xpdf_16x16.xpm
+@comment MD5:9a9ca495bc6452a051d1968a7c09f4bc
+frenzy/icons/fluxbox/xterm_16x16.xpm
+@comment MD5:96b1da470d69ea446089adfdb986612e
+frenzy/icons/fluxbox/email_16x16.xpm
+@comment MD5:182fe7a25e2cac6769886c917034e2ee
+frenzy/icons/fluxbox/ethereal_16x16.xpm
+@comment MD5:1378d16bbb8bde14dc0eb91518ed470d
+frenzy/icons/fluxbox/find_16x16.xpm
+@comment MD5:398d56ad718b21bd0d9e317bac79d288
+frenzy/icons/fluxbox/ms-dos_16x16.xpm
+@comment MD5:3eb1836cff1e9e69475eeea788c28036
+frenzy/icons/fluxbox/run_16x16.xpm
+@comment MD5:583ba4fd870796977b53488e8969538e
+frenzy/icons/fluxbox/gftp_16x16.xpm
+@comment MD5:9b89b8655d8cb3fc02571abb08f0ab57
+frenzy/icons/fluxbox/password_16x16.xpm
+@comment MD5:815fdde1bed1f62984f9f38238ca18bd
+frenzy/icons/fluxbox/xcd_16x16.xpm
+@comment MD5:8b86a5bf3070760322f3530f33adb9b2
+frenzy/icons/fluxbox/xkill_16x16
+@comment MD5:045e73f5748e5f706f0b823c5f92ef89
+frenzy/icons/fluxbox/freebsd_16x16.xpm
+@comment MD5:c3581479be80fa495e7a694101b6e599
+frenzy/styles/Frenzy-graphite/pixmaps/stick.xpm
+@comment MD5:d58e295c5881bde4628abc11ae7b0411
+frenzy/styles/Frenzy-graphite/pixmaps/stuck.xpm
+@comment MD5:56da1c4e046edf0d6ef18f7cbd108d1a
+frenzy/styles/Frenzy-graphite/pixmaps/icon.xpm
+@comment MD5:7df81e250530f836cf4a8457a34fc48e
+frenzy/styles/Frenzy-graphite/pixmaps/grip.xpm
+@comment MD5:4d92cd579bced6e4a8483da5a8f5d70f
+frenzy/styles/Frenzy-graphite/pixmaps/selected.xpm
+@comment MD5:8731c0743276b91af81565118b53fd09
+frenzy/styles/Frenzy-graphite/pixmaps/maxu.xpm
+@comment MD5:a4156379240d45bf599bf25994664c19
+frenzy/styles/Frenzy-graphite/pixmaps/max.xpm
+@comment MD5:8d8a543eeb00595d7c544d46eaedcf1a
+frenzy/styles/Frenzy-graphite/pixmaps/close.xpm
+@comment MD5:4e6a60696a5948c6f8956d2c8e887b8f
+frenzy/styles/Frenzy-graphite/pixmaps/closeu.xpm
+@comment MD5:b9c936b813b6c4b5c0ed2ed387443648
+frenzy/styles/Frenzy-graphite/pixmaps/iconu.xpm
+@comment MD5:9f2db71a7fd0aaca02653320de6f8f2b
+frenzy/styles/Frenzy-graphite/pixmaps/sticku.xpm
+@comment MD5:46b93b7d03b9d72df19d8a29c4085551
+frenzy/styles/Frenzy-graphite/pixmaps/stucku.xpm
+@comment MD5:ae5764354cd077230725e06449294897
+frenzy/styles/Frenzy-graphite/pixmaps/bar.xpm
+@comment MD5:d87fd3fc6a0653cb1a40ab2527eed794
+frenzy/styles/Frenzy-graphite/pixmaps/bar_act.xpm
+@comment MD5:ef3ef142cc2946aeb9b3c024c8d0d47d
+frenzy/styles/Frenzy-graphite/theme.cfg
+@comment MD5:f28a931b0129c2b6e6439fa095e5da65
+share/mplayer/Skin/default/README
+@comment MD5:e4f678bc9327b1c47c14c1aaf000660a
+share/mplayer/Skin/default/VERSION
+@comment MD5:d39d8df974f8d45e3d23499dc20ea763
+share/mplayer/Skin/default/button-about.png
+@comment MD5:026b310e3312180a68f420ccc51b16e6
+share/mplayer/Skin/default/button-exit.png
+@comment MD5:5287a654c6a563f3505ad2d1618ddc56
+share/mplayer/Skin/default/button-forward.png
+@comment MD5:502061ef901eb30f0ae025f504597a02
+share/mplayer/Skin/default/button-fullscr.png
+@comment MD5:a22b50cdaf1798911bc1e3aa508ffc4e
+share/mplayer/Skin/default/button-next.png
+@comment MD5:e9896dffac45c53abc9d2ca39e3199f1
+share/mplayer/Skin/default/button-open.png
+@comment MD5:e3efe42971636217ba24cc2b44801aa5
+share/mplayer/Skin/default/button-pause.png
+@comment MD5:11c275be2a4b0e88ec2900464b4d0903
+share/mplayer/Skin/default/button-play.png
+@comment MD5:021279f50031fc46c0c97399d791f8a0
+share/mplayer/Skin/default/button-playlst.png
+@comment MD5:582d5f4e5265e19b7c34608990682bd0
+share/mplayer/Skin/default/button-prev.png
+@comment MD5:5c5f641e1a5bc330d85aef5acdfdd120
+share/mplayer/Skin/default/button-rewind.png
+@comment MD5:9e5baf1dc7cbe29eafd21cd8cc93207e
+share/mplayer/Skin/default/button-skinbr.png
+@comment MD5:739fd49fce53f3252aa7226a33abea66
+share/mplayer/Skin/default/button-stop.png
+@comment MD5:e8801da2c3b8179de5ab5dab528da8a9
+share/mplayer/Skin/default/font.fnt
+@comment MD5:0936861b6bbb045eedeaece7649146f6
+share/mplayer/Skin/default/font.png
+@comment MD5:126f89a241e79f8744dc922e92cb3640
+share/mplayer/Skin/default/main.png
+@comment MD5:26b32dbad7feba028aadd02590afd310
+share/mplayer/Skin/default/pos.png
+@comment MD5:771a28fe754ba3491765bce98608468d
+share/mplayer/Skin/default/skin
+@comment MD5:12bc963dc9e4ecdaa44fb47fd11d72b6
+share/mplayer/Skin/default/sub.png
+@comment MD5:d73eddfd216a579b79fc71f62aedabfa
+share/mplayer/Skin/default/vol.png
+@comment MD5:6206fb5cfe071fdb2d6d376df085c191
+share/mplayer/Skin/mplayer-skins-1.1.2_1
+@comment MD5:d41d8cd98f00b204e9800998ecf8427e
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC

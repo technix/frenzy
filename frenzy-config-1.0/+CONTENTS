@@ -1,0 +1,53 @@
+@comment PKG_FORMAT_REVISION:1.1
+@name frenzy-config-1.0
+@comment ORIGIN:misc/frenzy-config-1.0
+@cwd /usr/local
+bin/conf_adsl.ncm
+@comment MD5:5849ccc2bcac1a21e71f5d6aa3838696
+bin/conf_cons.fcm
+@comment MD5:6fa7bce4ff0fded9ee0b57fb58f33b3e
+bin/conf_lan.ncm
+@comment MD5:a95b86f6f0d80056ea3b789a90748ee2
+bin/conf_ppp.ncm
+@comment MD5:72599f5e0b7086fbcac6bb46f4e05760
+bin/conf_swap.fcm
+@comment MD5:3082a725a0e51e3522fdbce5217455b9
+bin/conf_vpn.ncm
+@comment MD5:01e05e2f9aee9fb8bdf02189056510c9
+bin/frconf
+@comment MD5:ee809029486686b0508e49bd12a74092
+bin/servconf
+@comment MD5:1db7786b89b2a8f2b3cef9b839201caf
+bin/conf_ftpd.scm
+@comment MD5:ea631bd0622b8f8f1b5861acb3402441
+bin/conf_sshd.scm
+@comment MD5:7df8093be63fc80db836c35198ec3969
+bin/netconf
+@comment MD5:dab8871b0d664f6f4b94a45491080472
+bin/addftpuser
+@comment MD5:e894405fef829d876c525fb6120b0aa3
+bin/conf_httpd.scm
+@comment MD5:58d06d986e55f91b9ffa9dcf1f5112e0
+bin/sshd-key-generate
+@comment MD5:7828fefece957eb01f71d5f2cc37c4ed
+bin/conf_smbd.scm
+@comment MD5:7e1907f4c0d3d516dd45092316f257c0
+bin/addfrenzyuser
+@comment MD5:f3196a3e0ecd4c64482be39c5a99dbb6
+frenzy/locale/frconf/en
+@comment MD5:0cdf2e1352561045509ccc83eef32dcc
+frenzy/locale/frconf/ru
+@comment MD5:4d47fd8975b8244f75aeb8ee9796f002
+frenzy/locale/frconf/ua
+@comment MD5:c70651d93309fe510be436a4537c2f0d
+frenzy/lib/libcommon.mpl
+@comment MD5:b66462904b9214089707a92a06b0923e
+frenzy/scripts/vpn_up.sh
+@comment MD5:4f18a53c958006b896d28be2ef0a1a68
+frenzy/scripts/vpn_down.sh
+@comment MD5:8d921a2a5995a547d80090827aece753
+@cwd . 
+@ignore
++COMMENT
+@ignore
++DESC
