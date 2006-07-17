@@ -1,3 +1,0 @@
-PKG_NAME="gtk-themes"
-ORIGIN="x11-themes/gtk-frenzy-themes"
-BASEDIR="/usr/X11R6"
