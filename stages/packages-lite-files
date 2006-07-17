@@ -1,0 +1,34 @@
+#!/bin/sh
+# PROVIDE: packages-lite-files
+# REQUIRE: packages-install-freebsd packages-install-frenzy
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "frenzy" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+SCRIPTDIR="pkglite/files"
+LOCALES="pkglite/locales"
+
+echo "[*] Patching installed packages."
+
+
+cp ${LOCALES}/locales ../${FRENZY_FS}
+for patchtype in ${PATCHES}
+do
+echo -n "${patchtype}: ["
+for i in `cd ${SCRIPTDIR} && ls -1 $patchtype*`
+do
+cp ${SCRIPTDIR}/${i} ../${FRENZY_FS}
+chroot ../${FRENZY_FS} sh /${i}
+rm ../${FRENZY_FS}/${i}
+echo -n "."
+done
+echo "]"
+done
+rm ../${FRENZY_FS}/locales
+
+stage_done
+
+fi

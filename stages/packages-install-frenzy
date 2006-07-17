@@ -1,0 +1,43 @@
+#!/bin/sh
+# PROVIDE: packages-install-frenzy
+# REQUIRE: world-lite
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "frenzy" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+echo "[*] Installing Frenzy packages."
+
+echo -n "["
+cd ../${PKG_FRENZY}
+FAILEDPKG=""
+xcmd="ls";
+if [ "$FRENZY_LANG" != "ru" ]; then
+xcmd="ls | grep -v RU"
+fi
+
+for pkg in `eval "$xcmd"`
+do
+cat ${pkg} | chroot ../../${FRENZY_FS} pkg_add -f - > /dev/null 2>&1
+if [ $? -eq 1 ]; then
+FAILEDPKG="${FAILEDPKG} ${pkg}"
+fi
+echo -n "."
+done
+
+# installing failed packages
+for pkg in `echo ${FAILEDPKG}`
+do
+cat ${pkg} | chroot ../../${FRENZY_FS} pkg_add -f - > /dev/null 2>&1
+echo -n ":"
+done
+
+echo "]"
+
+rm -rf ../../${FRENZY_FS}/var/tmp/* > /dev/null 2>&1
+
+stage_done
+
+fi

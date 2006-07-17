@@ -1,0 +1,24 @@
+#!/usr/local/bin/perl
+
+foreach $arg (@ARGV)
+{
+if ($arg eq "ru") {$mfile="menutrans_ru"}
+if ($arg eq "en") {$mfile="menutrans_en"}
+if ($arg eq "std") {$t{'==EXT=='}="#";}
+if ($arg eq "ext") {$t{'==EXT=='}="";}
+}
+
+require ("$mfile");
+open (MENU, "menu.blank");
+@menu=<MENU>;
+close (MENU);
+foreach $mp (@menu)
+{
+$mx = $mp;
+foreach $kw (keys %t)
+{
+$rep = $t{"$kw"};
+$mx =~ s/$kw/$rep/g;
+}
+print "$mx";
+}

@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# Mount uzip filesystem from selected dir
+mnt_uzip_from ()
+{
+IMG="$1"
+MD=`/sbin/mdconfig -af ${IMG} 2> /dev/null`
+sleep 1
+/sbin/mount_cd9660 /dev/${MD}.uzip ${fs}
+echo -n "[*] Mounting compressed filesystems:"
+for d in libexec bin boot lib sbin usr; do
+    echo -n " $d"
+    /sbin/mount_nullfs ${fs}/${d} /${d}
+done
+echo "."
+}
+
+# Mount compressed filesystems
+mount_uzip_fs ()
+{
+mnt_uzip_from ${fc_uzip}
+UZIP_MD=`echo ${MD} | sed "s/md//g"`
+}
+# -- END
+
+
+uzip_remount ()
+{
+for d in sbin libexec bin boot lib usr; do
+    /sbin/umount -f /${d}
+done
+if [ "${enable_unionfs}" = "YES" ]; then
+    for d in etc var root; do
+	umount /${d}
+	umount /${d}
+    done
+fi
+
+/sbin/umount -f ${fs}
+/sbin/mdconfig -d -u ${UZIP_MD}
+mnt_uzip_from $1  # mount compressed FS
+/sbin/umount -f ${fc}
+
+if [ "${enable_unionfs}" = "YES" ]; then
+    for d in etc var root; do
+	mount_nullfs ${fs}/${d} /${d}
+	mount_unionfs -c transparent ${fr_ram}/$d /$d
+    done
+fi
+
+(sleep 1 && cdcontrol -f ${CD} eject > /dev/null 2>&1 ) &
+}
+

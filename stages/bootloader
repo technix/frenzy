@@ -1,0 +1,17 @@
+#!/bin/sh
+# PROVIDE: bootloader
+# REQUIRE: kernel-install
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "frenzy" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+cd boot
+./make.sh
+cd ..
+
+stage_done
+
+fi

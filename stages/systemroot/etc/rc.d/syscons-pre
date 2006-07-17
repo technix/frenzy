@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# PROVIDE: syscons-pre
+# BEFORE: syscons
+# REQUIRE: LOGIN
+
+vidcontrol < /dev/ttyv0 -L

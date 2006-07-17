@@ -1,0 +1,12 @@
+# -- THEME AUTO-WRITTEN DO NOT EDIT
+include "/usr/X11R6/share/themes/Smooth-Orangish/gtk-2.0/gtkrc"
+
+style "user-font"
+{
+  font_name="Tahoma 8"
+}
+widget_class "*" style "user-font"
+
+include "/home/technix/.gtkrc.mine"
+
+# -- THEME AUTO-WRITTEN DO NOT EDIT

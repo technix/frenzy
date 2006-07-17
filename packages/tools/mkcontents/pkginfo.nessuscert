@@ -1,0 +1,3 @@
+PKG_NAME="nessus-cert-1.0"
+ORIGIN="misc/nessus-cert"
+BASEDIR="/usr/local"

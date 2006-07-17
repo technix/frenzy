@@ -1,0 +1,25 @@
+# $FreeBSD: src/etc/profile,v 1.13 2000/07/27 11:39:33 asmodai Exp $
+#
+# System-wide .profile file for sh(1).
+#
+# Uncomment this to give you the default 4.2 behavior, where disk 
+# information is shown in K-Blocks
+# BLOCKSIZE=K; export BLOCKSIZE
+#
+# For the setting of languages and character sets please see
+# login.conf(5) and in particular the charset and lang options.
+# For full locales list check /usr/share/locale/*
+# You should also read the setlocale(3) man page for information
+# on how to achieve more precise control of locale settings.
+#
+# Read system messages
+# msgs -f
+# Allow terminal messages
+# mesg y
+
+# GTK2 locale
+G_BROKEN_FILENAMES=1; export G_BROKEN_FILENAMES
+
+# GTK XFT
+GDK_USE_XFT=1; export GDK_USE_XFT
+

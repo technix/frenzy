@@ -1,0 +1,72 @@
+#
+# File   : tcsh config for Frenzy 1.0
+# Author : Sergei Mozhaisky (technix@frenzy.org.ua)
+# 
+
+setenv	EDITOR		ee
+setenv	PAGER		more
+setenv	BLOCKSIZE	K
+
+set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin /usr/X11R6/bin $HOME/bin)
+
+# if this is not interactive shell - exit
+if ($?USER == 0 || $?prompt == 0) exit
+
+set autocomplete
+set autoexpand
+set autolist
+set filec
+set ellipsis
+set nobeep
+set listjobs
+set rmstar
+set prompt = "`hostname -s`:%.04%B%#%b "
+set prompt2 = "%R?"
+set history = 100
+set savehist = 100
+set inputmode = insert
+set symlinks = chase
+limit coredumpsize 0
+unset autologout
+
+## Alias section
+alias today     "date '+%Y%m%d'"
+alias mess      'clear ; tail -f /var/log/messages'
+alias ff        'find . -name $*'
+alias h		'history 25'
+alias j 	'jobs -l'
+alias la	'ls -a'
+alias lf	'ls -FA'
+alias ll	'ls -lA'
+
+
+# enter command name and press F1 to see man on this prog
+alias helpcommand man
+
+## Bindkey section
+
+# F1 : help on command currently typed(if 'ls passwd', help on 'ls').
+bindkey ^[[M run-help
+bindkey [OP  run-help
+
+
+if ($term == "xterm" || $term == "vt100" || $term == "vt102" || $term !~ "con*") then
+# bind keypad keys for console, vt100, vt102, xterm
+bindkey "\e[1~" beginning-of-line  # Home
+bindkey "\e[7~" beginning-of-line  # Home rxvt
+bindkey "\e[2~" overwrite-mode     # Ins
+bindkey "\e[3~" delete-char        # Delete
+bindkey "\e[4~" end-of-line        # End
+bindkey "\e[8~" end-of-line        # End rxvt
+else
+# INSERT : toggles overwrite or insert mode.
+bindkey ^[[L  overwrite-mode
+bindkey ^[[2~ overwrite-mode        # for x
+# DELETE : delete char at cursor position.     
+bindkey ^?    delete-char
+bindkey ^[[3~ delete-char           # for x
+# HOME : go to the beginning of the line.
+bindkey ^[[H beginning-of-line
+# END : go to the end of the line.
+bindkey ^[[F end-of-line
+endif

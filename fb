@@ -1,0 +1,4 @@
+#!/bin/sh
+./frbuild install
+./frbuild frenzy
+./frbuild iso

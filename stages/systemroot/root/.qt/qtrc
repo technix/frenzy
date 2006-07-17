@@ -1,0 +1,27 @@
+[3.3]
+libraryPath=/usr/X11R6/lib/plugins:/usr/X11R6/bin
+
+[Font Substitutions]
+arial=helvetica^e
+helv=helvetica^e
+tms rmn=times^e
+
+[General]
+GUIEffects=none^e
+XIMInputStyle=On The Spot
+cursorFlashTime=1000
+doubleClickInterval=400
+embedFonts=true
+font=Tahoma,8,-1,5,50,0,0,0,0,0
+fontPath=\0
+globalStrut=0^e0^e
+resolveSymlinks=true
+style=Windows
+useRtlExtensions=false
+wheelScrollLines=3
+
+[Palette]
+active=#000000^e#c0c0c0^e#ececec^e#dfdfdf^e#808080^e#a0a0a4^e#000000^e#ffffff^e#000000^e#ffffff^e#c0c0c0^e#000000^e#000000^e#ffffff^e#0000ff^e#ff00ff^e
+disabled=#808080^e#c0c0c0^e#ececec^e#dfdfdf^e#808080^e#a0a0a4^e#808080^e#ffffff^e#808080^e#c0c0c0^e#c0c0c0^e#000000^e#808080^e#c0c0c0^e#0000ff^e#ff00ff^e
+inactive=#000000^e#c0c0c0^e#ececec^e#dfdfdf^e#808080^e#a0a0a4^e#000000^e#ffffff^e#000000^e#ffffff^e#c0c0c0^e#000000^e#000000^e#ffffff^e#0000ff^e#ff00ff^e
+

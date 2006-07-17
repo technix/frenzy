@@ -1,0 +1,90 @@
+#!/bin/sh
+
+bootsplash ()
+{
+
+FS_SIZE=`du -m ${fc_uzip} | awk '{print $1}'`
+MEMREQ=`expr ${FS_SIZE} + 120`
+### Welcome screen
+
+VERSION=""
+VF="${fc}/boot/frenzy.version"
+if [ -e $VF ]; then
+    VERSION=`cat $VF`
+    VERSION="   $VERSION"
+    xl=0
+    while [ ${xl} -lt 79 ];
+    do
+        VERSION="$VERSION "
+        xl=`echo "${VERSION}" | awk '{print length}'`
+    done
+fi
+
+bootsplash_screen
+read -t ${DELAY}s INT
+# newline 
+echo
+
+PARAM=""
+
+PARAMLIST="lang ramdisk toram gui fromhdd nohdd nohdmnt hdrw nofem nobackup hwinfo"
+sysvar_lang="FR_LANG"
+sysvar_ramdisk="FR_RAMDISK"
+sysvar_toram="FR_TORAM"
+sysvar_gui="FR_GUI"
+sysvar_fromhdd="FR_FROMHDD"
+sysvar_nohdd="FR_NOHDD"
+sysvar_nohdmnt="FR_NOHDMNT"
+sysvar_hdrw="FR_HDRW"
+sysvar_nobackup="FR_NOBACKUP"
+sysvar_nofem="FR_NOFEM"
+sysvar_hwinfo="FR_HWINFO"
+
+
+for i in `echo ${INT}`
+do
+    for param in `echo ${PARAMLIST}`
+    do
+	if [ -n `echo $i | grep "${param}"` ]; then
+	    NAME=`echo $i | awk -F"=" '{print $1}'`
+	    VALUE=`echo $i | awk -F"=" '{print $2}'`
+	    if [ -z "${VALUE}" ]; then
+		VALUE=1
+	    fi
+	fi
+    done
+    if [ -n "${NAME}" ]; then
+        eval VARNAME="sysvar_$NAME"
+	eval ZNAME="\$${VARNAME}"
+        setvar ${ZNAME} "${VALUE}"
+    fi
+done
+
+if [ -n "${FR_RAMDISK}" ]; then
+    MFS_SIZE="$FR_RAMDISK"
+fi
+
+}
+
+bootsplash_save ()
+{
+conf="/etc/frenzy.boot"
+cat /dev/null > ${conf} # clean this file
+
+if [ -n "${FR_LANG}" ]; then
+    SYSLANG="$FR_LANG"
+else
+    SYSLANG="${DEFLANG}"
+fi
+echo "FR_LANG=${SYSLANG} " >> ${conf}
+echo "FR_AUTOLOGIN=1 " >> ${conf}
+
+if [ -n "${FR_GUI}" ]; then
+    echo "FR_GUI=1 " >> ${conf}
+fi
+
+if [ -n "${FR_HWINFO}" ]; then
+    echo "FR_HWINFO=1 " >> ${conf}
+fi
+
+}

@@ -1,0 +1,59 @@
+# rc
+MSG_apply_conf_patch="Applying configuration patches."
+MSG_loading_system_rc="Loading system rc."
+
+# rc (backup)
+MSG_restoring_backup="Restoring backup."
+
+# rc.fromhdd
+MSG_booting_from_hdd="Booting from HDD:"
+MSG_image_not_found="Frenzy image not found on HDD."
+
+# rc.hdd
+MSG_searching_for_partitions="Searching for partitions..."
+
+# rc.mfs
+MSG_memory="Memory:"
+MSG_ramdisk="RAM-disk:"
+
+# rc.toram
+MSG_please_wait_toram="Loading to RAM please wait.\n    Please wait...\n"
+MSG_toram_failed="An ERROR occured while loading to RAM."
+MSG_done_toram="Loading to RAM is OK."
+
+# rc.fem
+MSG_fem_loading="Loading Frenzy extension modules."
+MSG_fem_search="Searching in"
+MSG_fem_union="Mounting unionfs."
+MSG_fem_loaded="Extension modules loaded."
+
+# rc.bootsplash
+
+bootsplash_screen ()
+{
+printf "
+$zwwb${VERSION}$ze\n\
+
+    lang=en${zgb}|${ze}de${zgb}|${ze}fr${zgb}|${ze}it${zgb}|${ze}es${zgb}|${ze}pl${zgb}|${ze}bg${zgb}|${ze}cz${zgb}|${ze}sk${zgb}|${ze}ru${zgb}|${ze}ua        Language selection 
+
+    ramdisk=X      RAM-disk size, now ${MFS_SIZE} 
+    toram          Loading to RAM (required >${MEMREQ}Mb RAM) 
+    fromhdd        Loading image from HDD (frees CD-ROM) 
+    nohdd          Don't search and mount HDD partitions
+    nohdmnt        Don't mount HDD partitions during boot
+    hdrw           Mount HDD partitions in RW mode 
+    nobackup       Don't restore config data from backup 
+    nofem          Don't load Frenzy extension modules
+    hwinfo         Make a list of hardware 
+    gui            Boot in graphics mode 
+
+  Defauls: lang=en ramdisk=${MFS_SIZE}
+
+
+
+
+
+${zgb}-------------------------------------------------------------------------------${ze}
+${mi} Type boot parameters and hit Enter (${DELAY} seconds)
+${me} "
+}

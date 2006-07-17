@@ -1,0 +1,78 @@
+#!/bin/sh
+
+# PROVIDE: frenzy
+# REQUIRE: LOGIN 
+# KEYWORD: FreeBSD
+
+PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:/usr/X11R6/sbin"
+
+# frenzy scripts before login
+
+mi="\033[0;40;32m[*]\033[0m" # info
+mw="\033[0;40;31m[!]\033[0m" # warning
+me="\033[1;40;33m[>]\033[0m" # input
+hlb="\033[1;40;33m"
+hle="\033[0m"
+
+# include variables
+
+FR_GUI=0
+FR_GUISAFE=0
+FR_HWINFO=0
+FR_AUTOLOGIN=0
+
+. /etc/frenzy.boot
+
+# mounting procfs
+mount /proc > /dev/null 2>&1
+
+## Auto-configure mouse
+#
+printf "$mi "
+/usr/local/bin/mouse-detect
+#
+##
+
+## Get hardware info
+#
+if [ ${FR_HWINFO} -eq 1 ]; then
+if [ -e /usr/local/bin/hwinfo ]; then
+case ${FR_LANG} in
+RU)
+GH="${mi} Сбор информации об оборудовании... "
+GR="завершен, сохранен в /tmp/hwinfo.html.\n"
+;;
+*)
+GH="${mi} Getting hardware information... "
+GR="saved in /tmp/hwinfo.html.\n"
+;;
+esac
+printf "${GH}"
+/usr/local/bin/hwinfo -html -full > /tmp/hwinfo.html
+printf "${GR}"
+fi
+fi
+#
+##
+
+
+## Enable GUI if needed
+#
+if [ ${FR_GUI} -eq 1 ]; then
+printf "$mi Starting X.org\n"
+# enable X.org autostart
+touch /tmp/.xautostart
+fi
+
+if [ ${FR_GUISAFE} -eq 1 ]; then
+/usr/local/bin/xautoconf safemon
+fi
+
+## Enable autologin on ttyv0 if needed
+#
+if [ ${FR_AUTOLOGIN} -eq 1 ]; then
+X="/etc/ttys"
+/usr/bin/awk '{if ($1 == "ttyv0") print $1, $2, "alroot\"", $4, $5, $6
+ else print $0 }' ${X} > ${X}.new
+/bin/mv ${X}.new ${X}
+fi

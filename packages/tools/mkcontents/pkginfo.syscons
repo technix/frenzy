@@ -1,0 +1,3 @@
+PKG_NAME="frenzy-fonts-syscons-1.0"
+ORIGIN="misc/frenzy-fonts-syscons"
+BASEDIR="/usr/share/syscons/fonts"

@@ -1,0 +1,35 @@
+#!/bin/sh
+# PROVIDE: system-patch
+# REQUIRE: packages-lite-lib packages-lite-files packages-lite-locales
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "frenzy" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+# install new system files
+SYSTEMROOT="systemroot"
+(cd ${SYSTEMROOT} && pax -rw . ../../${FRENZY_FS})
+
+# do extra patches
+PATCHDIR="patches"
+for tpe in ${POSTPATCHES}
+do
+echo -n "${tpe} ["
+for i in `cd ${PATCHDIR} && ls -1 $tpe*`
+do
+echo -n "."
+cp ${PATCHDIR}/${i} ../${FRENZY_FS}
+chroot ../${FRENZY_FS} sh /${i}
+rm ../${FRENZY_FS}/${i}
+done
+echo "]"
+done
+
+# add version info
+echo "$VERSION" > ../${FRENZY_FS}/etc/motd
+
+stage_done
+
+fi

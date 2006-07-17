@@ -1,0 +1,23 @@
+#!/bin/sh
+# PROVIDE: packages-lite-lib
+# REQUIRE: packages-install-freebsd packages-install-frenzy
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "frenzy" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+SCRIPTDIR="pkglite/lib"
+
+echo -n "[*] Removing unused static libraries... "
+cp ${SCRIPTDIR}/rmlibs.sh ../${FRENZY_FS}
+chroot ../${FRENZY_FS} sh /rmlibs.sh /usr/lib
+chroot ../${FRENZY_FS} sh /rmlibs.sh /usr/local/lib
+chroot ../${FRENZY_FS} sh /rmlibs.sh /usr/X11R6/lib
+rm ../${FRENZY_FS}/rmlibs.sh
+echo "done."
+
+stage_done
+
+fi

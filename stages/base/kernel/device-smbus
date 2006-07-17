@@ -1,0 +1,56 @@
+# === smbus ==================================================================
+
+#
+# SMB bus
+#
+# System Management Bus support is provided by the 'smbus' device.
+# Access to the SMBus device is via the 'smb' device (/dev/smb*),
+# which is a child of the 'smbus' device.
+#
+# Supported devices:
+# smb		standard io through /dev/smb*
+#
+# Supported SMB interfaces:
+# iicsmb	I2C to SMB bridge with any iicbus interface
+# bktr		brooktree848 I2C hardware interface
+# intpm		Intel PIIX4 (82371AB, 82443MX) Power Management Unit
+# alpm		Acer Aladdin-IV/V/Pro2 Power Management Unit
+# ichsmb	Intel ICH SMBus controller chips (82801AA, 82801AB, 82801BA)
+# viapm		VIA VT82C586B/596B/686A and VT8233 Power Management Unit
+# amdpm		AMD 756 Power Management Unit
+# nfpm		NVIDIA nForce Power Management Unit
+#
+device		smbus		# Bus support, required for smb below.
+
+device		intpm
+device		alpm
+device		ichsmb
+device		viapm
+device		amdpm
+device		nfpm
+
+device		smb
+
+#
+# I2C Bus
+#
+# Philips i2c bus support is provided by the `iicbus' device.
+#
+# Supported devices:
+# ic	i2c network interface
+# iic	i2c standard io
+# iicsmb i2c to smb bridge. Allow i2c i/o with smb commands.
+#
+# Supported interfaces:
+# bktr	brooktree848 I2C software interface
+#
+# Other:
+# iicbb	generic I2C bit-banging code (needed by lpbb, bktr)
+#
+device		iicbus		# Bus support, required for ic/iic/iicsmb below.
+device		iicbb
+
+device		ic
+device		iic
+device		iicsmb		# smb over i2c bridge
+
