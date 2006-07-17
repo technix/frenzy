@@ -1,8 +1,0 @@
-rescue
-sys
-usr/games
-usr/obj
-usr/src
-usr/share/games
-usr/share/doc/*
-usr/share/openssl/man

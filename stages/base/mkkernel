@@ -1,4 +1,0 @@
-#!/bin/sh
-cd kernel
-cat /dev/null > ../FRENZY
-cat * >> ../FRENZY
