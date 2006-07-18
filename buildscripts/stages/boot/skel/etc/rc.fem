@@ -8,10 +8,13 @@ RELINK=0
 
 printf "${mi} ${MSG_fem_loading}\n"
 
-for d in `ls /mnt`
-do
-    DIRLIST="${DIRLIST} /mnt/${d}/frenzy/fem"
-done
+# if nofem option enabled, do not load FEM from HDD
+if [ -z "$FR_NOFEM" ]; then
+    for d in `ls /mnt`
+    do
+	DIRLIST="${DIRLIST} /mnt/${d}/frenzy/fem"
+    done
+fi
 DIRLIST="${DIRLIST} ${ff}/fem"
 
 for i in ${DIRLIST} 
