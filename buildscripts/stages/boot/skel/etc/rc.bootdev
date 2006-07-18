@@ -10,6 +10,7 @@ do
     mount_cd9660 -s 0 ${CD} ${fc} 2>/dev/null
     if test -r ${fc_uzip}; then 
 	echo "OK."
+	echo "[*] Booting from CD (${CD})."
 	devfound="1"
 	break
     else
@@ -26,6 +27,7 @@ if test ${devfound} -eq 0; then
 	##mount ${FLASH} ${fc} 2>/dev/null
 	if test -r ${fc_uzip}; then 
 	    echo "OK."
+	    echo "[*] Booting from USB Flash (${FLASH})."
 	    devfound="1"
 	    break
 	else
