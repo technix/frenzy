@@ -1,0 +1,466 @@
+#!/bin/sh
+#
+# Name    : Frenzy USB Flash installer
+# Version : 0.2
+# Author  : Elisey Savateev (b3k@mail.ru)
+#
+
+. l10n.sh
+. dialog_common.sh
+
+MODID="install2flash"
+VERSION="0.2"
+
+msg_instsrc=`gettext -s "Installation source"`
+msg_chsrc=`gettext -s "Choose an installation source"`
+msg_nodev=`gettext -s "No flash disk found.\\nTry again?"`
+msg_flash=`gettext -s "Flash disk"`
+msg_chflash=`gettext -s "Choose flash disk for installation"`
+msg_chiso=`gettext -s "Choose an ISO image"`
+msg_start=`gettext -s "Installation started at"`
+msg_end=`gettext -s "Installation ended at"`
+msg_init=`gettext -s "Initializing flash disk"`
+msg_initerr=`gettext -s "initializing"`
+msg_params=`gettext -s "The following parameters selected"`
+msg_srctype=`gettext -s "Source type"`
+msg_destr=`gettext -s "All information on flash disk will be destroyed"`
+msg_noentry=`gettext -s "doesn't contain entry for"`
+msg_part=`gettext -s "Creating partition table"`
+msg_parterr=`gettext -s "create partition table"`
+msg_label=`gettext -s "Creating label on"`
+msg_labelerr=`gettext -s "create label on"`
+msg_boot=`gettext -s "Installing boot manager on"`
+msg_booterr=`gettext -s "install boot manager on"`
+msg_data=`gettext -s "Installing data"`
+msg_dataerr=`gettext -s "install data"`
+msg_help=`gettext -s "\
+  -n Noninteractive mode (cdialog is not required)\\n\
+  -f Do not display warning messages\\n\
+  -h Display this help message\\n\
+  -s source Specify installation source\\n\
+     source can be device, mountpoint or ISO image\\n\
+     Default: /Frenzy/boot\\n\
+  -l log Specify log file path\\n\
+     Default: /tmp/install2flash.log\\n\
+  disk Full path to flash disk device\\n\
+  Default: /dev/da0"`
+
+# Variables (command line arguments)
+DEV=""		# Flash device
+LOG=""		# Full path to the log file
+SRC=""		# Installation source (cdrom device, mountpoint or iso)
+NONINTER=0	# Non-interactive mode
+NOWARN=0	# Do not display warning messages
+
+# Variables that will be set automatically
+SRCTYPE=""	# Source type
+SECTSIZE=""	# Flash disk sector size
+SRCSIZE=""	# Source size
+SRCUMNT=0	# Do we need to unmount source when finish?
+
+# Constants
+FSTAB="/etc/fstab"			# Full path to fstab file
+CDMNT="/Frenzy/boot"		# Frenzy Live CD mountpoint
+SRCMNT="/tmp/frenzy.src"	# Source mountpoint
+DSTMNT="/tmp/frenzy.dst"	# Flash mountpoint
+MDUNIT=10					# MD unit number (when SRCTYPE="ISO")
+PARTOFFSET=32				# First partition offset in sectors
+SRCADD=16348				# Addition to source size in kilobytes
+
+select_dev()
+{
+	local dev_list=""
+	local flash_list=""
+
+	while [ $? -eq 0 ]; do
+		dev_list=`ls /dev/da[0-9]`
+		if [ -z "$dev_list" ]; then 
+			yesno "$msg_error" "$msg_nodev" "6 40"
+		else
+			break
+		fi
+	done
+
+	if [ $? -ne 0 ]; then exit 0; fi
+
+	if [ `echo "$dev_list" | wc -l` -eq 1 ]; then 
+		DEV="$dev_list"
+		return 0
+	fi
+
+	for i in $dev_list; do
+		flash_list="${flash_list} \"${i#/dev/}\" \"$msg_flash ${i#/dev/da}\""
+	done
+
+	menu "$msg_flash" "$msg_chflash" "10 40 3" "$flash_list"
+	if [ -z "$RESULT" ]; then exit 0; fi
+
+	DEV="$RESULT"
+}
+
+error()
+{
+	if [ $NONINTER -eq 0 ]; then
+		msgbox "$msg_error" "$1" "6 50"
+	else
+		echo "$MODID: $1" >&2
+	fi
+}
+
+info()
+{
+	echo "===> $1" >>"$LOG"
+
+	if [ $NONINTER -eq 0 ]; then
+		infobox "$1..." "3 50"
+	else
+		echo "===> $1"
+	fi
+}
+
+log_init()
+{
+	if [ -z "$LOG" ]; then LOG="/tmp/${MODID}.log"; fi
+
+	touch "$LOG" >/dev/null 2>&1
+	if [ $? -ne 0 -o -d "$LOG" ]; then 
+		error "$msg_create $LOG"
+		exit 1
+	fi
+	
+	echo "$msg_start `date`" >"$LOG"
+}
+
+flash_init()
+{
+	info "$msg_init $DEV"
+
+	SECTSIZE=`diskinfo $DEV | cut -f 2` && \
+	dd if=/dev/zero of=$DEV bs=$SECTSIZE count=$PARTOFFSET >>"$LOG" 2>&1 && \
+	fdisk -BI "$DEV" >>"$LOG" 2>&1
+	if [ $? -ne 0 ]; then
+		error "$msg_error $msg_initerr $DEV. $msg_log."
+		exit 1
+	fi
+}
+
+select_source()
+{
+	menu "$msg_instrc" "$msg_chsrc" "10 40 3" \
+	"\"CDROM\" \"Frenzy Live CD\" \
+	\"ISO\" \"Frenzy ISO\""
+
+	if [ "$RESULT" = "CDROM" ]; then
+		SRC=$CDMNT
+	elif [ "$RESULT" = "ISO" ]; then
+		fselect "$msg_chiso" "./" "10 50"
+		if [ -z "$RESULT" ]; then exit 0; fi
+
+		SRC=$RESULT
+	elif [ -z "$RESULT" ]; then
+		exit 0
+	fi
+}
+
+check_source()
+{
+	if [ -n "`echo $SRC | grep '^/dev/'`" ]; then
+		if [ ! -c "$SRC" ]; then
+			error "$msg_file $SRC $msg_notfound $msg_or $msg_notdev."
+			exit 1
+		fi
+
+		SRCTYPE="DEV"
+	elif [ -n "`echo $SRC | grep '\.iso$'`" ]; then
+		if [ ! -f "$SRC" ]; then
+			error "$msg_file $SRC $msg_notfound."
+			exit 1
+		fi
+
+		SRCTYPE="ISO"
+	else
+		if [ ! -d "$SRC" ]; then
+			error "$msg_file $SRC $msg_notfound $msg_or $msg_notdir."
+			exit 1
+		fi
+
+		SRCTYPE="MNTPT"
+	fi
+}
+
+confirm()
+{
+	yesno "$msg_warn" "$msg_params: \n\
+	$msg_instsrc: $SRC\n\
+	$msg_srctype: $SRCTYPE\n\
+	$msg_flash: $DEV\n\n\
+	$msg_destr. $msg_confirm"\
+	"13 50"
+	if [ $? -ne 0 ]; then exit 0; fi
+}
+
+usage()
+{
+	echo "$msg_usage: $MODID [-nfh] [-s source] [-l log] [disk]"
+	exit 1
+}
+
+help()
+{
+	echo "$msg_usage: $MODID [-nfh] [-s source] [-l log] [disk]"
+	echo -e "$msg_help"
+	echo "$msg_example: $MODID -ns /dev/acd0 da1"
+	exit 0
+}
+
+mount_source()
+{
+	info "$msg_mounting $SRC"
+
+	if [ "$SRCTYPE" != "ISO" ]; then
+		mount "$SRC" >>"$LOG" 2>&1
+	else
+		mdconfig -a -t vnode -f "$SRC" -u $MDUNIT >>"$LOG" 2>&1 && \
+		mount_cd9660 /dev/md$MDUNIT "$SRCMNT" >>"$LOG" 2>&1 && \
+		SRC=$SRCMNT
+	fi
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_mount $SRC. $msg_log."
+		exit 1
+	fi
+
+	SRCUMNT=1
+}
+
+prepare_source()
+{
+	local tmp=""
+
+	if [ "$SRCTYPE" = "MNTPT" ]; then
+		if [ -n "`mount | grep "$SRC"`" ]; then return; fi
+	elif [ "$SRCTYPE" = "ISO" ]; then
+		if [ ! -d "$SRCMNT" ]; then
+			mkdir -p "$SRCMNT" >/dev/null 2>&1
+			if [ $? -ne 0 ]; then
+				error "$msg_create $SRCMNT."
+				exit 1
+			fi
+		fi
+	else
+		if [ -z "`mount | grep "$SRC"`" ]; then
+			tmp=`grep "$SRC" "$FSTAB" | tr -s '\t' ' ' | cut -d ' ' -f 2`
+			if [ -z "$tmp" ]; then
+				error "$FSTAB $msg_noentry $SRC."
+				exit 1
+			fi
+			
+			SRC=$tmp
+		fi
+	fi
+
+	mount_source
+}
+
+clean_source()
+{
+	info "$msg_umounting $SRC"
+
+	if [ "$SRCTYPE" != "ISO" ]; then
+		umount "$SRC" >>"$LOG" 2>&1
+	else
+		umount "$SRC" >>"$LOG" 2>&1 && \
+		mdconfig -d -u $MDUNIT >>"$LOG" 2>&1
+	fi
+
+	if [ $? -ne 0 ]; then error "$msg_unable $msg_umount $SRC. $msg_log."; fi
+}
+
+flash_mkpart()
+{
+	local srcsize=`du -kd0 "$SRC" | cut -f 1`
+	
+	set `diskinfo $DEV`
+	local flashsize=$4
+	local cyls=$5
+	local heads=$6
+	local sectors=$7
+
+	# FIXME: Better calculation of start offset and size of partitions
+   	# to avoid errors when fdisk can't adjust bad values
+	srcsize=$(((srcsize + SRCADD) * (1024 / SECTSIZE)))
+	local table=\
+"g c$cyls h$heads s$sectors\n\
+p 1 0 0 0\n\
+p 2 0 0 0\n\
+p 3 0 0 0\n\
+p 4 0 0 0\n\
+p 1 11 $PARTOFFSET $((flashsize - srcsize - $PARTOFFSET))\n\
+p 2 165 $((flashsize - srcsize)) $srcsize\n\
+a 2"
+
+	info "$msg_part"
+	
+	echo -e "$table" | fdisk -f - "$DEV" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_parterr. $msg_log."
+		exit 1
+	fi
+}
+
+flash_formatpart()
+{
+	local part1="${DEV}s1"
+	local part2="${DEV}s2"
+	local tmp=`mktemp -q /tmp/frenzy.XXXXX`
+
+	info "$msg_label $part2"
+
+	dd if=/dev/zero of=$part2 bs=$SECTSIZE count=32 >>"$LOG" 2>&1 && \
+	bsdlabel -w -B $part2 >>"$LOG" 2>&1 && \
+	bsdlabel $part2 | sed -e '/a:/s/unused/4.2BSD/' >$tmp && \
+	bsdlabel -R $part2 $tmp >>"$LOG" 2>&1 && \
+	rm -f $tmp
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_labelerr $part2. $msg_log."
+		exit 1
+	fi
+
+	info "$msg_formatting ${part2}a"
+
+	newfs -n -m 0 -b $((SECTSIZE * 8)) -f $SECTSIZE -i $((SECTSIZE * 16)) "${part2}a" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_format ${part2}a. $msg_log."
+		exit 1
+	fi
+
+	info "$msg_formatting $part1"
+
+	# TODO: Additional tuning for FAT depending on flash disk geometry
+	newfs_msdos -F 32 "$part1" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_format $part1. $msg_log."
+		exit 1
+	fi
+}
+
+flash_boot()
+{
+	info "$msg_boot $DEV"
+
+	boot0cfg -B -o noupdate -s 2 "$DEV" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_booterr $DEV. $msg_log."
+		exit 1
+	fi
+}
+
+install_data()
+{
+	local part="${DEV}s2a"
+
+	if [ ! -d "$DSTMNT" ]; then
+		mkdir -p "$DSTMNT" >/dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			error "$msg_create $DSTMNT."
+			exit 1
+		fi
+	fi
+
+	info "$msg_mounting $part"
+
+	mount "$part" "$DSTMNT" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_mount $part. $msg_log."
+		exit 1
+	fi
+
+	# TODO: Display intallation progress (maybe with tar + bar + cdialog --gauge?)
+	info "$msg_data"
+
+	cp -R "$SRCMNT"/* "$DSTMNT" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then
+		error "$msg_unable $msg_dataerr. $msg_log."
+		exit 1
+	fi
+
+	info "$msg_umounting $part"
+
+	umount "$part" >>"$LOG" 2>&1
+
+	if [ $? -ne 0 ]; then 
+		error "$msg_unable $msg_umount $part. $msg_log."
+		exit 1
+   	fi
+}
+
+while getopts nfhs:l: OPT >/dev/null 2>&1; do
+	case $OPT in
+		n) NONINTER=1 ;;
+		f) NOWARN=1 ;;
+		h) help ;;
+		s) SRC=$OPTARG ;;
+		l) LOG=$OPTARG ;;
+		\?) echo "$MODID: $msg_badargs" >&2; usage ;;
+	esac
+done
+
+shift $((OPTIND - 1))
+if [ $# -eq 1 -a "$OPT" != "no" ]; then DEV=$1; fi
+	
+if [ $NONINTER -eq 0 ]; then
+	dialog_init
+	if [ $? -ne 0 ]; then
+		echo "$MODID: cdialog $msg_notfound" >&2
+		exit 1
+	fi
+fi
+
+if [ -z "$SRC" ]; then
+	if [ $NONINTER -eq 0 ]; then
+		select_source
+	else
+		SRC=$CDMNT
+	fi
+fi
+
+check_source
+
+if [ -z "$DEV" ]; then
+	if [ $NONINTER -eq 0 ]; then
+		select_dev
+	else
+		DEV="/dev/da0"
+	fi
+fi
+
+if [ $NONINTER -eq 0 -a $NOWARN -eq 0 ]; then confirm; fi
+
+log_init
+
+if [ `id -u` -ne 0 -a $NONINTER -eq 0 ]; then
+	echo "$msg_su"
+	su root -c "$0 -fs "$SRC" -l "$LOG" "$DEV""
+	exit $?
+fi
+
+prepare_source
+
+flash_init
+flash_mkpart
+flash_formatpart
+flash_boot
+
+install_data
+
+if [ $SRCUMNT -eq 1 ]; then clean_source; fi
+
+echo "$msg_end `date`" >>"$LOG"
+exit 0

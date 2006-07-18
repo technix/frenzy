@@ -1,0 +1,167 @@
+# Common
+msgid "Error"
+msgstr "Ошибка"
+#
+msgid "Exit"
+msgstr "Выход"
+#
+msgid "Cancel"
+msgstr "Отмена"
+#
+msgid "version"
+msgstr "версия"
+#
+msgid "not found"
+msgstr "не найден"
+#
+msgid "Yes"
+msgstr "Да"
+#
+msgid "No"
+msgstr "Нет"
+#
+msgid "Сannot create"
+msgstr "Не удалось создать"
+#
+msgid "See log file for details"
+msgstr "Подробности смотрите в log файле"
+#
+msgid "File"
+msgstr "Файл"
+#
+msgid "or"
+msgstr "или"
+#
+msgid "is not a device"
+msgstr "не является устройством"
+#
+msgid "is not a directory"
+msgstr "не является директорией"
+#
+msgid "Warning"
+msgstr "Предупреждение"
+#
+msgid "Do you wish to continue?"
+msgstr "Желаете продолжить?"
+#
+msgid "Usage"
+msgstr "Использование"
+#
+msgid "Example"
+msgstr "Пример"
+#
+msgid "Incorrect arguments"
+msgstr "Некорректные аргументы"
+#
+msgid "Switching to root authority"
+msgstr "Переключение на полномочия root"
+#
+msgid "Mounting"
+msgstr "Монтирование"
+#
+msgid "Unmounting"
+msgstr "Демонтирование"
+#
+msgid "mount"
+msgstr "монтировать"
+#
+msgid "unmount"
+msgstr "демонтировать"
+#
+msgid "Unable to"
+msgstr "Не удалось"
+#
+msgid "Formatting"
+msgstr "Форматирование"
+#
+msgid "format"
+msgstr "форматировать"
+# install2flash
+msgid "Installation source"
+msgstr "Источник установки"
+#
+msgid "Choose an installation source"
+msgstr "Выберите источник установки"
+#
+msgid "No flash disk found.\\nTry again?"
+msgstr "Flash диск не найден.\\nПовторить попытку?"
+#
+msgid "Flash disk"
+msgstr "Flash диск"
+#
+msgid "Choose flash disk for installation"
+msgstr "Выберите flash диск для установки"
+#
+msgid "Choose an ISO image"
+msgstr "Выберите ISO образ"
+#
+msgid "Installation started at"
+msgstr "Установка начата в"
+#
+msgid "Installation ended at"
+msgstr "Установка завершена в"
+#
+msgid "Initializing flash disk"
+msgstr "Инициализация flash диска"
+#
+msgid "initializing"
+msgstr "при инициализации"
+#
+msgid "The following parameters selected"
+msgstr "Выбраны следующие параметры"
+#
+msgid "Source type"
+msgstr "Тип источника"
+#
+msgid "All information on flash disk will be destroyed"
+msgstr "Вся информация на flash диске будет уничтожена"
+#
+msgid "doesn't contain entry for"
+msgstr "не содержит записи для"
+#
+msgid "Creating partition table"
+msgstr "Создание таблицы разделов"
+#
+msgid "create partition table"
+msgstr "создать таблицу разделов"
+#
+msgid "Creating label on"
+msgstr "Создание метки на"
+#
+msgid "create label on"
+msgstr "создать метку на"
+#
+msgid "Installing boot manager on"
+msgstr "Установка менеджера загрузки на"
+#
+msgid "install boot manager on"
+msgstr "установить менеджер загрузки на"
+#
+msgid "Installing data"
+msgstr "Установка данных"
+#
+msgid "install data"
+msgstr "установить данные"
+#
+msgid "\
+  -n Noninteractive mode (cdialog is not required)\\n\
+  -f Do not display warning messages\\n\
+  -h Display this help message\\n\
+  -s source Specify installation source\\n\
+     source can be device, mountpoint or ISO image\\n\
+     Default: /Frenzy/boot\\n\
+  -l log Specify log file path\\n\
+     Default: /tmp/install2flash.log\\n\
+  disk Full path to flash disk device\\n\
+  Default: /dev/da0"
+msgstr "\
+  -n Неинтерактивный режим (cdialog не требуется)\\n\
+  -f Не выводить предупреждения\\n\
+  -h Вывести это справочное сообщение\\n\
+  -s source Указать источник установки\\n\
+     source может быть устройством, точкой монтирования или ISO образом\\n\
+     По умолчанию: /Frenzy/boot\\n\
+  -l log Указать путь к log файлу\\n\
+     По умолчанию: /tmp/install2flash.log\\n\
+  disk Полный путь к flash диску\\n\
+  По умолчанию: /dev/da0"
