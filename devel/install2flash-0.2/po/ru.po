@@ -1,0 +1,226 @@
+# Frenzy translations file.
+# Copyright (C) 2006 Sergei Mozhaisky
+# This file is distributed under the same license as the Frenzy.
+# Elisey Savateev <b3k@mail.ru>, 2006.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Frenzy 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-07-19 14:57+0600\n"
+"PO-Revision-Date: 2006-07-19 14:57+0600\n"
+"Last-Translator: Elisey Savateev <b3k@mail.ru>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: l10n.sh:8
+msgid "Error"
+msgstr "Ошибка"
+
+#: l10n.sh:9
+msgid "Exit"
+msgstr "Выход"
+
+#: l10n.sh:10
+msgid "version"
+msgstr "версия"
+
+#: l10n.sh:11
+msgid "Cancel"
+msgstr "Отмена"
+
+#: l10n.sh:12
+msgid "not found"
+msgstr "не найден"
+
+#: l10n.sh:13
+msgid "Yes"
+msgstr "Да"
+
+#: l10n.sh:14
+msgid "No"
+msgstr "Нет"
+
+#: l10n.sh:15
+msgid "Can not create"
+msgstr "Не удалось создать"
+
+#: l10n.sh:16
+msgid "See log file for details"
+msgstr "Подробности смотрите в log файле"
+
+#: l10n.sh:17
+msgid "File"
+msgstr "Файл"
+
+#: l10n.sh:18
+msgid "or"
+msgstr "или"
+
+#: l10n.sh:19
+msgid "is not a device"
+msgstr "не является устройством"
+
+#: l10n.sh:20
+msgid "is not a directory"
+msgstr "не является директорией"
+
+#: l10n.sh:21
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: l10n.sh:22
+msgid "Do you wish to continue?"
+msgstr "Желаете продолжить?"
+
+#: l10n.sh:23
+msgid "Usage"
+msgstr "Использование"
+
+#: l10n.sh:24
+msgid "Example"
+msgstr "Пример"
+
+#: l10n.sh:25
+msgid "Incorrect arguments"
+msgstr "Некорректные аргументы"
+
+#: l10n.sh:26
+msgid "Switching to root authority"
+msgstr "Переключение на полномочия root"
+
+#: l10n.sh:27
+msgid "mount"
+msgstr "монтировать"
+
+#: l10n.sh:28
+msgid "unmount"
+msgstr "демонтировать"
+
+#: l10n.sh:29
+msgid "Mounting"
+msgstr "Монтирование"
+
+#: l10n.sh:30
+msgid "Unable to"
+msgstr "Не удалось"
+
+#: l10n.sh:31
+msgid "Unmounting"
+msgstr "Демонтирование"
+
+#: l10n.sh:32
+msgid "Formatting"
+msgstr "Форматирование"
+
+#: l10n.sh:33
+msgid "format"
+msgstr "форматировать"
+
+#: install2flash:14
+msgid "Installation source"
+msgstr "Источник установки"
+
+#: install2flash:15
+msgid "Choose an installation source"
+msgstr "Выберите источник установки"
+
+#: install2flash:16
+msgid "No flash disk found.\\nTry again?"
+msgstr "Flash диск не найден.\\nПовторить попытку?"
+
+#: install2flash:17
+msgid "Flash disk"
+msgstr "Flash диск"
+
+#: install2flash:18
+msgid "Choose flash disk for installation"
+msgstr "Выберите flash диск для установки"
+
+#: install2flash:19
+msgid "Choose an ISO image"
+msgstr "Выберите ISO образ"
+
+#: install2flash:20
+msgid "Installation started at"
+msgstr "Установка начата в"
+
+#: install2flash:21
+msgid "Installation ended at"
+msgstr "Установка завершена в"
+
+#: install2flash:22
+msgid "Initializing flash disk"
+msgstr "Инициализация flash диска"
+
+#: install2flash:23
+msgid "initializing"
+msgstr "при инициализации"
+
+#: install2flash:24
+msgid "The following parameters selected"
+msgstr "Выбраны следующие параметры"
+
+#: install2flash:25
+msgid "Source type"
+msgstr "Тип источника"
+
+#: install2flash:26
+msgid "All information on flash disk will be destroyed"
+msgstr "Вся информация на flash диске будет уничтожена"
+
+#: install2flash:27
+msgid "doesn't contain entry for"
+msgstr "не содержит записи для"
+
+#: install2flash:28
+msgid "Creating partition table"
+msgstr "Создание таблицы разделов"
+
+#: install2flash:29
+msgid "create partition table"
+msgstr "создать таблицу разделов"
+
+#: install2flash:30
+msgid "Creating label on"
+msgstr "Создание метки на"
+
+#: install2flash:31
+msgid "create label on"
+msgstr "создать метку на"
+
+#: install2flash:32
+msgid "Installing boot manager on"
+msgstr "Установка менеджера загрузки на"
+
+#: install2flash:33
+msgid "install boot manager on"
+msgstr "установить менеджер загрузки на"
+
+#: install2flash:34
+msgid "Installing data"
+msgstr "Установка данных"
+
+#: install2flash:35
+msgid "install data"
+msgstr "установить данные"
+
+#: install2flash:36
+msgid ""
+"  -n Noninteractive mode (cdialog is not required)\\n  -f Do not display "
+"warning messages\\n  -h Display this help message\\n  -s source Specify "
+"installation source\\n     source can be device, mountpoint or ISO image"
+"\\n     Default: /Frenzy/boot\\n  -l log Specify log file path\\n     "
+"Default: /tmp/install2flash.log\\n  disk Full path to flash disk device\\n  "
+"Default: /dev/da0"
+msgstr ""
+"  -n Неинтерактивный режим (cdialog не требуется)\\n  -f Не выводить "
+"предупреждения\\n  -h Вывести это справочное сообщение\\n  -s source "
+"Указать источник установки\\n     source может быть устройством, точкой "
+"монтирования или ISO образом\\n     По умолчанию: /Frenzy/boot\\n"
+"  -l log Указать путь к log файлу\\n     По умолчанию: "
+"/tmp/install2flash.log\\n  disk Полный путь к flash диску\\n  "
+"По умолчанию: /dev/da0"
