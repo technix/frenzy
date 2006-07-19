@@ -421,6 +421,8 @@ if [ $NONINTER -eq 0 ]; then
 		echo "$MODID: cdialog $msg_notfound" >&2
 		exit 1
 	fi
+	
+	trap dialog_clean 0 1 2 5 15
 fi
 
 if [ -z "$SRC" ]; then

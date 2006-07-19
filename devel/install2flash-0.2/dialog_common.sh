@@ -14,8 +14,12 @@ dialog_init()
 	DCOMMON="--backtitle \"Frenzy $MODID $msg_version $VERSION\" --cancel-label \
 	\"$msg_cancel\" --exit-label \"$msg_exit\" --no-label \"$msg_no\" --yes-label \
 	\"$msg_yes\""
+}
 
-	trap "clear; rm -f $DIALOGRES" 0 1 2 5 15
+dialog_clean()
+{
+	clear
+	rm -f $DIALOGRES
 }
 
 radiolist()
