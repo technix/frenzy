@@ -23,6 +23,7 @@ echo "==> Installing packages for FEM module."
 cd ${DIRPKG}
 mkdir ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
 mkdir ${FEMNAME}.${DIRFEM}/fs > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/fs/usr > /dev/null 2>&1
 for pkgtype in tgz tbz
 do
 for pkgn in `ls *${pkgtype} 2>/dev/null`
@@ -35,9 +36,9 @@ fi
 tar ${EXTR} ${pkgn} \+CONTENTS
 PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g"`
 rm \+CONTENTS > /dev/null 2>&1
-mkdir ${FEMNAME}.${DIRFEM}/fs/${PKGSUBDIR} > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} > /dev/null 2>&1
 PKGNAME=`echo ${pkgn} | sed "s/\.${pkgtype}//g"`
-pkg_add -R -f -p ${CURRDIR}/${DIRPKG}/${FEMNAME}.${DIRFEM}/fs/${PKGSUBDIR} ${pkgn}  > /dev/null 2>&1
+pkg_add -R -f -p ${CURRDIR}/${DIRPKG}/${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} ${pkgn}  > /dev/null 2>&1
 done
 done
 
