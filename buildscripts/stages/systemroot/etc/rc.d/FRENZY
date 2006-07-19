@@ -16,10 +16,10 @@ hle="\033[0m"
 
 # include variables
 
-FR_GUI=0
-FR_GUISAFE=0
-FR_HWINFO=0
-FR_AUTOLOGIN=0
+FR_AUTOLOGIN=0	# enable autologin
+FR_GUI=0	# enable X.org 
+FR_GUISAFE=0	# load X.org with safe settings
+FR_HWINFO=0	# generate hardware info
 
 . /etc/frenzy.boot
 
@@ -36,21 +36,21 @@ printf "$mi "
 ## Get hardware info
 #
 if [ ${FR_HWINFO} -eq 1 ]; then
-if [ -e /usr/local/bin/hwinfo ]; then
-case ${FR_LANG} in
-RU)
-GH="${mi} Сбор информации об оборудовании... "
-GR="завершен, сохранен в /tmp/hwinfo.html.\n"
-;;
-*)
-GH="${mi} Getting hardware information... "
-GR="saved in /tmp/hwinfo.html.\n"
-;;
-esac
-printf "${GH}"
-/usr/local/bin/hwinfo -html -full > /tmp/hwinfo.html
-printf "${GR}"
-fi
+    if [ -e /usr/local/bin/hwinfo ]; then
+	case ${FR_LANG} in
+	RU)
+	    GH="${mi} Сбор информации об оборудовании... "
+	    GR="завершен, сохранен в /tmp/hwinfo.html.\n"
+	;;
+	*)
+	    GH="${mi} Getting hardware information... "
+	    GR="saved in /tmp/hwinfo.html.\n"
+	;;
+	esac
+	printf "${GH}"
+	/usr/local/bin/hwinfo -html -full > /tmp/hwinfo.html
+	printf "${GR}"
+    fi
 fi
 #
 ##
@@ -59,20 +59,19 @@ fi
 ## Enable GUI if needed
 #
 if [ ${FR_GUI} -eq 1 ]; then
-printf "$mi Starting X.org\n"
-# enable X.org autostart
-touch /tmp/.xautostart
+    printf "$mi Starting X.org\n"
+    # enable X.org autostart
+    touch /tmp/.xautostart
 fi
 
 if [ ${FR_GUISAFE} -eq 1 ]; then
-/usr/local/bin/xautoconf safemon
+    /usr/local/bin/xautoconf safemon
 fi
 
 ## Enable autologin on ttyv0 if needed
 #
 if [ ${FR_AUTOLOGIN} -eq 1 ]; then
-X="/etc/ttys"
-/usr/bin/awk '{if ($1 == "ttyv0") print $1, $2, "alroot\"", $4, $5, $6
- else print $0 }' ${X} > ${X}.new
-/bin/mv ${X}.new ${X}
+    X="/etc/ttys"
+    /usr/bin/awk '{if ($1 == "ttyv0") print $1, $2, "alroot\"", $4, $5, $6 else print $0 }' ${X} > ${X}.new
+    /bin/mv ${X}.new ${X}
 fi
