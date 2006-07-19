@@ -1,7 +1,8 @@
-*fontList: -xos4-terminus-medium-r-*-*-14-*-*-*-*-*-koi8-r
-*fontStruct: -xos4-terminus-medium-r-*-*-14-*-*-*-*-*-koi8-r
-*font: -xos4-terminus-medium-r-*-*-14-*-*-*-*-*-koi8-r
-*Font: -xos4-terminus-medium-r-*-*-14-*-*-*-*-*-koi8-r
+*fontList: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
+*fontStruct: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
+*font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
+*Font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
+xpdf*fontList: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
 
 ! RXVT settings
 
