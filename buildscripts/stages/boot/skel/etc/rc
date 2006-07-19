@@ -96,13 +96,11 @@ if [ "${enable_hddpartitions}" = "YES" ]; then
     ###
 fi
 
-if [ -z "${FR_NOFEM}" ]; then
-    if [ "$enable_fem" = "YES" ]; then
-	load_fem
-    fi
+if [ "$enable_fem" = "YES" ]; then
+    load_fem
 fi
 if [ "$enable_unionfs" = "YES" ]; then
-    create_rwusr
+    create_rw
 fi
 
 ### 

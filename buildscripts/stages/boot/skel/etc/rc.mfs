@@ -30,8 +30,12 @@ MD_DEV=`/sbin/mdconfig -a -t malloc -o compress -s ${MFS_SIZE}`
 /sbin/mount -o noatime /dev/${MD_DEV} ${fr_ram}
 
 printf "$mi ${MSG_memory} ${MEM} | ${MSG_ramdisk} ${MFS_SIZE} |"
-
-for d in etc var root; do
+if [ "$enable_rwall" = "YES" ]; then
+    MFSLIST="etc"
+else
+    MFSLIST="etc var root"
+fi
+for d in ${MFSLIST}; do
     printf " ${d}"
     mkdir ${fr_ram}/$d
     if [ "${enable_unionfs}" = "YES" ]; then
@@ -53,12 +57,17 @@ cp -R ${fs}/mnt/* /mnt > /dev/null 2>&1
 mkdir ${femdirmod}
 mkdir ${femdir}
 mkdir ${femusr}
+mkdir ${rwall}
 echo "."
 }
 
-create_rwusr ()
+create_rw ()
 {
 # mounting read-write directory over all of it
+if [ "$enable_rwall" = "YES" ]; then
+mount_unionfs -o noatime -c transparent ${rwall} /Frenzy/fs > /dev/null 2>&1
+else
 mount_unionfs -o noatime -c transparent ${femusr} /usr > /dev/null 2>&1
+fi
 }
 

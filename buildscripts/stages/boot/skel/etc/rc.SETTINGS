@@ -14,3 +14,5 @@ enable_hddpartitions="YES"	# search HDD for partitions,
 enable_unionfs="YES"		# Enable unionfs for ramdisk.
 
 enable_fem="YES"		# Enable Frenzy extension modules.
+
+#enable_rwsys="YES"		# Enable Frenzy read-write filesystem

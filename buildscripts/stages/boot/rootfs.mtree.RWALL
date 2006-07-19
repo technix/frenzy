@@ -2,8 +2,6 @@
 /set type=dir uid=0 gid=0 mode=0755
 .
 Frenzy
-bin
-..
 boot
 ..
 fs
@@ -13,6 +11,8 @@ mfs
 ramdisk
 ..
 ..
+bin
+..
 dev
 ..
 etc
@@ -21,16 +21,14 @@ mnt
 ..
 proc
 ..
-root
-..
-var
+sbin
 ..
 ..
-home	type=link link=/var/home
-tmp	type=link link=/var/tmp
-bin	type=link link=/Frenzy/fs/bin
+home   type=link link=/var/home
+tmp    type=link link=/var/tmp
 boot	type=link link=/Frenzy/fs/boot
 lib	type=link link=/Frenzy/fs/lib
 libexec	type=link link=/Frenzy/fs/libexec
-sbin	type=link link=/Frenzy/fs/sbin
+root	type=link link=/Frenzy/fs/root
 usr	type=link link=/Frenzy/fs/usr
+var	type=link link=/Frenzy/fs/var

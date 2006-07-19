@@ -100,7 +100,7 @@ if [ "$enable_fem" = "YES" ]; then
     load_fem
 fi
 if [ "$enable_unionfs" = "YES" ]; then
-    create_rwusr
+    create_rw
 fi
 
 ### 

@@ -54,7 +54,11 @@ do
     		done
 	    else
 	    # We do not need relink since multiple union mount implemented
-		mount_unionfs -o noatime,ro -c transparent ${femfs}/fs /usr > /dev/null 2>&1
+		if [ "$enable_rwsys" = "YES" ]; then
+		    mount_unionfs -o noatime,ro -c transparent ${femfs}/fs /Frenzy/fs > /dev/null 2>&1
+		else
+		    mount_unionfs -o noatime,ro -c transparent ${femfs}/fs/usr /usr > /dev/null 2>&1
+		fi
 	    fi
 	done
     cd ${CURRDIR}

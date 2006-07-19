@@ -8,7 +8,12 @@ MD=`/sbin/mdconfig -af ${IMG} 2> /dev/null`
 sleep 1
 /sbin/mount_cd9660 /dev/${MD}.uzip ${fs}
 echo -n "[*] Mounting compressed filesystems:"
-for d in libexec bin boot lib sbin usr; do
+if [ "$enable_rwsys" = "YES" ]; then
+    UZIPLIST="bin sbin"
+else
+    UZIPLIST="libexec bin boot lib sbin usr"
+fi
+for d in ${UZIPLIST}; do
     echo -n " $d"
     /sbin/mount_nullfs ${fs}/${d} /${d}
 done
@@ -26,7 +31,12 @@ UZIP_MD=`echo ${MD} | sed "s/md//g"`
 
 uzip_remount ()
 {
-for d in sbin libexec bin boot lib usr; do
+if [ "$enable_rwsys" = "YES" ]; then
+    UZIPLIST="bin sbin"
+else
+    UZIPLIST="sbin libexec bin boot sbin usr"
+fi
+for d in ${UZIPLIST}; do
     /sbin/umount -f /${d}
 done
 if [ "${enable_unionfs}" = "YES" ]; then

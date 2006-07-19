@@ -2,7 +2,7 @@
 # Boot device search
 search_boot_device ()
 {
-echo -n "[*] Boot from: "
+echo -n "[*] Searching boot device: "
 devfound="0"
 for CD in `echo /dev/acd* /dev/cd*`
 do
