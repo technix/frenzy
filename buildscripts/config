@@ -20,6 +20,9 @@ VERSION="Frenzy 1.0-p1 (Dreamchild)                            [ ${BD} ]"
 
 
 # ADDITIONAL PATCHES
+# Package patches
+# available options: fix relink rm strip
+# 'relink' required only if no unionfs available
 PATCHES="fix rm strip"
 # Post-install patches
 # available options: create config patch relink final
