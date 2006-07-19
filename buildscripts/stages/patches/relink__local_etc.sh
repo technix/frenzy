@@ -3,7 +3,6 @@
 # Relink /usr/local/etc if available
 
 # not required since unionfs available
-exit
 
 if [ -d /usr/local/etc ]; then
 mv /usr/local/etc /usr/local/etc_local

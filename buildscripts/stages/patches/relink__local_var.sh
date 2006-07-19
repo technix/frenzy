@@ -3,7 +3,6 @@
 # Relink /usr/local/var if available
 
 # not required since unionfs available
-exit
 
 
 if [ -d /usr/local/var ]; then
