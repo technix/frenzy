@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# This is only scratch!
+
+cd ../packages
+
+for i in *; do
+	tar -cyf "../ports/distfiles/$i.tar.bz2" "$i"
+done
+
+cd -
