@@ -22,11 +22,7 @@ BLOCKSIZE="130560"
 echo "==> Installing packages for FEM module."
 cd ${DIRPKG}
 mkdir ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
-
 mkdir ${FEMNAME}.${DIRFEM}/fs > /dev/null 2>&1
-mkdir ${FEMNAME}.${DIRFEM}/desc > /dev/null 2>&1
-mkdir ${FEMNAME}.${DIRFEM}/scripts > /dev/null 2>&1
-
 mkdir ${FEMNAME}.${DIRFEM}/fs/usr > /dev/null 2>&1
 for pkgtype in tgz tbz
 do
@@ -42,12 +38,7 @@ PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g"`
 rm \+CONTENTS > /dev/null 2>&1
 mkdir ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} > /dev/null 2>&1
 PKGNAME=`echo ${pkgn} | sed "s/\.${pkgtype}//g"`
-tar ${EXTR} ${pkgn} -C ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}
-mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+COMMENT ${FEMNAME}.${DIRFEM}/desc/${PKGNAME}-comment
-mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+DESC ${FEMNAME}.${DIRFEM}/desc/${PKGNAME}-desc
-mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+CONTENTS ${FEMNAME}.${DIRFEM}/scripts/${PKGNAME}-contents
-rm ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+MTREE_DIRS
-#pkg_add -R -f -p ${CURRDIR}/${DIRPKG}/${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} ${pkgn}  > /dev/null 2>&1
+pkg_add -R -f -p ${CURRDIR}/${DIRPKG}/${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} ${pkgn}  > /dev/null 2>&1
 done
 done
 
