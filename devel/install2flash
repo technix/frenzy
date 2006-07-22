@@ -5,8 +5,8 @@
 # Author  : Elisey Savateev (b3k@mail.ru)
 #
 
-. l10n.sh
-. dialog_common.sh
+. packages/l10n-1.0/l10n.sh
+. packages/libs-1.1/dialog_common.sh
 
 MODID="install2flash"
 VERSION="0.2"
@@ -280,7 +280,7 @@ flash_mkpart()
 {
 	local srcsize=`du -kd0 "$SRC" | cut -f 1`
 	
-	set `diskinfo $DEV`
+	set -- `diskinfo $DEV`
 	local flashsize=$4
 	local cyls=$5
 	local heads=$6
