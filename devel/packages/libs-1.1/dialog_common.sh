@@ -8,7 +8,7 @@
 dialog_init()
 {
 	DIALOG=`whereis -bq cdialog`
-	if [ -z $DIALOG ]; then return 1; fi
+	if [ -z "$DIALOG" ]; then return 1; fi
 
 	DIALOGRES=`mktemp -q /tmp/frenzy.XXXXX`
 	DCOMMON="--backtitle \"Frenzy $MODID $msg_version $VERSION\" --cancel-label \
@@ -31,7 +31,25 @@ radiolist()
 
 	>$DIALOGRES
 	eval $DIALOG $DCOMMON --title \"$1\" --radiolist \"$2\" $3 $4 2>$DIALOGRES
+	local status=$?
+	
 	RESULT=`cat $DIALOGRES`
+	return $status
+}
+
+checklist()
+{
+	# $1	title
+	# $2	text
+	# $3	height width list-height
+	# $4	[ tag item status ] ...
+
+	>$DIALOGRES
+	eval $DIALOG $DCOMMON --title \"$1\" --checklist \"$2\" $3 $4 2>$DIALOGRES
+	local status=$?
+
+	RESULT=`cat $DIALOGRES`
+	return $status
 }
 
 menu()
@@ -43,7 +61,10 @@ menu()
 
 	>$DIALOGRES
 	eval $DIALOG $DCOMMON --title \"$1\" --menu \"$2\" $3 $4 2>$DIALOGRES
+	local status=$?
+
 	RESULT=`cat $DIALOGRES`
+	return $status
 }
 
 yesno()
@@ -83,5 +104,8 @@ fselect()
 
 	>$DIALOGRES
 	eval $DIALOG $DCOMMON --title \"$1\" --fselect \"$2\" $3 2>$DIALOGRES
+	local status=$?
+
 	RESULT=`cat $DIALOGRES`
+	return $status
 }

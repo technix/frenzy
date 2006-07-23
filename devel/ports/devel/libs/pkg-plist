@@ -1,4 +1,5 @@
 %%INSTALL_DIR%%/dialog_common.sh
+%%INSTALL_DIR%%/sh_common.sh
 %%INSTALL_DIR%%/libdialog.mpl
 %%INSTALL_DIR%%/liblocale.mpl
 @dirrmtry %%INSTALL_DIR%%

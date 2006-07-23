@@ -6,6 +6,7 @@
 #
 
 . packages/l10n-1.0/l10n.sh
+. packages/libs-1.1/sh_common.sh
 . packages/libs-1.1/dialog_common.sh
 
 MODID="install2flash"
@@ -96,39 +97,6 @@ select_dev()
 	if [ -z "$RESULT" ]; then exit 0; fi
 
 	DEV="$RESULT"
-}
-
-error()
-{
-	if [ $NONINTER -eq 0 ]; then
-		msgbox "$msg_error" "$1" "6 50"
-	else
-		echo "$MODID: $1" >&2
-	fi
-}
-
-info()
-{
-	echo "===> $1" >>"$LOG"
-
-	if [ $NONINTER -eq 0 ]; then
-		infobox "$1..." "3 50"
-	else
-		echo "===> $1"
-	fi
-}
-
-log_init()
-{
-	if [ -z "$LOG" ]; then LOG="/tmp/${MODID}.log"; fi
-
-	touch "$LOG" >/dev/null 2>&1
-	if [ $? -ne 0 -o -d "$LOG" ]; then 
-		error "$msg_create $LOG"
-		exit 1
-	fi
-	
-	echo "$msg_start `date`" >"$LOG"
 }
 
 flash_init()
@@ -446,6 +414,8 @@ fi
 if [ $NONINTER -eq 0 -a $NOWARN -eq 0 ]; then confirm; fi
 
 log_init
+	
+echo "$msg_start `date`" >"$LOG"
 
 if [ `id -u` -ne 0 -a $NONINTER -eq 0 ]; then
 	echo "$msg_su"
@@ -465,4 +435,5 @@ install_data
 if [ $SRCUMNT -eq 1 ]; then clean_source; fi
 
 echo "$msg_end `date`" >>"$LOG"
+
 exit 0
