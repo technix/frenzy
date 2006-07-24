@@ -37,6 +37,7 @@ msg_dataerr=`gettext -s "install data"`
 msg_help=`gettext -s "\
   -n Noninteractive mode (cdialog is not required)\\n\
   -f Do not display warning messages\\n\
+  -v Verbose logging\\n\
   -h Display this help message\\n\
   -s source Specify installation source\\n\
      source can be device, mountpoint or ISO image\\n\
@@ -52,6 +53,7 @@ LOG=""		# Full path to the log file
 SRC=""		# Installation source (cdrom device, mountpoint or iso)
 NONINTER=0	# Non-interactive mode
 NOWARN=0	# Do not display warning messages
+VERBOSE=""	# Verbose logging
 
 # Variables that will be set automatically
 SRCTYPE=""	# Source type
@@ -105,7 +107,7 @@ flash_init()
 
 	SECTSIZE=`diskinfo $DEV | cut -f 2` && \
 	dd if=/dev/zero of=$DEV bs=$SECTSIZE count=$PARTOFFSET >>"$LOG" 2>&1 && \
-	fdisk -BI "$DEV" >>"$LOG" 2>&1
+	fdisk $VERBOSE -BI "$DEV" >>"$LOG" 2>&1
 	if [ $? -ne 0 ]; then
 		error "$msg_error $msg_initerr $DEV. $msg_log."
 		exit 1
@@ -169,13 +171,13 @@ confirm()
 
 usage()
 {
-	echo "$msg_usage: $MODID [-nfh] [-s source] [-l log] [disk]"
+	echo "$msg_usage: $MODID [-nfvh] [-s source] [-l log] [disk]"
 	exit 1
 }
 
 help()
 {
-	echo "$msg_usage: $MODID [-nfh] [-s source] [-l log] [disk]"
+	echo "$msg_usage: $MODID [-nfvh] [-s source] [-l log] [disk]"
 	echo -e "$msg_help"
 	echo "$msg_example: $MODID -ns /dev/acd0 da1"
 	exit 0
@@ -186,10 +188,10 @@ mount_source()
 	info "$msg_mounting $SRC"
 
 	if [ "$SRCTYPE" != "ISO" ]; then
-		mount "$SRC" >>"$LOG" 2>&1
+		mount $VERBOSE "$SRC" >>"$LOG" 2>&1
 	else
 		mdconfig -a -t vnode -f "$SRC" -u $MDUNIT >>"$LOG" 2>&1 && \
-		mount_cd9660 /dev/md$MDUNIT "$SRCMNT" >>"$LOG" 2>&1 && \
+		mount_cd9660 $VERBOSE /dev/md$MDUNIT "$SRCMNT" >>"$LOG" 2>&1 && \
 		SRC=$SRCMNT
 	fi
 
@@ -235,9 +237,9 @@ clean_source()
 	info "$msg_umounting $SRC"
 
 	if [ "$SRCTYPE" != "ISO" ]; then
-		umount "$SRC" >>"$LOG" 2>&1
+		umount $VERBOSE "$SRC" >>"$LOG" 2>&1
 	else
-		umount "$SRC" >>"$LOG" 2>&1 && \
+		umount $VERBOSE "$SRC" >>"$LOG" 2>&1 && \
 		mdconfig -d -u $MDUNIT >>"$LOG" 2>&1
 	fi
 
@@ -269,7 +271,7 @@ a 2"
 
 	info "$msg_part"
 	
-	echo -e "$table" | fdisk -f - "$DEV" >>"$LOG" 2>&1
+	echo -e "$table" | fdisk $VERBOSE -f - "$DEV" >>"$LOG" 2>&1
 
 	if [ $? -ne 0 ]; then
 		error "$msg_unable $msg_parterr. $msg_log."
@@ -320,7 +322,7 @@ flash_boot()
 {
 	info "$msg_boot $DEV"
 
-	boot0cfg -B -o noupdate -s 2 "$DEV" >>"$LOG" 2>&1
+	boot0cfg $VERBOSE -B -o noupdate -s 2 "$DEV" >>"$LOG" 2>&1
 
 	if [ $? -ne 0 ]; then
 		error "$msg_unable $msg_booterr $DEV. $msg_log."
@@ -342,7 +344,7 @@ install_data()
 
 	info "$msg_mounting $part"
 
-	mount "$part" "$DSTMNT" >>"$LOG" 2>&1
+	mount $VERBOSE "$part" "$DSTMNT" >>"$LOG" 2>&1
 
 	if [ $? -ne 0 ]; then
 		error "$msg_unable $msg_mount $part. $msg_log."
@@ -352,7 +354,7 @@ install_data()
 	# TODO: Display intallation progress (maybe with tar + bar + cdialog --gauge?)
 	info "$msg_data"
 
-	cp -R "$SRCMNT"/* "$DSTMNT" >>"$LOG" 2>&1
+	cp $VERBOSE -R "$SRCMNT"/* "$DSTMNT" >>"$LOG" 2>&1
 
 	if [ $? -ne 0 ]; then
 		error "$msg_unable $msg_dataerr. $msg_log."
@@ -361,7 +363,7 @@ install_data()
 
 	info "$msg_umounting $part"
 
-	umount "$part" >>"$LOG" 2>&1
+	umount $VERBOSE "$part" >>"$LOG" 2>&1
 
 	if [ $? -ne 0 ]; then 
 		error "$msg_unable $msg_umount $part. $msg_log."
@@ -369,10 +371,11 @@ install_data()
    	fi
 }
 
-while getopts nfhs:l: OPT >/dev/null 2>&1; do
+while getopts nfvhs:l: OPT >/dev/null 2>&1; do
 	case $OPT in
 		n) NONINTER=1 ;;
 		f) NOWARN=1 ;;
+		v) VERBOSE="-v" ;;
 		h) help ;;
 		s) SRC=$OPTARG ;;
 		l) LOG=$OPTARG ;;
