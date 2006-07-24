@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Frenzy 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-19 14:57+0600\n"
-"PO-Revision-Date: 2006-07-24 09:32+0600\n"
+"PO-Revision-Date: 2006-07-24 14:15+0600\n"
 "Last-Translator: Elisey Savateev <b3k@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,3 +226,79 @@ msgstr ""
 "  -l log Указать путь к лог файлу\\n     По умолчанию: "
 "/tmp/install2flash.log\\n  disk Полный путь к flash диску\\n  "
 "По умолчанию: /dev/da0"
+
+#: stresstest:17
+msgid "At least one stage must be selected"
+msgstr "Хотя бы один этап должен быть выбран"
+
+#: stresstest:18
+msgid "Stage"
+msgstr "Этап"
+
+#: stresstest:19
+msgid "High load"
+msgstr "Высокая нагрузка"
+
+#: stresstest:20
+msgid "Memory test"
+msgstr "Тест памяти"
+
+#: stresstest:21
+msgid "Memory test under high load"
+msgstr "Тест памяти под высокой нагрузкой"
+
+#: stresstest:22
+msgid "Compression test"
+msgstr "Тест сжатия"
+
+#: stresstest:23
+msgid "CPU overload"
+msgstr "Перегрузка CPU"
+
+#: stresstest:24
+msgid "Disk IO and memory test"
+msgstr "Тест дискового IO и памяти"
+
+#: stresstest:25
+msgid "Test stages"
+msgstr "Этапы тестирования"
+
+#: stresstest:26
+msgid "Select test stages"
+msgstr "Выберите этапы тестирования"
+
+#: stresstest:27
+msgid "Stresstesting started at"
+msgstr "Стресс-тестирование начато в"
+
+#: stresstest:28
+msgid "Stresstesting ended at"
+msgstr "Стресс-тестирование завершено в"
+
+#: stresstest:29
+msgid "finished with error"
+msgstr "завершился с ошибкой"
+
+#: stresstest:30
+msgid ""
+"  -123456 Specify test stages\\n          Stages will be performed in "
+"specified order\\n  -a Perform all stages\\n  -n Noninteractive mode "
+"(cdialog is not required)\\n  -v Verbose logging\\n  -h Display this help "
+"message\\n  -m mem Amount of memory to allocate and test (in MB)\\n     "
+"Default: 32\n"
+"  -c sqrt_wrk sqrt() workers count\\n     Default: 16\n"
+"  -i sync_wrks sync() workers count\\n     Default: 4\n"
+"  -s rnd_sz Size of random data (in MB)\\n     Default: mem * 2\\n  -f rnd "
+"File used for random data generation\\n     Default: /tmp/random.dat\\n  -l "
+"log Specify log file path\\n     Default: /tmp/stresstest.log"
+msgstr ""
+"  -123456 Указать этапы тестирования\\n          Этапы будут выполнены в "
+"указанном порядке\\n  -a Выполнить все этапы\\n  -n Неинтерактивный режим "
+"(cdialog не требуется)\\n  -v Подробный лог\\n  -h Вывести это справочное "
+"сообщение\\n  -m mem Количество памяти для выделения и тестирования (в MB)\\n"
+"     По умолчанию: 32\n  -c sqrt_wrk Число sqrt() процессов\\n     "
+"По умолчанию: 16\n  -i sync_wrks Число sync() процессов\\n     "
+"По умолчанию: 4\n  -s rnd_sz Размер случайных данных (в MB)\\n     "
+"По умолчанию: mem * 2\\n  -f rnd Файл для генерации случайных данных\\n     "
+"По умолчанию: /tmp/random.dat\\n  -l log Указать путь к лог файлу\\n     "
+"По умолчанию: /tmp/stresstest.log"

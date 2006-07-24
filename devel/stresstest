@@ -1,0 +1,241 @@
+#!/bin/sh
+#
+# Name    : Frenzy stress test utility
+# Version : 0.2
+# Author  : Elisey Savateev (b3k@mail.ru)
+#			Based on stress test methodics, 
+#           described on http://dedic.ru/node/66
+#
+
+. packages/l10n-1.0/l10n.sh
+. packages/libs-1.1/sh_common.sh
+. packages/libs-1.1/dialog_common.sh
+
+MODID="stresstest"
+VERSION="0.2"
+
+msg_selerr=`gettext -s "At least one stage must be selected"`
+msg_stage=`gettext -s "Stage"`
+msg_stage1=`gettext -s "High load"`
+msg_stage2=`gettext -s "Memory test"`
+msg_stage3=`gettext -s "Memory test under high load"`
+msg_stage4=`gettext -s "Compression test"`
+msg_stage5=`gettext -s "CPU overload"`
+msg_stage6=`gettext -s "Disk IO and memory test"`
+msg_stages=`gettext -s "Test stages"`
+msg_selstages=`gettext -s "Select test stages"`
+msg_start=`gettext -s "Stresstesting started at"`
+msg_end=`gettext -s "Stresstesting ended at"`
+msg_stageerr=`gettext -s "finished with error"`
+msg_help=`gettext -s "\
+  -123456 Specify test stages\\n\
+          Stages will be performed in specified order\\n\
+  -a Perform all stages\\n\
+  -n Noninteractive mode (cdialog is not required)\\n\
+  -v Verbose logging\\n\
+  -h Display this help message\\n\
+  -m mem Amount of memory to allocate and test (in MB)\\n\
+     Default: 32
+  -c sqrt_wrk sqrt() workers count\\n\
+     Default: 16
+  -i sync_wrks sync() workers count\\n\
+     Default: 4
+  -s rnd_sz Size of random data (in MB)\\n\
+     Default: mem * 2\\n\
+  -f rnd File used for random data generation\\n\
+     Default: /tmp/random.dat\\n\
+  -l log Specify log file path\\n\
+     Default: /tmp/stresstest.log"`
+
+# Variables (command line arguments)
+LOG=""			# Full path to the log file
+NONINTER=0		# Non-interactive mode
+STAGES=""		# Test stages
+VERBOSE=""		# Verbose logging
+MEM=32			# Stage 2, 3, 6: the amount of memory to allocate and test
+WORK=16			# Stage 1, 3: workers spinning on sqrt()
+S4_SIZE=""		# Stage 4: size of random data
+S6_WORK=4		# Stage 6: workers spinning on sync()
+RND=""			# Stage 4: full path to random data
+
+# Constants
+S1_TIMEOUT="5m"			# Stage 1: timeout
+S2_ITER=1				# Stage 2: iterations
+S5_WORK="1024"			# Stage 5: workers spinning on sqrt()
+S5_TIMEOUT="1m"			# Stage 5: timeout
+S6_ITER=5				# Stage 6: iterations
+RNDDEV="/dev/urandom"	# Source of random data
+
+STRESS=`whereis -bq stress`
+if [ -z "$STRESS" ]; then
+	echo "$MODID: stress $msg_notfound" >&2
+	exit 1
+fi
+
+MEMTEST=`whereis -bq memtest`
+if [ -z "$MEMTEST" ]; then
+	echo "$MODID: memtest $msg_notfound" >&2
+	exit 1
+fi
+
+help()
+{
+	echo -e "\
+$msg_usage: $MODID [-123456] [-anvh] [-m mem] [-c sqrt_wrk] [-i sync_wrks]\n\
+\t\t[-s rnd_sz] [-f rnd] [-l log]"
+	echo -e "$msg_help"
+	echo "$msg_example: $MODID -n45 -m 8"
+	exit 0
+}
+
+usage()
+{
+	echo -e "\
+$msg_usage: $MODID [-123456] [-anvh] [-m mem] [-c sqrt_wrk] [-i sync_wrks]\n\
+\t\t[-s rnd_sz] [-f rnd] [-l log]"
+	exit 1
+}
+
+stage1()
+{
+	info "$msg_stage1 (wrks = $WORK, time = $S1_TIMEOUT)"
+
+	$STRESS $VERBOSE -c $WORK -t $S1_TIMEOUT >>"$LOG" 2>&1
+	
+	return $?
+}
+
+stage2()
+{
+	info "$msg_stage2 (mem = $MEM, iter = $S2_ITER)"
+
+	$MEMTEST $MEM $S2_ITER >>"$LOG" 2>&1
+	
+	return $?
+}
+
+stage3()
+{
+	info "$msg_stage3"
+
+	$STRESS -q -c $WORK >>"$LOG" 2>&1 & \
+	$MEMTEST $MEM $S2_ITER >>"$LOG" 2>&1 && \
+	killall stress >>"$LOG" 2>&1
+	
+	return $?
+}
+
+stage4()
+{
+	if [ -z "$RND" ]; then RND="/tmp/random.dat"; fi
+	if [ -z "$S4_SIZE" ]; then S4_SIZE=$((MEM * 2)); fi
+	
+	info "$msg_stage4"
+
+	dd if=$RNDDEV of="$RND" bs=1M count=$S4_SIZE >>"$LOG" 2>&1 && \
+	bzip2 $VERBOSE "$RND" >>"$LOG" 2>&1 && \
+	bunzip2 "$RND.bz2" >>"$LOG" 2>&1
+
+	return $?
+}
+
+stage5()
+{
+	info "$msg_stage5 (wrks = $S5_WORK, time = $S5_TIMEOUT)"
+
+	$STRESS $VERBOSE -c $S5_WORK -t $S5_TIMEOUT >>"$LOG" 2>&1
+	
+	return $?
+}
+
+stage6()
+{
+	info "$msg_stage6 (wrks = $S6_WORK, iter = $S6_ITER)"
+
+	$STRESS -q -i $S6_WORK >>"$LOG" 2>&1 & \
+	$MEMTEST $MEM $S6_ITER >>"$LOG" 2>&1 && \
+	killall stress >>"$LOG" 2>&1
+
+	return $?
+}
+
+stages_clean()
+{
+	if [ $NONINTER -eq 0 ]; then dialog_clean; fi
+
+	if [ -f "$RND" ]; then rm -f "$RND"; fi
+
+	killall stress >/dev/null 2>&1
+}
+
+select_stages()
+{
+	checklist "$msg_stages" "$msg_selstages" "13 60 6" "\
+	1 \"$msg_stage1 (wrks = $WORK, time = $S1_TIMEOUT)\"	ON \
+	2 \"$msg_stage2 (mem = $MEM, iter = $S2_ITER)\"	ON \
+	3 \"$msg_stage3\"	ON \
+	4 \"$msg_stage4\"	ON \
+	5 \"$msg_stage5 (wrks = $S5_WORK, time = $S5_TIMEOUT)\"	ON \
+	6 \"$msg_stage6 (wrks = $S6_WORK, iter = $S6_ITER)\"	ON"
+	if [ $? -ne 0 ]; then exit 0; fi
+	
+	STAGES=`echo "$RESULT" | tr -d \"`
+	if [ -z "$STAGES" ]; then error "$msg_selerr"; fi
+}
+
+while getopts 123456anhvm:c:i:s:f:l: OPT >/dev/null 2>&1; do
+	case $OPT in
+		1) STAGES="$STAGES 1" ;;
+		2) STAGES="$STAGES 2" ;;
+		3) STAGES="$STAGES 3" ;;
+		4) STAGES="$STAGES 4" ;;
+		5) STAGES="$STAGES 5" ;;
+		6) STAGES="$STAGES 6" ;;
+		a) STAGES="1 2 3 4 5 6" ;;
+		n) NONINTER=1 ;;
+		h) help ;;
+		v) VERBOSE="-v" ;;
+		m) MEM=$OPTARG ;;
+		c) WORK=$OPTARG ;;
+		i) S6_WORK=$OPTARG ;;
+		s) S4_SIZE=$OPTARG ;;
+		f) RND=$OPTARG ;;
+		l) LOG=$OPTARG ;;
+		\?) echo "$MODID: $msg_badargs" >&2; usage ;;
+	esac
+done
+
+if [ $NONINTER -eq 0 ]; then
+	dialog_init
+	if [ $? -ne 0 ]; then
+		echo "$MODID: cdialog $msg_notfound" >&2
+		exit 1
+	fi
+fi
+
+while [ -z "$STAGES" ]; do
+	if [ $NONINTER -eq 0 ]; then
+		select_stages
+	else
+		error "$msg_selerr"
+		exit 1
+	fi
+done
+
+log_init
+	
+trap stages_clean 0 1 2 5 15
+	
+echo "$msg_start `date`" >"$LOG"
+
+for i in $STAGES; do 
+	eval stage$i
+	if [ $? -ne 0 ]; then
+		error "$msg_stage $i $msg_stageerr. $msg_log."
+		exit 1
+	fi
+done
+
+echo "$msg_end `date`" >>"$LOG"
+
+exit 0
