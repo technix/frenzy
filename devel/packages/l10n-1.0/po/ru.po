@@ -3,6 +3,8 @@
 # This file is distributed under the same license as the Frenzy.
 # Elisey Savateev <b3k@mail.ru>, 2006.
 #
+# $Id$
+#
 #, fuzzy
 msgid ""
 msgstr ""

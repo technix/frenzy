@@ -4,6 +4,8 @@
 # Version : 0.1
 # Author  : Elisey Savateev (b3k@mail.ru)
 #
+# $Id$
+#
 
 dialog_init()
 {

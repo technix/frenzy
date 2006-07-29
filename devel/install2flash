@@ -4,6 +4,8 @@
 # Version : 0.2
 # Author  : Elisey Savateev (b3k@mail.ru)
 #
+# $Id$
+#
 
 . packages/l10n-1.0/l10n.sh
 . packages/libs-1.1/sh_common.sh

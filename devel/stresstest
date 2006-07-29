@@ -6,6 +6,8 @@
 #			Based on stress test methodics, 
 #           described on http://dedic.ru/node/66
 #
+# $Id$
+#
 
 . packages/l10n-1.0/l10n.sh
 . packages/libs-1.1/sh_common.sh
