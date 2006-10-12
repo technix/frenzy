@@ -172,7 +172,7 @@ stages_clean()
 
 select_stages()
 {
-	checklist "$msg_stages" "$msg_selstages" "13 60 6" "\
+	checklist "$msg_stages" "$msg_selstages" "13 68 6" "\
 	1 \"$msg_stage1 (wrks = $WORK, time = $S1_TIMEOUT)\"	ON \
 	2 \"$msg_stage2 (mem = $MEM, iter = $S2_ITER)\"	ON \
 	3 \"$msg_stage3\"	ON \
