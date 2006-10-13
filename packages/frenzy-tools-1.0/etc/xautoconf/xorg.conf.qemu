@@ -1,7 +1,7 @@
 Section "Monitor"
 	Identifier	"Monitor0"
-	HorizSync	30 - 60
-	VertRefresh	50.0 - 100.0
+	HorizSync	31.5 - 48.5
+	VertRefresh	50.0 - 90.0
 	Option		"DPMS"
 EndSection
 
