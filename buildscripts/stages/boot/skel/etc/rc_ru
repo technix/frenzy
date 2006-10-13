@@ -57,6 +57,15 @@ cd ${CURRDIR}
 define_var
 ### 1. Search and mount boot device (CD or USB FLASH)
 search_boot_device
+
+### 1.1. Loading loader config from boot media, if exist
+FRENZY_LOADSET="${fc}/${fbootcfg}"
+if [ -e "${FRENZY_LOADSET}" ]; then
+    . ${FRENZY_LOADSET}
+else
+
+
+
 ### 2. Mounting compressed FS
 mount_uzip_fs
 ### 2.1. Enable locale
