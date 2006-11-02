@@ -48,7 +48,7 @@ if [ "${pkgtype}" = "tbz" ]; then
 EXTR="xjf"
 fi
 tar ${EXTR} ${pkgn} \+CONTENTS
-PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g"`
+PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g" | sed "s/@cwd .//g"`
 rm \+CONTENTS > /dev/null 2>&1
 mkdir ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} > /dev/null 2>&1
 PKGNAME=`echo ${pkgn} | sed "s/\.${pkgtype}//g"`
