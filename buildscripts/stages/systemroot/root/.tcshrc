@@ -47,7 +47,7 @@ alias helpcommand man
 
 # F1 : help on command currently typed(if 'ls passwd', help on 'ls').
 bindkey ^[[M run-help
-bindkey [OP  run-help
+#bindkey [OP  run-help
 
 
 if ($term == "xterm" || $term == "vt100" || $term == "vt102" || $term !~ "con*") then
