@@ -62,7 +62,7 @@ search_boot_device
 FRENZY_LOADSET="${fc}/${fbootcfg}"
 if [ -e "${FRENZY_LOADSET}" ]; then
     . ${FRENZY_LOADSET}
-else
+fi
 
 
 
