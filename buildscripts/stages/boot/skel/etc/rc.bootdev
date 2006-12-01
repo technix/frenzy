@@ -4,21 +4,6 @@ search_boot_device ()
 {
 echo -n "[*] Searching boot device: "
 devfound="0"
-for CD in `echo /dev/acd* /dev/cd*`
-do
-    echo -n "${CD} "
-    mount_cd9660 -s 0 ${CD} ${fc} 2>/dev/null
-    if test -r ${fc_uzip}; then 
-	echo "OK."
-	echo "[*] Booting from CD (${CD})."
-	devfound="1"
-	break
-    else
-	umount ${CD} 2>/dev/null
-    fi
-done
-# Search for USB Flash
-if test ${devfound} -eq 0; then
     for FLASH in `echo /dev/da*`
     do
 	echo -n "${FLASH} "
@@ -34,6 +19,22 @@ if test ${devfound} -eq 0; then
 	    umount ${FLASH} 2>/dev/null
 	fi
     done
+# Search for CD
+if test ${devfound} -eq 0; then
+for CD in `echo /dev/acd* /dev/cd*`
+do
+    echo -n "${CD} "
+    mount_cd9660 -s 0 ${CD} ${fc} 2>/dev/null
+    if test -r ${fc_uzip}; then 
+	echo "OK."
+	echo "[*] Booting from CD (${CD})."
+	devfound="1"
+	break
+    else
+	umount ${CD} 2>/dev/null
+    fi
+done
+
 fi
 
 # manual entering of boot device
