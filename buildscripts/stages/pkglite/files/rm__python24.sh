@@ -4,3 +4,7 @@
 P="/usr/local/lib/python2.4"
 # Removing test modules
 rm -rf ${P}/test > /dev/null 2>&1
+
+P="/usr/local/share/examples/python2.4"
+# Removing examples
+rm -rf ${P}/* > /dev/null 2>&1

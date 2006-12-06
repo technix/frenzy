@@ -1,5 +1,5 @@
 #!/bin/sh
-FDIR="/usr/X11R6/lib/X11/fonts/local"
+FDIR="/usr/X11R6/lib/X11/fonts/terminus-font"
 
 if [ -d ${FDIR} ]; then 
 rm ${FDIR}/ter-5*.gz > /dev/null 2>&1
