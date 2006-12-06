@@ -55,9 +55,9 @@ do
 	    else
 	    # We do not need relink since multiple union mount implemented
 		if [ "$enable_rwsys" = "YES" ]; then
-		    mount_unionfs -o noatime -o ro -o copymode=transparent ${femfs}/fs /Frenzy/fs > /dev/null 2>&1
+		    mount_unionfs -o ro -o copymode=transparent ${femfs}/fs /Frenzy/fs > /dev/null 2>&1
 		else
-		    mount_unionfs -o noatime -o ro -o copymode=transparent ${femfs}/fs/usr /usr > /dev/null 2>&1
+		    mount_unionfs -o ro -o copymode=transparent ${femfs}/fs/usr /usr > /dev/null 2>&1
 		fi
 	    fi
 	done
@@ -68,7 +68,7 @@ done
 
 if [ "$RELINK" = 1 ]; then
     printf "${mi} ${MSG_fem_union}.\n"
-    mount_unionfs -o noatime -o ro -o copymode=transparent ${femdirmod} /usr > /dev/null 2>&1
+    mount_unionfs -o ro -o copymode=transparent ${femdirmod} /usr > /dev/null 2>&1
 fi
 
 printf "${mi} ${MSG_fem_loaded}\n"

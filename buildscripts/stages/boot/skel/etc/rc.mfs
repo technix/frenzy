@@ -65,9 +65,9 @@ create_rw ()
 {
 # mounting read-write directory over all of it
 if [ "$enable_rwall" = "YES" ]; then
-mount_unionfs -o noatime -o copymode=transparent ${rwall} /Frenzy/fs > /dev/null 2>&1
+mount_unionfs -o copymode=transparent ${rwall} /Frenzy/fs > /dev/null 2>&1
 else
-mount_unionfs -o noatime -o copymode=transparent ${femusr} /usr > /dev/null 2>&1
+mount_unionfs -o copymode=transparent ${femusr} /usr > /dev/null 2>&1
 fi
 }
 
