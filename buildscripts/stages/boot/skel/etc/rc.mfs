@@ -41,7 +41,7 @@ for d in ${MFSLIST}; do
     if [ "${enable_unionfs}" = "YES" ]; then
 	# unionfs enabled
 	mount_nullfs ${fs}/$d /$d
-	mount_unionfs -c transparent ${fr_ram}/$d /$d
+	mount_unionfs -o copymode=transparent ${fr_ram}/$d /$d
     else
 	# old method
 	mount_nullfs ${fr_ram}/$d /$d
@@ -65,9 +65,9 @@ create_rw ()
 {
 # mounting read-write directory over all of it
 if [ "$enable_rwall" = "YES" ]; then
-mount_unionfs -o noatime -c transparent ${rwall} /Frenzy/fs > /dev/null 2>&1
+mount_unionfs -o noatime -o copymode=transparent ${rwall} /Frenzy/fs > /dev/null 2>&1
 else
-mount_unionfs -o noatime -c transparent ${femusr} /usr > /dev/null 2>&1
+mount_unionfs -o noatime -o copymode=transparent ${femusr} /usr > /dev/null 2>&1
 fi
 }
 
