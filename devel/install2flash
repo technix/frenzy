@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Name    : Frenzy USB Flash installer
-# Version : 0.2
+# Version : 0.3
 # Author  : Elisey Savateev (b3k@mail.ru)
 #
 # $Id$
@@ -12,7 +12,7 @@
 . packages/libs-1.1/dialog_common.sh
 
 MODID="install2flash"
-VERSION="0.2"
+VERSION="0.3"
 
 msg_instsrc=`gettext -s "Installation source"`
 msg_chsrc=`gettext -s "Choose an installation source"`
@@ -61,16 +61,18 @@ VERBOSE=""	# Verbose logging
 SRCTYPE=""	# Source type
 SECTSIZE=""	# Flash disk sector size
 SRCSIZE=""	# Source size
+PART=""		# Data partition
 SRCUMNT=0	# Do we need to unmount source when finish?
+DSTUMNT=0	# Do we need to unmount destination when finish?
 
 # Constants
-FSTAB="/etc/fstab"			# Full path to fstab file
+FSTAB="/etc/fstab"		# Full path to fstab file
 CDMNT="/Frenzy/boot"		# Frenzy Live CD mountpoint
 SRCMNT="/tmp/frenzy.src"	# Source mountpoint
 DSTMNT="/tmp/frenzy.dst"	# Flash mountpoint
-MDUNIT=10					# MD unit number (when SRCTYPE="ISO")
-PARTOFFSET=32				# First partition offset in sectors
-SRCADD=16348				# Addition to source size in kilobytes
+MDUNIT=10			# MD unit number (when SRCTYPE="ISO")
+PARTOFFSET=32			# First partition offset in sectors
+SRCADD=16348			# Addition to source size in kilobytes
 
 select_dev()
 {
@@ -89,7 +91,7 @@ select_dev()
 	if [ $? -ne 0 ]; then exit 0; fi
 
 	if [ `echo "$dev_list" | wc -l` -eq 1 ]; then 
-		DEV="$dev_list"
+		DEV="/dev/$dev_list"
 		return 0
 	fi
 
@@ -100,7 +102,7 @@ select_dev()
 	menu "$msg_flash" "$msg_chflash" "10 40 3" "$flash_list"
 	if [ -z "$RESULT" ]; then exit 0; fi
 
-	DEV="$RESULT"
+	DEV="/dev/$RESULT"
 }
 
 flash_init()
@@ -234,18 +236,34 @@ prepare_source()
 	mount_source
 }
 
-clean_source()
+cleanup()
 {
-	info "$msg_umounting $SRC"
+	if [ $SRCUMNT -eq 1 ]; then
+		info "$msg_umounting $SRC"
 
-	if [ "$SRCTYPE" != "ISO" ]; then
-		umount $VERBOSE "$SRC" >>"$LOG" 2>&1
-	else
-		umount $VERBOSE "$SRC" >>"$LOG" 2>&1 && \
-		mdconfig -d -u $MDUNIT >>"$LOG" 2>&1
+		if [ "$SRCTYPE" != "ISO" ]; then
+			umount $VERBOSE "$SRC" >>"$LOG" 2>&1
+		else
+			umount $VERBOSE "$SRC" >>"$LOG" 2>&1 && \
+			mdconfig -d -u $MDUNIT >>"$LOG" 2>&1
+		fi
+
+		if [ $? -ne 0 ]; then error "$msg_unable $msg_umount $SRC. $msg_log."; fi
+
+		SRCUMNT=0
 	fi
 
-	if [ $? -ne 0 ]; then error "$msg_unable $msg_umount $SRC. $msg_log."; fi
+	if [ $DSTUMNT -eq 1 ]; then
+		info "$msg_umounting $PART"
+
+	        umount $VERBOSE "$PART" >>"$LOG" 2>&1
+
+		if [ $? -ne 0 ]; then error "$msg_unable $msg_umount $PART. $msg_log."; fi
+
+		DSTUMNT=0
+	fi
+
+	if [ $NONINTER -eq 0 ]; then dialog_clean; fi
 }
 
 flash_mkpart()
@@ -334,7 +352,7 @@ flash_boot()
 
 install_data()
 {
-	local part="${DEV}s2a"
+	PART="${DEV}s2a"
 
 	if [ ! -d "$DSTMNT" ]; then
 		mkdir -p "$DSTMNT" >/dev/null 2>&1
@@ -344,14 +362,16 @@ install_data()
 		fi
 	fi
 
-	info "$msg_mounting $part"
+	info "$msg_mounting $PART"
 
-	mount $VERBOSE "$part" "$DSTMNT" >>"$LOG" 2>&1
+	mount $VERBOSE "$PART" "$DSTMNT" >>"$LOG" 2>&1
 
 	if [ $? -ne 0 ]; then
-		error "$msg_unable $msg_mount $part. $msg_log."
+		error "$msg_unable $msg_mount $PART. $msg_log."
 		exit 1
 	fi
+
+	DSTUMNT=1
 
 	# TODO: Display intallation progress (maybe with tar + bar + cdialog --gauge?)
 	info "$msg_data"
@@ -362,15 +382,6 @@ install_data()
 		error "$msg_unable $msg_dataerr. $msg_log."
 		exit 1
 	fi
-
-	info "$msg_umounting $part"
-
-	umount $VERBOSE "$part" >>"$LOG" 2>&1
-
-	if [ $? -ne 0 ]; then 
-		error "$msg_unable $msg_umount $part. $msg_log."
-		exit 1
-   	fi
 }
 
 while getopts nfvhs:l: OPT >/dev/null 2>&1; do
@@ -394,8 +405,6 @@ if [ $NONINTER -eq 0 ]; then
 		echo "$MODID: cdialog $msg_notfound" >&2
 		exit 1
 	fi
-	
-	trap dialog_clean 0 1 2 5 15
 fi
 
 if [ -z "$SRC" ]; then
@@ -419,6 +428,8 @@ fi
 if [ $NONINTER -eq 0 -a $NOWARN -eq 0 ]; then confirm; fi
 
 log_init
+
+trap cleanup 0 1 2 5 15
 	
 echo "$msg_start `date`" >"$LOG"
 
@@ -436,8 +447,6 @@ flash_formatpart
 flash_boot
 
 install_data
-
-if [ $SRCUMNT -eq 1 ]; then clean_source; fi
 
 echo "$msg_end `date`" >>"$LOG"
 
