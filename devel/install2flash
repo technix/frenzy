@@ -91,7 +91,7 @@ select_dev()
 	if [ $? -ne 0 ]; then exit 0; fi
 
 	if [ `echo "$dev_list" | wc -l` -eq 1 ]; then 
-		DEV="/dev/$dev_list"
+		DEV="$dev_list"
 		return 0
 	fi
 
@@ -376,7 +376,9 @@ install_data()
 	# TODO: Display intallation progress (maybe with tar + bar + cdialog --gauge?)
 	info "$msg_data"
 
-	cp $VERBOSE -R "$SRCMNT"/* "$DSTMNT" >>"$LOG" 2>&1
+	cd "$SRCMNT"
+	pax -rw . "$DSTMNT" >>"$LOG" 2>&1
+	cd -
 
 	if [ $? -ne 0 ]; then
 		error "$msg_unable $msg_dataerr. $msg_log."
