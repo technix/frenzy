@@ -3,6 +3,11 @@ sys
 usr/games
 usr/obj
 usr/src
-usr/share/games
+usr/share/dict
 usr/share/doc/*
-usr/share/openssl/man
+usr/share/games
+usr/include
+usr/share/man/man2/*
+usr/share/man/man3/*
+usr/share/man/man9/*
+usr/share/openssl/man/man3/*

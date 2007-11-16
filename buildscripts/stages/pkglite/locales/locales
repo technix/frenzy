@@ -5,7 +5,7 @@ az*
 am
 be
 bg
-bn
+bn*
 br
 bs
 ca
@@ -46,6 +46,7 @@ la
 li
 lt
 lv
+mg
 mi
 mk
 ml
@@ -59,6 +60,7 @@ nl
 nn
 no*
 nso
+oc
 or
 pa
 pl
