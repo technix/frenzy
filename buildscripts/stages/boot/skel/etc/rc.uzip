@@ -54,7 +54,7 @@ mnt_uzip_from $1  # mount compressed FS
 if [ "${enable_unionfs}" = "YES" ]; then
     for d in etc var root; do
 	mount_nullfs ${fs}/${d} /${d}
-	mount_unionfs -c transparent ${fr_ram}/$d /$d
+	mount_unionfs -o noatime -o copymode=transparent ${fr_ram}/$d /$d
     done
 fi
 
