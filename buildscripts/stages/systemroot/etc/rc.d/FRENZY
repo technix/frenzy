@@ -24,7 +24,7 @@ FR_HWINFO=0	# generate hardware info
 . /etc/frenzy.boot
 
 # mounting procfs
-mount /proc > /dev/null 2>&1
+#mount /proc > /dev/null 2>&1
 
 ## Auto-configure mouse
 #
@@ -72,6 +72,6 @@ fi
 #
 if [ ${FR_AUTOLOGIN} -eq 1 ]; then
     X="/etc/ttys"
-    /usr/bin/awk '{if ($1 == "ttyv0") print $1, $2, "alroot\"", $4, $5, $6 else print $0 }' ${X} > ${X}.new
+    /usr/bin/awk '{if ($1 == "ttyv0") print $1, $2, "alroot\"", $4, $5, $6; else print $0 }' ${X} > ${X}.new
     /bin/mv ${X}.new ${X}
 fi

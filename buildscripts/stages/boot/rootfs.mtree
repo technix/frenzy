@@ -21,7 +21,13 @@ mnt
 ..
 proc
 ..
+root
+..
 sbin
+..
+usr
+..
+var
 ..
 ..
 home   type=link link=/var/home
@@ -29,6 +35,3 @@ tmp    type=link link=/var/tmp
 boot	type=link link=/Frenzy/fs/boot
 lib	type=link link=/Frenzy/fs/lib
 libexec	type=link link=/Frenzy/fs/libexec
-root	type=link link=/Frenzy/fs/root
-usr	type=link link=/Frenzy/fs/usr
-var	type=link link=/Frenzy/fs/var

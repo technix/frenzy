@@ -36,40 +36,11 @@ do
 	    #echo "> mount_cd9660 ${femfs}"
 	    #echo "> ${FMD} -> ${femfs}"
 	    /sbin/mount_cd9660 /dev/${FMD}.uzip ${femfs}
-
-	    if [ "$RELINK" = 1 ]; then
-	        #echo "> relinking"    
-	        ffs="${femfs}/fs"
-	        for pkfile in `cd ${ffs} && find . -xdev | sed "s/\.\///"g`
-	        do
-		    if [ -d ${ffs}/${pkfile} ]; then
-	    		mkdir ${femdirmod}/${pkfile} > /dev/null 2>&1
-		    fi
-		    if [ -f ${ffs}/${pkfile} ]; then
-	    		ln -s ${ffs}/${pkfile} ${femdirmod}/${pkfile} > /dev/null 2>&1
-		    fi
-		    if [ -L ${ffs}/${pkfile} ]; then
-	    		ln -s ${ffs}/${pkfile} ${femdirmod}/${pkfile} > /dev/null 2>&1
-		    fi
-    		done
-	    else
-	    # We do not need relink since multiple union mount implemented
-		if [ "$enable_rwsys" = "YES" ]; then
-		    mount_unionfs -o noatime -o ro -o copymode=transparent ${femfs}/fs /Frenzy/fs > /dev/null 2>&1
-		else
-		    mount_unionfs -o noatime -o ro -o copymode=transparent ${femfs}/fs/usr /usr > /dev/null 2>&1
-		fi
-	    fi
+	    mount_unionfs -o noatime -o ro -o copymode=transparent ${femfs}/fs/usr /usr > /dev/null 2>&1
 	done
     cd ${CURRDIR}
     fi
 done
-
-
-if [ "$RELINK" = 1 ]; then
-    printf "${mi} ${MSG_fem_union}.\n"
-    mount_unionfs -o noatime -o ro -o copymode=transparent ${femdirmod} /usr > /dev/null 2>&1
-fi
 
 printf "${mi} ${MSG_fem_loaded}\n"
 

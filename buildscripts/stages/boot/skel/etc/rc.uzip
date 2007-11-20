@@ -8,11 +8,7 @@ MD=`/sbin/mdconfig -af ${IMG} 2> /dev/null`
 sleep 1
 /sbin/mount_cd9660 /dev/${MD}.uzip ${fs}
 echo -n "[*] Mounting compressed filesystems:"
-if [ "$enable_rwsys" = "YES" ]; then
-    UZIPLIST="bin sbin"
-else
-    UZIPLIST="libexec bin boot lib sbin usr"
-fi
+UZIPLIST="bin sbin usr var etc root"
 for d in ${UZIPLIST}; do
     echo -n " $d"
     /sbin/mount_nullfs ${fs}/${d} /${d}
@@ -31,33 +27,29 @@ UZIP_MD=`echo ${MD} | sed "s/md//g"`
 
 uzip_remount ()
 {
-if [ "$enable_rwsys" = "YES" ]; then
-    UZIPLIST="bin sbin"
-else
-    UZIPLIST="sbin libexec bin boot sbin usr"
-fi
+UZIPLIST="bin sbin usr var etc root"
 for d in ${UZIPLIST}; do
-    /sbin/umount -f /${d}
+    /sbin/umount -f /${d} > /dev/null 2>&1
+    /sbin/umount -f /${d} > /dev/null 2>&1
+    # we do it twice since we have unionfs mounts over them
 done
-if [ "${enable_unionfs}" = "YES" ]; then
-    for d in etc var root; do
-	umount /${d}
-	umount /${d}
-    done
-fi
 
 /sbin/umount -f ${fs}
 /sbin/mdconfig -d -u ${UZIP_MD}
 mnt_uzip_from $1  # mount compressed FS
 /sbin/umount -f ${fc}
 
-if [ "${enable_unionfs}" = "YES" ]; then
-    for d in etc var root; do
-	mount_nullfs ${fs}/${d} /${d}
-	mount_unionfs -o noatime -o copymode=transparent ${fr_ram}/$d /$d
-    done
-fi
+# now we remount unionfs again
+unionfs_from_ram
 
 (sleep 1 && cdcontrol -f ${CD} eject > /dev/null 2>&1 ) &
 }
 
+
+unionfs_from_ram () 
+{
+UNIONLIST="var etc root"
+for d in ${UZIPLIST}; do
+    /sbin/mount_unionfs -o noatime -o copymode transparent ${fr_ram}/${d} /${d}
+done
+}
