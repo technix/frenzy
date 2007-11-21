@@ -50,6 +50,6 @@ unionfs_from_ram ()
 {
 UNIONLIST="var etc root"
 for d in ${UZIPLIST}; do
-    /sbin/mount_unionfs -o noatime -o copymode transparent ${fr_ram}/${d} /${d}
+    /sbin/mount_unionfs -o noatime -o copymode=transparent ${fr_ram}/${d} /${d}
 done
 }
