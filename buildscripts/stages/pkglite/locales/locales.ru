@@ -3,6 +3,7 @@ ar
 as
 az*
 am
+ang
 be
 bg
 bn*
@@ -35,11 +36,13 @@ hu
 hy
 ia
 id
+io
 is
 it
 ja
 ka
 ko
+km
 kn
 ku
 la
@@ -68,8 +71,9 @@ pt*
 ro
 rw
 se
+si
 sk
-sl
+sl*
 sp
 sq
 sr*
@@ -84,6 +88,7 @@ tl
 tr
 tt
 ug
+ur
 uz*
 vi
 wa
