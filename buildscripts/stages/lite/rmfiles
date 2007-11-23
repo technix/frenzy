@@ -6,7 +6,6 @@ usr/src
 usr/share/dict
 usr/share/doc/*
 usr/share/games
-usr/include
 usr/share/man/man2/*
 usr/share/man/man3/*
 usr/share/man/man9/*

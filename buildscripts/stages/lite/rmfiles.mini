@@ -6,6 +6,8 @@ usr/src
 usr/share/dict
 usr/share/doc/*
 usr/share/games
-usr/share/man/* 
 usr/include
-usr/lib/*.a
+usr/share/man/man2/*
+usr/share/man/man3/*
+usr/share/man/man9/*
+usr/share/openssl/man/man3/*
