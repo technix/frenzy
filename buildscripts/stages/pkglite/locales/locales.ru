@@ -4,7 +4,7 @@ as
 az*
 am
 ang
-be
+be@latin
 bg
 bn*
 br
