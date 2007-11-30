@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Name    : Loading of required sound driver
+# Version : 0.1 (30.11.2007)
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+# 
+
+KMODDIR="/boot/kernel"
+
+# sound
+MODNAME=""
+echo -n "[*] Sound "
+kldload sound.ko > /dev/null 2>&1
+DB=`ls /dev | wc -l`
+for module in `ls ${KMODDIR}/snd_* | grep -v snd_driver`
+do
+kldload ${module} > /dev/null 2>&1
+DA=`ls /dev | wc -l`
+if [ "${DA}" = "${DB}" ]; then
+kldunload ${module} > /dev/null 2>&1
+else
+MODNAME=`echo ${module} | awk -F"/" '{print $4}'`
+DB=`ls /dev | wc -l`
+fi
+echo -n "."
+done
+
+if [ -z "${MODNAME}" ]; then
+echo " not found."
+kldunload sound.ko > /dev/null 2>&1
+else
+echo " found, loaded '${MODNAME}'."
+fi
