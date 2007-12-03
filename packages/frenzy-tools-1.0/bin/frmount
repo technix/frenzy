@@ -57,7 +57,7 @@ case ${PTYPE} in
 1|4|6|b|c|e|11|14|16|1b|1c|1e)
 # MSDOS
  MPTR="${MPT}.fat"
- FSTAB_ENTRY="${PNAME}    /mnt/${MPTR}   msdos   ${MOUNTMODE},noauto,longnames,-Lru_RU.KOI8-R,-Dcp866,-m664,-M775     0       0"
+ FSTAB_ENTRY="${PNAME}    /mnt/${MPTR}   msdosfs   ${MOUNTMODE},noauto,longnames,-Lru_RU.KOI8-R,-Dcp866,-m664,-M775     0       0"
  if [ -z "${EXIST}" ]; then
   FSTAB_NEW=`printf "${FSTAB_NEW}\n${FSTAB_ENTRY}"`
   if [ -n "${VERBOSE}" ]; then

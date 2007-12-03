@@ -204,10 +204,10 @@ at-xy ."         `--{__________) [0m"
 	clear
 	2 4 print-logo
 	45 6 at-xy ." Welcome to Frenzy LiveCD! "
-	printmenuitem ."  Boot FreeBSD [default]" bootkey !
+	printmenuitem ."  Boot Frenzy [default]" bootkey !
 	s" arch-i386" environment? if
 		drop
-		printmenuitem ."  Boot FreeBSD with ACPI " bootacpikey !
+		printmenuitem ."  Boot Frenzy with ACPI " bootacpikey !
 		acpienabled? if
 			." disabled"
 		else
@@ -216,9 +216,11 @@ at-xy ."         `--{__________) [0m"
 	else
 		-2 bootacpikey !
 	then
-	printmenuitem ."  Boot FreeBSD in Safe Mode" bootsafekey !
-	printmenuitem ."  Boot FreeBSD in single user mode" bootsinglekey !
-	printmenuitem ."  Boot FreeBSD with verbose logging" bootverbosekey !
+	printmenuitem ."  Boot Frenzy in Safe Mode" bootsafekey !
+	printmenuitem ."  Boot Frenzy in single user mode" bootsinglekey !
+	printmenuitem ."  Boot Frenzy with verbose logging" bootverbosekey !
+	printmenuitem ."  Boot Frenzy with ATAPI DMA disabled" bootnoatapikey !
+	printmenuitem ."  Boot Frenzy with ATA DMA disabled" bootnoatakey !
 	printmenuitem ."  Escape to loader prompt" escapekey !
 	printmenuitem ."  Reboot" rebootkey !
 	menuX @ 20 at-xy
@@ -306,6 +308,14 @@ set-current
 		then
 		dup bootsinglekey @ = if
 			s" YES" s" boot_single" setenv
+			0 boot
+		then
+		dup bootnoatapikey @ = if
+			s" 0" s" hw.ata.atapi_dma" setenv
+			0 boot
+		then
+		dup bootnoatakey @ = if
+			s" 0" s" hw.ata.ata_dma" setenv
 			0 boot
 		then
 		dup escapekey @ = if
