@@ -46,9 +46,9 @@ $zwwb${VERSION}$ze\n\
     nofem          Don't load Frenzy extension modules
     hwinfo         Make a list of hardware 
     gui            Boot in graphics mode 
+    sound          Autodetect and load sound card driver
 
   Defauls: lang=en ramdisk=${MFS_SIZE}
-
 
 
 

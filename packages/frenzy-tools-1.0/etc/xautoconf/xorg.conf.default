@@ -57,6 +57,7 @@ Section "Screen"
 	Device     "Card0"
 	Monitor    "Monitor0"
 	#DefaultDepth 24
+	#%DEFAULTDEPTH%
 	SubSection "Display"
 		Depth     1
 		Modes	"640x480"

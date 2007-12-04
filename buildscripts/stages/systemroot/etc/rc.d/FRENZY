@@ -20,6 +20,7 @@ FR_AUTOLOGIN=0	# enable autologin
 FR_GUI=0	# enable X.org 
 FR_GUISAFE=0	# load X.org with safe settings
 FR_HWINFO=0	# generate hardware info
+FR_SOUND=0	# autodetect sound card
 
 . /etc/frenzy.boot
 
@@ -32,6 +33,11 @@ printf "$mi "
 /usr/local/bin/mouse-detect
 #
 ##
+
+# Detect sound card
+if [ ${FR_SOUND} -eq 1 ]; then
+    /usr/local/bin/snd_kmod_probe
+fi
 
 ## Get hardware info
 #

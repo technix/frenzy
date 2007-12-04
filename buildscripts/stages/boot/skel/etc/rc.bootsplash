@@ -39,7 +39,7 @@ sysvar_hdrw="FR_HDRW"
 sysvar_nobackup="FR_NOBACKUP"
 sysvar_nofem="FR_NOFEM"
 sysvar_hwinfo="FR_HWINFO"
-
+sysvar_sound="FR_SOUND"
 
 for i in `echo ${INT}`
 do
@@ -86,5 +86,10 @@ fi
 if [ -n "${FR_HWINFO}" ]; then
     echo "FR_HWINFO=1 " >> ${conf}
 fi
+
+if [ -n "${FR_SOUND}" ]; then
+    echo "FR_SOUND=1 " >> ${conf}
+fi
+
 
 }
