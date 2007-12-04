@@ -44,6 +44,8 @@ variable bootacpikey
 variable bootsafekey
 variable bootverbosekey
 variable bootsinglekey
+variable bootnoatapikey
+variable bootnoatakey
 variable escapekey
 variable rebootkey
 
