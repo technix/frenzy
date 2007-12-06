@@ -3,7 +3,7 @@
 if [ -d "/usr/local/lib/rkhunter" ]; then
 
 # adding updates
-mv /usr/local/lib/rkhunter/db-latest/* /usr/local/lib/rkhunter/db
+#mv /usr/local/lib/rkhunter/db-latest/* /usr/local/lib/rkhunter/db
 
-cp /usr/local/etc/rkhunter.conf.sample /usr/local/etc/rkhunter.conf
+cp /usr/local/etc/rkhunter.conf.sample /usr/local/etc/rkhunter.conf > /dev/null 2>&1
 fi

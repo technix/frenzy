@@ -49,3 +49,6 @@ for i in TW KR JP CN
 do
 rm -f ${P}/5.8.8/mach/auto/Encode/${i}/*.so > /dev/null 2>&1
 done
+
+rm -f ${P}/5.8.8/man/man3/Gtk*.gz > /dev/null 2>&1
+rm -f ${P}/5.8.8/man/man3/Glib*.gz > /dev/null 2>&1
