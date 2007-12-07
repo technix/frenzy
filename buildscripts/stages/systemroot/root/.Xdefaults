@@ -1,8 +1,8 @@
-*fontList: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
-*fontStruct: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
-*font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
-*Font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
-xpdf*fontList: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-koi8-r
+*fontList: -xos4-terminus-medium-r-normal-*-20-*-*-*-*-*-koi8-r
+*fontStruct: -xos4-terminus-medium-r-normal-*-20-*-*-*-*-*-koi8-r
+*font: -xos4-terminus-medium-r-normal-*-20-*-*-*-*-*-koi8-r
+*Font: -xos4-terminus-medium-r-normal-*-20-*-*-*-*-*-koi8-r
+xpdf*fontList: -xos4-terminus-medium-r-normal-*-20-*-*-*-*-*-koi8-r
 
 ! RXVT settings
 
@@ -11,17 +11,17 @@ Rxvt*deletekey: "\033[3~"
 
 Rxvt*background: Black
 Rxvt*foreground: White
-Rxvt*font: -xos4-terminus-medium-r-*-*-14-*-*-*-*-*-koi8-r
+Rxvt*font: -xos4-terminus-medium-r-*-*-20-*-*-*-*-*-koi8-r
 Rxvt*saveLines: 500
 
 mrxvt*backspacekey: "\010"
 mrxvt*deletekey: "\033[3~"
 mrxvt*background: Black
 mrxvt*foreground: White
-mrxvt*font: -xos4-terminus-bold-r-*-*-14-*-*-*-*-*-koi8-r
+mrxvt*font: -xos4-terminus-bold-r-*-*-20-*-*-*-*-*-koi8-r
 mrxvt*saveLines: 500
 
-Xdialog.font: -xos4-terminus-bold-r-*-*-14-*-*-*-*-*-koi8-r
+Xdialog.font: -xos4-terminus-bold-r-*-*-20-*-*-*-*-*-koi8-r
 
 xterm:vt100:translations:
 <Key>BackSpace: string (\010) \n
