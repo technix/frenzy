@@ -27,7 +27,7 @@ echo
 
 PARAM=""
 
-PARAMLIST="lang ramdisk toram gui fromhdd nohdd nohdmnt hdrw nofem nobackup hwinfo"
+PARAMLIST="lang ramdisk toram gui fromhdd nohdd nohdmnt hdrw nofem nobackup hwinfo sound mode"
 sysvar_lang="FR_LANG"
 sysvar_ramdisk="FR_RAMDISK"
 sysvar_toram="FR_TORAM"
@@ -40,6 +40,8 @@ sysvar_nobackup="FR_NOBACKUP"
 sysvar_nofem="FR_NOFEM"
 sysvar_hwinfo="FR_HWINFO"
 sysvar_sound="FR_SOUND"
+sysvar_mode="FR_GCONSOLE"
+
 
 for i in `echo ${INT}`
 do
@@ -89,6 +91,12 @@ fi
 
 if [ -n "${FR_SOUND}" ]; then
     echo "FR_SOUND=1 " >> ${conf}
+fi
+
+if [ -n "${FR_GCONSOLE}" ]; then
+    GCONSOLE="$FR_GCONSOLE"
+else
+    GCONSOLE="default"
 fi
 
 

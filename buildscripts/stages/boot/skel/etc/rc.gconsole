@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Name    : Graphical console
+
+gconsole ()
+{
+if [ "${GCONSOLE}" != "default" ]; then
+modeid=`vidcontrol -i mode | grep ${GCONSOLE} | awk '{print $1}'`
+if [ -n "${modeid}" ]; then
+vidcontrol < /dev/ttyv0 MODE_${modeid} > /dev/null 2>&1
+fi
+fi
+}

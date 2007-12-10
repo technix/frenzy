@@ -18,6 +18,7 @@ DEFLANG="ru"
 . /etc/rc.bootsplash
 . /etc/rc.fem
 . /etc/rc.fromhdd
+. /etc/rc.gconsole
 . /etc/rc.hdd 
 . /etc/rc.mfs
 . /etc/rc.toram
@@ -80,6 +81,8 @@ fi
 create_mfs
 ### 4.1. Save bootsplash settings
 bootsplash_save
+### 4.2. Graphical console
+gconsole
 ### 5. Patch loading
 if [ "${enable_patchloader}" = "YES" ]; then
     patch_loader

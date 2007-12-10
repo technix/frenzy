@@ -27,7 +27,7 @@ UZIP_MD=`echo ${MD} | sed "s/md//g"`
 
 uzip_remount ()
 {
-UZIPLIST="bin sbin usr var etc root"
+UZIPLIST="usr var etc root bin sbin"
 for d in ${UZIPLIST}; do
     /sbin/umount -f /${d} > /dev/null 2>&1
     /sbin/umount -f /${d} > /dev/null 2>&1
@@ -40,16 +40,10 @@ mnt_uzip_from $1  # mount compressed FS
 /sbin/umount -f ${fc}
 
 # now we remount unionfs again
-unionfs_from_ram
-
-(sleep 1 && cdcontrol -f ${CD} eject > /dev/null 2>&1 ) &
-}
-
-
-unionfs_from_ram () 
-{
 UNIONLIST="var etc root"
-for d in ${UZIPLIST}; do
+for d in ${UNIONLIST}; do
     /sbin/mount_unionfs -o noatime -o copymode=transparent ${fr_ram}/${d} /${d}
 done
+
+(sleep 1 && cdcontrol -f ${CD} eject > /dev/null 2>&1 ) &
 }

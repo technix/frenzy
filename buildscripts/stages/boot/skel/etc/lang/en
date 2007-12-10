@@ -34,6 +34,9 @@ bootsplash_screen ()
 printf "
 $zwwb${VERSION}$ze\n\
 
+    mode=default${zgb}|${ze}MODE  Select console graphics mode. default - standard
+                   console 80È25. Another modes may be defined as
+                   SizeX${zgb}x${ze}SizeY${zgb}x${ze}ColorDepth (for example, 1024x768x16)
     lang=en${zgb}|${ze}de${zgb}|${ze}fr${zgb}|${ze}it${zgb}|${ze}es${zgb}|${ze}pl${zgb}|${ze}bg${zgb}|${ze}cz${zgb}|${ze}sk${zgb}|${ze}ru${zgb}|${ze}ua        Language selection 
 
     ramdisk=X      RAM-disk size, now ${MFS_SIZE} 
@@ -50,10 +53,8 @@ $zwwb${VERSION}$ze\n\
 
   Defauls: lang=en ramdisk=${MFS_SIZE}
 
-
-
-
 ${zgb}-------------------------------------------------------------------------------${ze}
 ${mi} Type boot parameters and hit Enter (${DELAY} seconds)
 ${me} "
 }
+
