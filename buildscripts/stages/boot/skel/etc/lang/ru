@@ -28,6 +28,9 @@ MSG_fem_search="Поиск в"
 MSG_fem_union="Монтирование unionfs."
 MSG_fem_loaded="Модули расширения подключены."
 
+# rc.gconsole
+MSG_gconsole_failed=": режим не найден, используем режим по умолчанию."
+MSG_gconsole_success=": hi-res режим включен."
 
 # rc.bootsplash
 

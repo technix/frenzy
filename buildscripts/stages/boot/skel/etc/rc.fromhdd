@@ -13,7 +13,7 @@ for i in `ls /mnt`
 do
     hd_uzip="/mnt/$i/frenzy/${uzip_file}"
     if [ -r "${hd_uzip}" ]; then
-	printf "$i [UZIP] .\n"
+	printf "$i [UZIP].\n"
 	FOUND=1
 	break
     fi

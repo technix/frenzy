@@ -21,6 +21,10 @@ MSG_please_wait_toram="Loading to RAM please wait.\n    Please wait...\n"
 MSG_toram_failed="An ERROR occured while loading to RAM."
 MSG_done_toram="Loading to RAM is OK."
 
+# rc.gconsole
+MSG_console_failed=": mode not found, using default."
+MSG_console_success=": hi-res mode enabled."
+
 # rc.fem
 MSG_fem_loading="Loading Frenzy extension modules."
 MSG_fem_search="Searching in"
