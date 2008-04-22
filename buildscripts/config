@@ -6,27 +6,26 @@ BLOCKSIZE="130560"	# uzip block size
 BUILDDATE=`date "+%Y%m%d%H%M"`
 BD=`date "+%d.%m.%Y %H:%M"`
 
+#FRENZY_TYPE="lite"
 FRENZY_TYPE="std"
-#FRENZY_TYPE="ext"
 FRENZY_LANG="ru"
 #FRENZY_LANG="en"
 
 
-FRENZY_ISOIMAGE="frenzy-1.0p1-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
-FRENZY_VOL="frenzy-1.0p1-${FRENZY_TYPE}-${FRENZY_LANG}"
+#FRENZY_ISOIMAGE="frenzy-1.1-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
+FRENZY_ISOIMAGE="frenzy-1.1-${FRENZY_TYPE}-${FRENZY_LANG}-BETA3.iso"
+FRENZY_VOL="frenzy-1.1-${FRENZY_TYPE}-${FRENZY_LANG}"
 
 #       |---------+---------+---------+---------+---------+---------+--|------+
-VERSION="Frenzy 1.0-p1 (Dreamchild)                            [ ${BD} ]"
+VERSION="Frenzy 1.1-standard (Starstruck) - RC1                [ ${BD} ]"
 
 
 # ADDITIONAL PATCHES
 # Package patches
-# available options: fix relink rm strip
-# 'relink' required only if no unionfs available
+# available options: fix rm strip
 PATCHES="fix rm strip"
 # Post-install patches
-# available options: create config patch relink final
-# 'relink' required only if no unionfs available
+# available options: create config patch final
 POSTPATCHES="create config patch final"
 
 
