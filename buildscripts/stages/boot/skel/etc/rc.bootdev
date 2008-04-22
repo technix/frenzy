@@ -7,12 +7,24 @@ devfound="0"
     for FLASH in `echo /dev/da*`
     do
 	echo -n "${FLASH} "
+	# trying to mount as UFS partition
 	mount -r ${FLASH} ${fc} 2>/dev/null
 	# Mounting Flash drive in RW mode (not needed)
 	##mount ${FLASH} ${fc} 2>/dev/null
 	if test -r ${fc_uzip}; then 
 	    echo "OK."
-	    echo "[*] Booting from USB Flash (${FLASH})."
+	    echo "[*] Booting from USB Flash (${FLASH}, UFS)."
+	    devfound="1"
+	    break
+	else
+	    umount ${FLASH} 2>/dev/null
+	fi
+
+	# trying to mount as FAT partition
+	mount_msdosfs -l ${FLASH} ${fc} 2>/dev/null
+	if test -r ${fc_uzip}; then 
+	    echo "OK."
+	    echo "[*] Booting from USB Flash (${FLASH}, FAT)."
 	    devfound="1"
 	    break
 	else

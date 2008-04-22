@@ -3,7 +3,7 @@
 buildopts -DNOPAM -DRELEASE_CRUNCH -DCRUNCHED_BINARY -DNOSECURE -DNOCRYPT -DNONETGRAPH -DNOIPSEC
 
 progs cp sh test echo init mdconfig
-progs mount mount_cd9660 mount_nullfs mount_unionfs umount sleep
+progs mount mount_msdosfs mount_ntfs mount_cd9660 mount_nullfs mount_unionfs umount sleep
 # DEBUG
 # progs ls kldstat
 
