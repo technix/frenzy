@@ -1,5 +1,3 @@
-# === netgraph ===============================================================
-
 # netgraph(4). Enable the base netgraph code with the NETGRAPH option.
 # Individual node types can be enabled with the corresponding option
 # listed below; however, this is not strictly necessary as netgraph
@@ -7,8 +5,6 @@
 # is not already compiled into the kernel. Each type below has a
 # corresponding man page, e.g., ng_async(8).
 options 	NETGRAPH		# netgraph(4) system
-options 	NETGRAPH_DEBUG		# enable extra debugging, this
-					# affects netgraph(4) and nodes
 # Node types
 options 	NETGRAPH_ASYNC
 #options 	NETGRAPH_ATMLLC
@@ -24,6 +20,7 @@ options 	NETGRAPH_BLUETOOTH_UBTBCMFW	# ubtbcmfw(4)
 options 	NETGRAPH_BPF
 options 	NETGRAPH_BRIDGE
 options 	NETGRAPH_CISCO
+options 	NETGRAPH_DEFLATE
 options 	NETGRAPH_DEVICE
 options 	NETGRAPH_ECHO
 options 	NETGRAPH_EIFACE
@@ -48,23 +45,14 @@ options 	NETGRAPH_ONE2MANY
 options 	NETGRAPH_PPP
 options 	NETGRAPH_PPPOE
 options 	NETGRAPH_PPTPGRE
+options 	NETGRAPH_PRED1
 options 	NETGRAPH_RFC1490
 options 	NETGRAPH_SOCKET
 options 	NETGRAPH_SPLIT
 options 	NETGRAPH_SPPP
+options 	NETGRAPH_TAG
 options 	NETGRAPH_TCPMSS
 options 	NETGRAPH_TEE
 options 	NETGRAPH_TTY
 options 	NETGRAPH_UI
 options 	NETGRAPH_VJC
-
-# NgATM - Netgraph ATM
-#options 	NGATM_ATM
-#options 	NGATM_ATMBASE
-#options 	NGATM_SSCOP
-#options 	NGATM_SSCFU
-#options 	NGATM_UNI
-#options 	NGATM_CCATM
-
-device		mn	# Munich32x/Falc54 Nx64kbit/sec cards.
-

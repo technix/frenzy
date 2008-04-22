@@ -1,0 +1,110 @@
+
+
+#
+# Network interfaces:
+#  The `loop' device is MANDATORY when networking is enabled.
+#  The `ether' device provides generic code to handle
+#  Ethernets; it is MANDATORY when an Ethernet device driver is
+#  configured or token-ring is enabled.
+#  The `vlan' device implements the VLAN tagging of Ethernet frames
+#  according to IEEE 802.1Q.  It requires `device miibus'.
+#  The `wlan' device provides generic code to support 802.11
+#  drivers, including host AP mode; it is MANDATORY for the wi,
+#  ath, and awi drivers and will eventually be required by all 802.11 drivers.
+#  The `wlan_wep', `wlan_tkip', and `wlan_ccmp' devices provide
+#  support for WEP, TKIP, and AES-CCMP crypto protocols optionally
+#  used with 802.11 devices that depend on the `wlan' module.
+#  The `wlan_xauth' device provides support for external (i.e. user-mode)
+#  authenticators for use with 802.11 drivers that use the `wlan'
+#  module and support 802.1x and/or WPA security protocols.
+#  The `wlan_acl' device provides a MAC-based access control mechanism
+#  for use with 802.11 drivers operating in ap mode and using the
+#  `wlan' module.
+#  The `fddi' device provides generic code to support FDDI.
+#  The `arcnet' device provides generic code to support Arcnet.
+#  The `sppp' device serves a similar role for certain types
+#  of synchronous PPP links (like `cx', `ar').
+#  The `sl' device implements the Serial Line IP (SLIP) service.
+#  The `ppp' device implements the Point-to-Point Protocol.
+#  The `bpf' device enables the Berkeley Packet Filter.  Be
+#  aware of the legal and administrative consequences of enabling this
+#  option.  The number of devices determines the maximum number of
+#  simultaneous BPF clients programs runnable.  DHCP requires bpf.
+#  The `disc' device implements a minimal network interface,
+#  which throws away all packets sent and never receives any.  It is
+#  included for testing and benchmarking purposes.
+#  The `edsc' device implements a minimal Ethernet interface,
+#  which discards all packets sent and receives none.
+#  The `tap' device is a pty-like virtual Ethernet interface
+#  The `tun' device implements (user-)ppp and nos-tun
+#  The `gif' device implements IPv6 over IP4 tunneling,
+#  IPv4 over IPv6 tunneling, IPv4 over IPv4 tunneling and
+#  IPv6 over IPv6 tunneling.
+#  The `gre' device implements two types of IP4 over IP4 tunneling:
+#  GRE and MOBILE, as specified in the RFC1701 and RFC2004.
+#  The XBONEHACK option allows the same pair of addresses to be configured on
+#  multiple gif interfaces.
+#  The `faith' device captures packets sent to it and diverts them
+#  to the IPv4/IPv6 translation daemon.
+#  The `stf' device implements 6to4 encapsulation.
+#  The `ef' device provides support for multiple ethernet frame types
+#  specified via ETHER_* options. See ef(4) for details.
+#
+# The pf packet filter consists of three devices:
+#  The `pf' device provides /dev/pf and the firewall code itself.
+#  The `pflog' device provides the pflog0 interface which logs packets.
+#  The `pfsync' device provides the pfsync0 interface used for
+#   synchronization of firewall state tables (over the net).
+#
+# The PPP_BSDCOMP option enables support for compress(1) style entire
+# packet compression, the PPP_DEFLATE is for zlib/gzip style compression.
+# PPP_FILTER enables code for filtering the ppp data stream and selecting
+# events for resetting the demand dial activity timer - requires bpf.
+# See pppd(8) for more details.
+#
+device		ether			#Generic Ethernet
+device		vlan			#VLAN support (needs miibus)
+device		wlan			#802.11 support
+device		wlan_wep		#802.11 WEP support
+device		wlan_ccmp		#802.11 CCMP support
+device		wlan_tkip		#802.11 TKIP support
+device		wlan_xauth		#802.11 external authenticator support
+device		wlan_acl		#802.11 MAC ACL support
+device		token			#Generic TokenRing
+device		fddi			#Generic FDDI
+device		arcnet			#Generic Arcnet
+device		sppp			#Generic Synchronous PPP
+device		loop			#Network loopback device
+device		bpf			#Berkeley packet filter
+device		disc			#Discard device based on loopback
+device		edsc			#Ethernet discard device
+device		tap			#Virtual Ethernet driver
+device		tun			#Tunnel driver (ppp(8), nos-tun(8))
+device		sl			#Serial Line IP
+device		gre			#IP over IP tunneling
+device		if_bridge		#Bridge interface
+
+device		pf			#PF OpenBSD packet-filter firewall
+device		pflog			#logging support interface for PF
+device		pfsync			#synchronization interface for PF
+
+device		carp			#Common Address Redundancy Protocol
+device		ppp			#Point-to-point protocol
+options 	PPP_BSDCOMP		#PPP BSD-compress support
+options 	PPP_DEFLATE		#PPP zlib/deflate/gzip support
+options 	PPP_FILTER		#enable bpf filtering (needs bpf)
+device		lagg			#Link aggregation interface
+
+device		ef			# Multiple ethernet frames support
+options 	ETHER_II		# enable Ethernet_II frame
+options 	ETHER_8023		# enable Ethernet_802.3 (Novell) frame
+options 	ETHER_8022		# enable Ethernet_802.2 frame
+options 	ETHER_SNAP		# enable Ethernet_802.2/SNAP frame
+
+# for IPv6
+device		gif			#IPv6 and IPv4 tunneling
+options 	XBONEHACK
+device		faith			#for IPv6 and IPv4 translation
+device		stf			#6to4 IPv6 over IPv4 encapsulation
+
+

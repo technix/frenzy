@@ -1,0 +1,132 @@
+machine		i386
+#cpu		I486_CPU	# this is outdated now in 2007
+cpu		I586_CPU
+cpu		I686_CPU
+ident		FRENZY
+
+options 	SCHED_4BSD		# 4BSD scheduler
+options 	PREEMPTION		# Enable kernel thread preemption
+
+options 	COMPAT_43		# Compatible with BSD 4.3 [KEEP THIS!]
+options 	COMPAT_FREEBSD4	# Compatible with FreeBSD4
+options 	COMPAT_FREEBSD5	# Compatible with FreeBSD5
+
+options 	SCSI_DELAY=5000	# Delay (in ms) before probing SCSI
+options 	KTRACE			# ktrace(1) support
+options 	SYSVSHM			# SYSV-style shared memory
+options 	SYSVMSG			# SYSV-style message queues
+options 	SYSVSEM			# SYSV-style semaphores
+options 	_KPOSIX_PRIORITY_SCHEDULING # POSIX P1003_1B real-time extensions
+options 	KBD_INSTALL_CDEV	# install a CDEV entry in /dev
+options 	ADAPTIVE_GIANT		# Giant mutex is adaptive.
+
+
+# Cryptographically secure random number generator; /dev/random
+device		random
+
+# The system memory devices; /dev/mem, /dev/kmem
+device		mem
+
+options 	VESA
+
+device		apic			# I/O APIC
+
+# Bus support.
+device		eisa
+device		pci
+
+# Floppy drives
+device		fdc
+
+
+device		speaker		#Play IBM BASIC-style noises out your speaker
+#hint.speaker.0.at="isa"
+#hint.speaker.0.port="0x61"
+
+
+# atkbdc0 controls both the keyboard and the PS/2 mouse
+device		atkbdc		# AT keyboard controller
+device		atkbd		# AT keyboard
+device		psm		# PS/2 mouse
+# Options for psm:
+options 	PSM_HOOKRESUME		#hook the system resume event, useful
+					#for some laptops
+options 	PSM_RESETAFTERSUSPEND	#reset the device at the resume event
+
+# Video card driver for VGA adapters.
+device		vga
+options 	VGA_WIDTH90		# support 90 column modes
+device		splash			# Splash screen and screen saver support
+# syscons is the default console driver, resembling an SCO console
+device		sc
+options 	SC_PIXEL_MODE		# add support for the raster text mode
+
+
+device		kbdmux		# keyboard multiplexer
+
+
+device		agp		# support several AGP chipsets
+
+# Power management support (see NOTES for more options)
+#device		apm
+# Add suspend/resume support for the i8254.
+device		pmtimer
+
+# PCCARD (PCMCIA) support
+# PCMCIA and cardbus bridge support
+device		cbb		# cardbus (yenta) bridge
+device		pccard		# PC Card (16-bit) bus
+device		cardbus		# CardBus (32-bit) bus
+
+# Serial (COM) ports
+device		sio		# 8250, 16[45]50 based serial ports
+
+# PCI Universal Communications driver
+# Supports various single and multi port PCI serial cards. Maybe later
+# also the parallel ports on combination serial/parallel cards. New cards
+# can be added in src/sys/dev/puc/pucdata.c.
+#
+# If the PUC_FASTINTR option is used the driver will try to use fast
+# interrupts. The card must then be the only user of that interrupt.
+# Interrupts cannot be shared when using PUC_FASTINTR.
+device		puc
+options 	PUC_FASTINTR
+
+# Pseudo devices.
+
+device		random		# Entropy device
+
+device		sl		# Kernel SLIP
+device		ppp		# Kernel PPP
+device		tun		# Packet tunnel.
+device		pty		# Pseudo-ttys (telnet etc)
+device		md		# Memory "disks"
+
+device		snp		#Snoop device - to look at pty/vty/etc..
+device		ccd		#Concatenated disk driver
+
+device		esp		# esp: NCR53c9x.  Only for SBUS hardware right now.
+device		wds		# wds: WD7000
+
+device		uart	# uart: newbusified driver for serial interfaces.  It consolidates the sio(4), sab(4) and zs(4) drivers.
+
+device		nmdm	# nmdm: nullmodem terminal driver (see nmdm(4))
+
+# Parallel-Port Bus
+options 	PPC_PROBE_CHIPSET # Enable chipset specific detection
+# Parallel port
+device		ppc
+device		ppbus		# Parallel port bus (required)
+device		lpt		# Printer
+device		plip		# TCP/IP over parallel
+device		ppi		# Parallel port interface device
+#device		vpo		# Requires scbus and da
+
+
+#####################################################################
+# dcons support (Dumb Console Device)
+
+device		dcons			# dumb console driver
+
+
+device		firmware		# firmware(9) support

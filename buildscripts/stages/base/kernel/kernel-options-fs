@@ -1,0 +1,52 @@
+options 	NFSCLIENT		# Network Filesystem Client
+options 	NFSSERVER		# Network Filesystem Server
+
+options 	FFS				#Fast filesystem
+options 	SOFTUPDATES
+
+options 	CD9660			#ISO 9660 filesystem
+options 	HPFS			#OS/2 File system
+options 	MSDOSFS			#MS DOS File System (FAT, FAT32)
+options 	NTFS			#NT File System
+options 	NULLFS			#NULL filesystem
+options 	PORTALFS			#Portal filesystem
+options 	PROCFS			#Process filesystem (requires PSEUDOFS)
+options 	PSEUDOFS		#Pseudo-filesystem framework
+options 	PSEUDOFS_TRACE	#Debugging support for PSEUDOFS
+options 	SMBFS			#SMB/CIFS filesystem
+options 	UDF				#Universal Disk Format
+options 	UNIONFS			#Union filesystem
+
+# Extended attributes allow additional data to be associated with files,
+# and is used for ACLs, Capabilities, and MAC labels.
+# See src/sys/ufs/ufs/README.extattr for more information.
+options 	UFS_EXTATTR
+options 	UFS_EXTATTR_AUTOSTART
+
+# Access Control List support for UFS filesystems.  The current ACL
+# implementation requires extended attribute support, UFS_EXTATTR,
+# for the underlying filesystem.
+# See src/sys/ufs/ufs/README.acls for more information.
+options 	UFS_ACL
+
+# Directory hashing improves the speed of operations on very large
+# directories at the expense of some memory.
+options 	UFS_DIRHASH
+
+# Make the md device a potential root device, either with preloaded
+# images of type mfs_root or md_root.
+options 	MD_ROOT
+
+
+options 	EXT2FS
+options 	REISERFS
+
+# Optional character code conversion support with LIBICONV.
+# Each option requires their base file system and LIBICONV.
+options 	CD9660_ICONV
+options 	MSDOSFS_ICONV
+options 	NTFS_ICONV
+options 	UDF_ICONV
+
+# Kernel side iconv library
+options 	LIBICONV

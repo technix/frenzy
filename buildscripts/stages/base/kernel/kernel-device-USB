@@ -1,0 +1,47 @@
+#####################################################################
+# USB support
+
+device		uhci		# UHCI PCI->USB interface
+device		ohci		# OHCI PCI->USB interface
+device		ehci		# EHCI PCI->USB interface (USB 2.0)
+device		usb		# USB Bus (required)
+#device		udbp		# USB Double Bulk Pipe devices
+device		ugen		# Generic
+device		uhid		# "Human Interface Devices"
+device		ukbd		# Keyboard
+#device		ulpt		# Printer
+device		umass		# Disks/Mass storage - Requires scbus and da
+device		ums		# Mouse
+device		ural		# Ralink Technology RT2500USB wireless NICs
+device		urio		# Diamond Rio 500 MP3 player
+device		uscanner	# Scanners
+# USB Ethernet, requires miibus
+device		aue		# ADMtek USB Ethernet
+device		axe		# ASIX Electronics USB Ethernet
+device		cdce		# Generic USB over Ethernet
+device		cue		# CATC USB Ethernet
+device		kue		# Kawasaki LSI USB Ethernet
+device		rue		# RealTek RTL8150 USB Ethernet
+
+# USB support for Belkin F5U109 and Magic Control Technology serial adapters
+device		umct
+# USB modem support
+device		umodem
+
+# USB serial support
+device		ucom
+# USB support for Arkmicro Technologies ARK3116 based serial adapters
+device		uark
+# USB support for Belkin F5U103 and compatible serial adapters
+device		ubsa
+# USB support for BWCT console serial adapters
+device		ubser
+# USB support for serial adapters based on the FT8U100AX and FT8U232AM
+device		uftdi
+# USB support for Prolific PL-2303 serial adapters
+device		uplcom
+# USB serial support for DDI pocket's PHS
+device		uvscom
+#
+# Davicom DM9601E USB to fast ethernet. Supports the Corega FEther USB-TXC.
+device		udav

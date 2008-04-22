@@ -1,7 +1,6 @@
-# === ipsec ==================================================================
 
-# IPSEC
-
+options 	INET				# InterNETworking
+options 	INET6			# IPv6 communications protocols
 options 	IPSEC			#IP security
 options 	IPSEC_ESP		#IP security (crypto; define w/ IPSEC)
 options 	IPSEC_DEBUG		#debug for IP security
@@ -15,6 +14,17 @@ options 	IPSEC_DEBUG		#debug for IP security
 # using ipfw(8)'s 'ipsec' keyword, when this option is enabled.
 #
 options 	IPSEC_FILTERGIF		#filter ipsec packets from a tunnel
-
 #options 	FAST_IPSEC		#new IPsec (cannot define w/ IPSEC)
+
+options 	IPX			#IPX/SPX communications protocols
+options 	NCP			#NetWare Core protocol
+options 	NETATALK		#Appletalk communications protocols
+
+# SMB/CIFS requester
+# NETSMB enables support for SMB protocol, it requires LIBMCHAIN and LIBICONV
+# options.
+options 	NETSMB			#SMB/CIFS requester
+options 	LIBMCHAIN		# mchain library. It can be either loaded as KLD or compiled into kernel
+options	LIBALIAS		# libalias library, performing NAT
+
 
