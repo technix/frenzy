@@ -22,7 +22,7 @@ rm -rf ${FS}/usr/include/*
 echo -n  "liba "
 rm ${FD}/liba.tar > /dev/null 2>&1
 tar cf ${FD}/liba.tar -C ${FS} usr/lib/*.a > /dev/null 2>&1
-rm -rf ${FS}/usr/lib/*.a
+#rm -rf ${FS}/usr/lib/*.a
 
 echo -n  "man2 "
 rm ${FD}/man2.tar > /dev/null 2>&1
