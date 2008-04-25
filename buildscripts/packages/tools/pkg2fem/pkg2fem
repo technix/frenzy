@@ -103,8 +103,8 @@ echo "==> Compressing ISO."
 mkuzip -o ../${DIRFEM}/${FEMNAME}.${DIRFEM} -s ${BLOCKSIZE} ${ISOFEM}  > /dev/null 2>&1
 chmod 644 ../${DIRFEM}/${FEMNAME}.${DIRFEM}
 echo "==> Removing temporary data."
-#rm -f ${ISOFEM} > /dev/null 2>&1
-#rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
+rm -f ${ISOFEM} > /dev/null 2>&1
+rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
 echo "==> Done."
 cd ..
 
