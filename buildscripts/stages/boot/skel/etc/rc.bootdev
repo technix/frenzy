@@ -20,6 +20,7 @@ devfound="0"
 	    umount ${FLASH} 2>/dev/null
 	fi
 
+	if test ${devfound} -eq 0; then
 	# trying to mount as FAT partition
 	mount_msdosfs -l ${FLASH} ${fc} 2>/dev/null
 	if test -r ${fc_uzip}; then 
@@ -29,6 +30,7 @@ devfound="0"
 	    break
 	else
 	    umount ${FLASH} 2>/dev/null
+	fi
 	fi
     done
 # Search for CD
@@ -46,7 +48,37 @@ do
 	umount ${CD} 2>/dev/null
     fi
 done
+fi
 
+# trying to boot from ATA HDD
+if test ${devfound} -eq 0; then
+
+    for HDD in `echo /dev/ad*`
+    do
+	echo -n "${HDD} "
+	# trying to mount as UFS partition
+	mount ${HDD} ${fc} 2>/dev/null
+	if test -r ${fc_uzip}; then 
+	    echo "OK."
+	    echo "[*] Booting from HDD (${HDD}, UFS)."
+	    devfound="1"
+	    break
+	else
+	    umount ${HDD} 2>/dev/null
+	fi
+	if test ${devfound} -eq 0; then
+	# trying to mount as FAT partition
+	mount_msdosfs -l ${HDD} ${fc} 2>/dev/null
+	if test -r ${fc_uzip}; then 
+	    echo "OK."
+	    echo "[*] Booting from HDD (${HDD}, FAT)."
+	    devfound="1"
+	    break
+	else
+	    umount ${HDD} 2>/dev/null
+	fi
+	fi
+    done
 fi
 
 # manual entering of boot device

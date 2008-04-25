@@ -114,6 +114,11 @@ fi
 
 create_rw
 
+if [ "$enable_fem" = "YES" ]; then
+    fem_postinstall
+fi
+
+
 ### 
 # Create file /tmp/.frenzy - required for patched /etc/rc.d/*
 #

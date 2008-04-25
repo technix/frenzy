@@ -30,6 +30,7 @@ MSG_fem_loading="Loading Frenzy extension modules."
 MSG_fem_search="Searching in"
 MSG_fem_union="Mounting unionfs."
 MSG_fem_loaded="Extension modules loaded."
+MSG_fem_postinstall="Finishing module installation"
 
 # rc.bootsplash
 

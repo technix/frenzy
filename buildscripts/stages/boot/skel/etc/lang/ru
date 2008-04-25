@@ -27,6 +27,7 @@ MSG_fem_loading="Подключаются модули расширения Frenzy."
 MSG_fem_search="Поиск в"
 MSG_fem_union="Монтирование unionfs."
 MSG_fem_loaded="Модули расширения подключены."
+MSG_fem_postinstall="Завершение установки модуля"
 
 # rc.gconsole
 MSG_gconsole_failed=": режим не найден, используем режим по умолчанию."
