@@ -37,6 +37,8 @@ do
 	    #echo "> ${FMD} -> ${femfs}"
 	    /sbin/mount_cd9660 /dev/${FMD}.uzip ${femfs}
 	    mount_unionfs -o noatime -o ro -o copymode=transparent ${femfs}/fs/usr /usr > /dev/null 2>&1
+	    # execute postinstall scripts
+	    pkg_add -R -f -F ${femfs}/scripts/* > /dev/null 2>&1
 	done
     cd ${CURRDIR}
     fi

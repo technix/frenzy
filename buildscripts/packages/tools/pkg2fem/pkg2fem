@@ -1,9 +1,11 @@
 #!/bin/sh
 #
 # Name    : Convert FreeBSD package to Frenzy extension module
-# Version : 0.1
+# Version : 0.2
 # Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
 #
+
+echo pkg2fem version 0.2
 
 DIRPKG=$1
 FEMNAME=$2
@@ -59,11 +61,8 @@ FEM_PKGDEPENDS="${FEM_PKGDEPENDS}${PKGDEPENDS}
 "
 
 tar ${EXTR} ${pkgn} -C ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}
-mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+COMMENT ${FEMNAME}.${DIRFEM}/desc/${PKGNAME}-comment
-mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+DESC ${FEMNAME}.${DIRFEM}/desc/${PKGNAME}-desc
-mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+CONTENTS ${FEMNAME}.${DIRFEM}/scripts/${PKGNAME}-contents
-rm ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/+MTREE_DIRS
-#pkg_add -R -f -p ${CURRDIR}/${DIRPKG}/${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} ${pkgn}  > /dev/null 2>&1
+(cd ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} && tar cjf ${PKGNAME}.tbz +* && rm +*)
+mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/${PKGNAME}.tbz ${FEMNAME}.${DIRFEM}/scripts
 done
 done
 
@@ -104,8 +103,8 @@ echo "==> Compressing ISO."
 mkuzip -o ../${DIRFEM}/${FEMNAME}.${DIRFEM} -s ${BLOCKSIZE} ${ISOFEM}  > /dev/null 2>&1
 chmod 644 ../${DIRFEM}/${FEMNAME}.${DIRFEM}
 echo "==> Removing temporary data."
-rm -f ${ISOFEM} > /dev/null 2>&1
-rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
+#rm -f ${ISOFEM} > /dev/null 2>&1
+#rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
 echo "==> Done."
 cd ..
 
