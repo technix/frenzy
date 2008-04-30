@@ -97,7 +97,7 @@
 		[exec]	(sendEmail)	{rxvt -e launch sendEmail}
 	[end]
 	[submenu] (=ICQIRC=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
-		[exec]	(centericq)	{rxvt -e centericq}
+		[exec]	(centerim)	{rxvt -e centerim}
 ==EXT==		[exec]	(micq)		{rxvt -e launch micq}
 ==EXT==		[exec]	(Licq)		{licq}				</usr/local/frenzy/icons/fluxbox/icq_16x16.xpm>
 ==EXT==		[exec]	(SIM)		{sim}				</usr/local/frenzy/icons/fluxbox/icq_16x16.xpm>
@@ -130,7 +130,7 @@
 		[exec]	(obexapp)	{rxvt -e launch obexapp -h}
 	[end]
 	[submenu] (=WIFI=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
-		[exec]	(aircrack)	{rxvt -e launch aircrack}
+		[exec]	(aircrack-ng)	{rxvt -e launch aircrack-ng}
 		[exec]	(ap-config)	{rxvt -e launch ap-config}
 		[exec]	(kismet)	{rxvt -e launch kismet}
 		[exec]	(wiconf)	{rxvt -e launch wiconf.pl}
@@ -334,7 +334,7 @@
 	[end]
 	[submenu] (=PORTSCAN=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(nmap)		{rxvt -e launch nmap}
-		[exec]	(nmap GUI)	{zenmap}			</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
+		#[exec]	(nmap GUI)	{zenmap}			</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
 		[separator]
 		[exec]	(doscan)	{rxvt -e launch doscan -h}
 		[exec]	(gps)		{rxvt -e launch gps -h}
@@ -362,7 +362,7 @@
 ==EXT==		[exec]	(yersinia)	{rxvt -e launch yersinia}
 	[end]
 	[submenu] (=SNIFF=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
-		[exec]	(ethereal)	{ethereal}			</usr/local/frenzy/icons/fluxbox/ethereal_16x16.xpm>
+		[exec]	(wireshark)	{wireshark}			</usr/local/frenzy/icons/fluxbox/ethereal_16x16.xpm>
 		[exec]	(ettercap)	{ettercap -G}			</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
 		[separator]
 		[exec]	(angst)		{rxvt -e launch angst -h}
