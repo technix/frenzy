@@ -7,5 +7,6 @@ EndSection
 
 Section "Device"
 	Identifier	"Card0"
-	Driver		"cirrus"
+	#Driver		"cirrus"
+	Driver		"vesa"
 EndSection
