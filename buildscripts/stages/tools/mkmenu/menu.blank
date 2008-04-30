@@ -212,7 +212,7 @@
 		[exec]	(VNC)		{vncviewer}			</usr/local/frenzy/icons/fluxbox/window_list_16x16.xpm>
 	[end]
 	[submenu] (=SMB=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
-		[exec]	(linneighborhood)	{LinNeighborhood}	</usr/local/frenzy/icons/fluxbox/samba_16x16.xpm>
+		#[exec]	(linneighborhood)	{LinNeighborhood}	</usr/local/frenzy/icons/fluxbox/samba_16x16.xpm>
 ==EXT==		[exec]	(Jags)		{jags}				</usr/local/frenzy/icons/fluxbox/samba_16x16.xpm>
 		[exec]	(nbtscan)	{rxvt -e launch nbtscan}
 		[exec]	(nbaudit)	{rxvt -e launch nbaudit}
@@ -313,6 +313,7 @@
 		[exec]	(http_ping)	{rxvt -e launch http_ping -h}
 		[exec]	(netwox)	{rxvt -e netwox}
 		[exec]	(nfsshell)	{rxvt -e launch nfsshell}
+		[exec]	(rsync)		{rxvt -e launch rsync}
 		[exec]	(wol)		{rxvt -e launch wol --help}
 	[end]
 [end]
@@ -333,7 +334,7 @@
 	[end]
 	[submenu] (=PORTSCAN=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(nmap)		{rxvt -e launch nmap}
-		[exec]	(nmap GUI)	{nmapfe}			</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
+		[exec]	(nmap GUI)	{zenmap}			</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
 		[separator]
 		[exec]	(doscan)	{rxvt -e launch doscan -h}
 		[exec]	(gps)		{rxvt -e launch gps -h}
