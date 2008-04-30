@@ -21,6 +21,7 @@ Section "Files"
 EndSection
 
 Section "Module"
+	Load  "GLcore"
 	Load  "dbe"
 	#Load  "dri"	# disabled due to ATI problems
 	Load  "extmod"
@@ -57,6 +58,7 @@ Section "Screen"
 	Device     "Card0"
 	Monitor    "Monitor0"
 	#DefaultDepth 24
+	#%DEFAULTDEPTH%
 	SubSection "Display"
 		Depth     1
 		Modes	"640x480"
