@@ -1,11 +1,14 @@
 #!/bin/sh
 #
 # Name    : Convert FreeBSD package to Frenzy extension module
-# Version : 0.2
+# Version : 0.3
 # Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
 #
 
-echo pkg2fem version 0.2
+echo pkg2fem version 0.3
+echo Usage: pkg2fem PKGDIR [FEMNAME]
+echo
+
 
 DIRPKG=$1
 FEMNAME=$2
@@ -108,8 +111,8 @@ ISOFEM="${FEMNAME}.${DIRFEM}.iso"
 echo "==> Creating temporary ISO."
 mkisofs -lRNU -quiet -ldots -o ${ISOFEM} ${FEMNAME}.${DIRFEM}  > /dev/null 2>&1
 echo "==> Compressing ISO."
-mkuzip -o ../${DIRFEM}/${FEMNAME}.${DIRFEM} -s ${BLOCKSIZE} ${ISOFEM}  > /dev/null 2>&1
-chmod 644 ../${DIRFEM}/${FEMNAME}.${DIRFEM}
+mkuzip -o ../${FEMNAME}.${DIRFEM} -s ${BLOCKSIZE} ${ISOFEM}  > /dev/null 2>&1
+chmod 644 ../${FEMNAME}.${DIRFEM}
 echo "==> Removing temporary data."
 rm -f ${ISOFEM} > /dev/null 2>&1
 rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
