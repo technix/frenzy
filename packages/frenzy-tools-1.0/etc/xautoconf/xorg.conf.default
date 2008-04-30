@@ -6,21 +6,21 @@ Section "ServerLayout"
 EndSection
 
 Section "Files"
-	RgbPath      "/usr/local/share/X11/rgb"
-	ModulePath   "/usr/local/lib/xorg/modules"
+	RgbPath      "/usr/X11R6/lib/X11/rgb"
+	ModulePath   "/usr/X11R6/lib/modules"
 
-	FontPath     "/usr/local/lib/X11/fonts/cyr-rfx-koi8-o/"
-	FontPath     "/usr/local/lib/X11/fonts/TrueType/"
-	FontPath     "/usr/local/lib/X11/fonts/artwiz-ru/"
-	FontPath     "/usr/local/lib/X11/fonts/illinoy/"
-	FontPath     "/usr/local/lib/X11/fonts/TTF/"
-	FontPath     "/usr/local/lib/X11/fonts/bitstream-vera/"
-	FontPath     "/usr/local/lib/X11/fonts/misc/"
-	FontPath     "/usr/local/lib/X11/fonts/local/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/cyr-rfx-koi8-o/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/TrueType/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/artwiz-ru/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/illinoy/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/TTF/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/bitstream-vera/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/terminus-font/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/misc/"
+	FontPath     "/usr/X11R6/lib/X11/fonts/local/"
 EndSection
 
 Section "Module"
-	Load  "GLcore"
 	Load  "dbe"
 	#Load  "dri"	# disabled due to ATI problems
 	Load  "extmod"
@@ -57,7 +57,6 @@ Section "Screen"
 	Device     "Card0"
 	Monitor    "Monitor0"
 	#DefaultDepth 24
-	#%DEFAULTDEPTH%
 	SubSection "Display"
 		Depth     1
 		Modes	"640x480"
