@@ -50,7 +50,7 @@ if [ "${pkgtype}" = "tbz" ]; then
 EXTR="xjf"
 fi
 tar ${EXTR} ${pkgn} \+CONTENTS
-PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g" | sed "s/@cwd .//g"`
+PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g" | sed "s/@cwd .//g" | head -1`
 rm \+CONTENTS > /dev/null 2>&1
 mkdir ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} > /dev/null 2>&1
 PKGNAME=`echo ${pkgn} | sed "s/\.${pkgtype}//g"`
@@ -61,7 +61,15 @@ FEM_PKGDEPENDS="${FEM_PKGDEPENDS}${PKGDEPENDS}
 "
 
 tar ${EXTR} ${pkgn} -C ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}
-(cd ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} && tar cjf ${PKGNAME}.tbz +* && rm +*)
+
+MCDIR=`pwd`
+cd ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}
+cat +CONTENTS | grep "@exec" > contentz 
+mv contentz +CONTENTS
+tar cjf ${PKGNAME}.tbz +* 
+rm ./+*
+cd ${MCDIR}
+
 mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/${PKGNAME}.tbz ${FEMNAME}.${DIRFEM}/scripts
 done
 done

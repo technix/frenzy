@@ -54,7 +54,7 @@ do
     printf "${mi} ${MSG_fem_postinstall} : ${femname}\n"
     femfs="${femdir}/${femname}"
     # execute postinstall scripts
-    #pkg_add -R -f -F ${femfs}/scripts/* > /dev/null 2>&1
-    pkg_add -v -R -f -F ${femfs}/scripts/*
+    pkg_add -R -f -F ${femfs}/scripts/* > /dev/null 2>&1
+    #pkg_add -v -R -f -F ${femfs}/scripts/*
 done
 }
