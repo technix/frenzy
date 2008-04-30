@@ -1,0 +1,134 @@
+diff -urBN /usr/src.p202/sys/fs/unionfs/union_subr.c /usr/src/sys/fs/unionfs/union_subr.c
+--- ../src.p202/sys/fs/unionfs/union_subr.c	2007-10-24 01:35:36.000000000 +0900
++++ ../src/sys/fs/unionfs/union_subr.c	2007-10-24 01:52:00.000000000 +0900
+@@ -268,10 +268,14 @@
+ 	}
+ 	if (dvp != NULLVP)
+ 		vref(dvp);
+-	if (uppervp != NULLVP)
++	if (uppervp != NULLVP) {
+ 		vref(uppervp);
+-	if (lowervp != NULLVP)
++		vkernref(uppervp);
++	}
++	if (lowervp != NULLVP) {
+ 		vref(lowervp);
++		vkernref(lowervp);
++	}
+ 
+ 	if (vt == VDIR)
+ 		unp->un_hashtbl = hashinit(NUNIONFSNODECACHE, M_UNIONFSHASH,
+@@ -304,10 +308,14 @@
+ 	if ((*vpp) != NULLVP) {
+ 		if (dvp != NULLVP)
+ 			vrele(dvp);
+-		if (uppervp != NULLVP)
++		if (uppervp != NULLVP) {
++			vkernrele(uppervp);
+ 			vrele(uppervp);
+-		if (lowervp != NULLVP)
++		}
++		if (lowervp != NULLVP) {
++			vkernrele(lowervp);
+ 			vrele(lowervp);
++		}
+ 
+ 		unp->un_uppervp = NULLVP;
+ 		unp->un_lowervp = NULLVP;
+@@ -363,11 +371,13 @@
+ 
+ 	if (lvp != NULLVP) {
+ 		vfslocked = VFS_LOCK_GIANT(lvp->v_mount);
++		vkernrele(lvp);
+ 		vrele(lvp);
+ 		VFS_UNLOCK_GIANT(vfslocked);
+ 	}
+ 	if (uvp != NULLVP) {
+ 		vfslocked = VFS_LOCK_GIANT(uvp->v_mount);
++		vkernrele(uvp);
+ 		vrele(uvp);
+ 		VFS_UNLOCK_GIANT(vfslocked);
+ 	}
+@@ -709,6 +719,7 @@
+ 	/*
+ 	 * lock update
+ 	 */
++	vkernref(uvp);
+ 	VI_LOCK(vp);
+ 	unp->un_uppervp = uvp;
+ 	vp->v_vnlock = uvp->v_vnlock;
+diff -urBN /usr/src.p202/sys/kern/vfs_subr.c /usr/src/sys/kern/vfs_subr.c
+--- ../src.p202/sys/kern/vfs_subr.c	2007-10-22 23:29:04.000000000 +0900
++++ ../src/sys/kern/vfs_subr.c	2007-10-24 01:41:41.000000000 +0900
+@@ -2104,6 +2104,8 @@
+ 	VNASSERT(vp->v_writecount < vp->v_usecount || vp->v_usecount < 1, vp,
+ 	    ("vrele: missed vn_close"));
+ 
++	if (vp->v_usecount <= vp->v_kernusecount)
++		panic("vrele: kernel is referring to it");
+ 	if (vp->v_usecount > 1 || ((vp->v_iflag & VI_DOINGINACT) &&
+ 	    vp->v_usecount == 1)) {
+ 		v_decr_usecount(vp);
+@@ -2143,6 +2145,32 @@
+ }
+ 
+ /*
++ * Increase the reference count of a vnode used by kernel.
++ */
++void
++vkernref(struct vnode *vp)
++{
++	VI_LOCK(vp);
++	if (vp->v_usecount <= vp->v_kernusecount)
++		panic("vkernref: vkernref call without vref");
++	vp->v_kernusecount++;
++	VI_UNLOCK(vp);
++}
++
++/*
++ * Decrease the reference count of a vnode used by kernel.
++ */
++void
++vkernrele(struct vnode *vp)
++{
++	VI_LOCK(vp);
++	if (vp->v_kernusecount < 1)
++		panic("vkernrele: negative kern ref count");
++	vp->v_kernusecount--;
++	VI_UNLOCK(vp);
++}
++
++/*
+  * Release an already locked vnode.  This give the same effects as
+  * unlock+vrele(), but takes less time and avoids releasing and
+  * re-aquiring the lock (as vrele() acquires the lock internally.)
+@@ -2373,7 +2401,8 @@
+ 		 *
+ 		 * If FORCECLOSE is set, forcibly close the vnode.
+ 		 */
+-		if (vp->v_usecount == 0 || (flags & FORCECLOSE)) {
++		if ((vp->v_usecount == 0 || (flags & FORCECLOSE)) &&
++		    vp->v_kernusecount == 0) {
+ 			VNASSERT(vp->v_usecount == 0 ||
+ 			    (vp->v_type != VCHR && vp->v_type != VBLK), vp,
+ 			    ("device VNODE %p is FORCECLOSED", vp));
+diff -urBN /usr/src.p202/sys/sys/vnode.h /usr/src/sys/sys/vnode.h
+--- ../src.p202/sys/sys/vnode.h	2007-10-22 23:29:47.000000000 +0900
++++ ../src/sys/sys/vnode.h	2007-10-24 01:41:41.000000000 +0900
+@@ -162,6 +162,7 @@
+ 	struct	lock *v_vnlock;			/* u pointer to vnode lock */
+ 	int	v_holdcnt;			/* i prevents recycling. */
+ 	int	v_usecount;			/* i ref count of users */
++	int	v_kernusecount;			/* i ref count of kernel */
+ 	u_long	v_iflag;			/* i vnode flags (see below) */
+ 	u_long	v_vflag;			/* v vnode flags */
+ 	int	v_writecount;			/* v ref count of writers */
+@@ -704,6 +705,8 @@
+ #define VOP_LOCK(vp, flags, td) VOP_LOCK1(vp, flags, td, __FILE__, __LINE__)
+ 
+ 
++void	vkernrele(struct vnode *vp);
++void	vkernref(struct vnode *vp);
+ void	vput(struct vnode *vp);
+ void	vrele(struct vnode *vp);
+ void	vref(struct vnode *vp);

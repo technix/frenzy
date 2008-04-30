@@ -1,0 +1,19 @@
+diff -urBN /usr/src.orig/sys/fs/unionfs/union_subr.c /usr/src/sys/fs/unionfs/union_subr.c
+--- ../src.orig/sys/fs/unionfs/union_subr.c	2007-10-22 23:28:17.000000000 +0900
++++ ../src/sys/fs/unionfs/union_subr.c	2007-10-23 01:44:18.000000000 +0900
+@@ -990,8 +990,14 @@
+ 		uio.uio_resid = iov.iov_len;
+ 
+ 		error = VOP_READDIR(lvp, &uio, cred, &eofflag, NULL, NULL);
+-		if (error)
++		if (error != 0)
+ 			break;
++		if (eofflag == 0 && uio.uio_resid == sizeof(buf)) {
++#ifdef DIAGNOSTIC
++			panic("bad readdir response from lower FS.");
++#endif
++			break;
++		}
+ 
+ 		edp = (struct dirent*)&buf[sizeof(buf) - uio.uio_resid];
+ 		for (dp = (struct dirent*)buf; !error && dp < edp;
