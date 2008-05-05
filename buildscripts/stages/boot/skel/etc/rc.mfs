@@ -29,15 +29,16 @@ MD_DEV=`/sbin/mdconfig -a -t malloc -o compress -s ${MFS_SIZE}`
 /sbin/newfs -m 0 -n -b 8192 -f 1024 /dev/${MD_DEV} >/dev/null 2>&1
 /sbin/mount -o noatime /dev/${MD_DEV} ${fr_ram}
 
-printf "$mi ${MSG_memory} ${MEM} | ${MSG_ramdisk} ${MFS_SIZE} |"
+MEMSHOW = `expr ${MEM} \/ 1024`
+printf "$mi ${MSG_memory} ${MEMSHOW}m | ${MSG_ramdisk} ${MFS_SIZE} |"
 MFSLIST="etc var root"
 for d in ${MFSLIST}; do
     printf " ${d}"
     mkdir ${fr_ram}/$d
     # unionfs enabled
-    #mount_nullfs ${fs}/$d /$d
     mount_unionfs -o noatime -o copymode=transparent ${fr_ram}/$d /$d
 done
+
 # populating /mnt
 mkdir ${fr_ram}/mnt
 mount_nullfs ${fr_ram}/mnt /mnt

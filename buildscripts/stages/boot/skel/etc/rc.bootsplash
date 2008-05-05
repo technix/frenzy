@@ -4,7 +4,7 @@ bootsplash ()
 {
 
 FS_SIZE=`du -m ${fc_uzip} | awk '{print $1}'`
-MEMREQ=`expr ${FS_SIZE} + 120`
+MEMREQ=`expr ${FS_SIZE} \* 3`
 ### Welcome screen
 
 VERSION=""

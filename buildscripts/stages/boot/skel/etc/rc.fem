@@ -3,9 +3,6 @@
 
 load_fem()
 {
-# relinking (no multiple union mounts)
-RELINK=0
-
 printf "${mi} ${MSG_fem_loading}\n"
 
 # if nofem option enabled, do not load FEM from HDD
@@ -43,18 +40,19 @@ do
 done
 
 printf "${mi} ${MSG_fem_loaded}\n"
-
 }
 
 
+### postinstall procedures for FEM modules
 fem_postinstall()
 { 
+printf "${mi} ${MSG_fem_postinstall} :"
 for femname in `cd ${femdir} && ls`
 do
-    printf "${mi} ${MSG_fem_postinstall} : ${femname}\n"
+    printf " ${femname}"
     femfs="${femdir}/${femname}"
     # execute postinstall scripts
     pkg_add -R -f -F ${femfs}/scripts/* > /dev/null 2>&1
-    #pkg_add -v -R -f -F ${femfs}/scripts/*
 done
+printf ". \n"
 }
