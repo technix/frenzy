@@ -1,8 +1,8 @@
 [begin] (Frenzy 1.1)
-	[exec]	(=TERMINAL=)	{mrxvt}				</usr/local/frenzy/icons/fluxbox/terminal_16x16.xpm>
+	[exec]	(=TERMINAL=)	{mrxvt}				</usr/local/frenzy/icons/fluxbox/terminal3_16x16.xpm>
 	[exec]	(=RUN=)		{thinglaunch}
 [submenu] (=FILEMAN=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
-	[exec]	(rxvt)		{rxvt}				</usr/local/frenzy/icons/fluxbox/terminal3_16x16.xpm>
+	[exec]	(rxvt)		{rxvt}				</usr/local/frenzy/icons/fluxbox/terminal_16x16.xpm>
 	[exec]	(MC)		{rxvt -e mc}
 	[separator]
 	[exec]	(screen)	{rxvt -e screen}
@@ -109,11 +109,10 @@
 	[end]
 	[submenu] (=WIFI=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(aircrack-ng)	{rxvt -e launch aircrack-ng}
-		[exec]	(ap-config)	{rxvt -e launch ap-config}
+		[exec]	(ap-config)	{rxvt -e ap-config}
 		[exec]	(kismet)	{rxvt -e launch kismet}
 		[exec]	(weplab)	{rxvt -e launch weplab -h}
 		[exec]	(wiconf)	{rxvt -e launch wiconf.pl}
-		[exec]	(wistumbler)	{rxvt -e launch wistumbler2 -h}
 		[submenu] (BSD-Airtools) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 			[exec]	(dstumbler)	{rxvt -e launch dstumbler}
 			[exec]	(dwepcrack)	{rxvt -e launch dwepcrack}
@@ -137,8 +136,8 @@
 		[exec]	(lft)		{rxvt -e launch lft}
 		[exec]	(tcptraceroute)	{rxvt -e launch tcptraceroute -h}
 		[exec]	(pathneck)	{rxvt -e launch pathneck -h}
-		[exec]	(etrace)	{rxvt -e etrace}
-		[exec]	(ntraceroute)	{rxvt -e ntraceroute}
+		[exec]	(etrace)	{rxvt -e launch etrace}
+		[exec]	(ntraceroute)	{rxvt -e launch ntraceroute}
 	[end]
 	[submenu] (=NETMONITOR=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(trafshow)	{rxvt -e trafshow}
@@ -147,14 +146,12 @@
 		[exec]	(iftop)		{rxvt -e launch iftop -h}
 		[exec]	(ipaudit)	{rxvt -e launch ipaudit}
 		[exec]	(ipfm)		{rxvt -e launch ipfm -h}
-		[exec]	(nettop)	{rxvt -e launch nettop --help}
 		[exec]	(nifmon)	{rxvt -e launch nifmon -help}
 		[exec]	(nload)		{rxvt -e launch nload -h}
 		[exec]	(pktstat)	{rxvt -e launch pktstat -h}
 		[exec]	(rate)		{rxvt -e launch rate -h}
 		[exec]	(tcpstat)	{rxvt -e launch tcpstat -h}
 		[exec]	(ifinfo)	{rxvt -e launch ifinfo}
-		[exec]	(cnd)		{rxvt -e launch cnd -h}
 		[exec]	(ifstat)	{rxvt -e launch ifstat -h}
 		[separator]
 		[exec]	(sntop)		{rxvt -e launch sntop -h}
@@ -226,7 +223,6 @@
 		[exec]	(dnstracer)	{rxvt -e launch dnstracer}
 		[exec]	(dnswalk)	{rxvt -e launch dnswalk --help}
 		[exec]	(doc)		{rxvt -e launch doc -h}
-		[exec]	(drill)		{rxvt -e launch drill}
 		[exec]	(gh)		{rxvt -e launch gh}
 		[exec]	(nsping)	{rxvt -e launch nsping}
 		[exec]	(rbllookup)	{rxvt -e launch rbllookup}
@@ -237,7 +233,7 @@
 	[submenu] (=SNMP=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(braa)		{rxvt -e launch braa}
 		[exec]	(mbrowse)	{mbrowse}			</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
-		[exec]	(scli)		{rxvt -e launch scli -h}
+		[exec]	(scli)		{rxvt -e launch scli --help}
 		[exec]	(ADMsnmp)	{rxvt -e launch ADMsnmp}
 		[exec]	(sdig)		{rxvt -e launch sdig -h}
 	[end]
@@ -245,7 +241,7 @@
 		[exec]	(adtool)	{rxvt -e launch adtool -h}
 		[exec]	(ldapvi)	{rxvt -e launch ldapvi --help}
 		[exec]	(ldapsh)	{rxvt -e launch ldapsh --help}
-		[exec]	(shelldap)	{rxvt -e launch man shelldap}
+		[exec]	(shelldap)	{rxvt -e launch shelldap --help}
 	[end]
 	[submenu] (=RADIUS=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(radiusclient)	{rxvt -e launch radiusclient}
@@ -286,7 +282,7 @@
 		[exec]	(mping)		{rxvt -e launch mping -h}
 		[exec]	(nemesis)	{rxvt -e launch nemesis}
 		[exec]	(rain)		{rxvt -e launch rain --help}
-		[exec]	(scapy)		{rxvt -e launch scapy}
+		[exec]	(scapy)		{rxvt -e launch scapy -h}
 		[exec]	(sendip)	{rxvt -e launch sendip}
 	[end]
 	[submenu] (=NETCAT=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
@@ -364,7 +360,6 @@
 		[exec]	(doscan)	{rxvt -e launch doscan -h}
 		[exec]	(gps)		{rxvt -e launch gps -h}
 		#[exec]	(knocker)	{rxvt -e launch knocker -h}
-		[exec]	(portscanner)	{rxvt -e launch portscanner}
 		[exec]	(strobe)	{rxvt -e launch strobe -h}
 	[end]
 	[submenu] (=NETSCAN=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
@@ -381,10 +376,9 @@
 		[exec]	(dmitry)	{rxvt -e launch dmitry}
 		[exec]	(gwee)		{rxvt -e launch gwee -h}
 		[exec]	(nikto)		{rxvt -e launch nikto}
-		[exec]	(pantera)	{rxvt -e launch pantera.sh}
 		[exec]	(shttpscanner)	{rxvt -e launch shttpscanner}
 		[exec]	(wapiti)	{rxvt -e launch wapiti.py -h}
-		[exec]	(yersinia)	{rxvt -e launch yersinia}
+		[exec]	(yersinia)	{rxvt -e launch yersinia -h}
 	[end]
 	[submenu] (=SNIFF=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(wireshark)	{wireshark}			</usr/local/frenzy/icons/fluxbox/ethereal_16x16.xpm>
@@ -396,7 +390,7 @@
 		[exec]	(ipgrab)	{rxvt -e launch ipgrab -h}
 		[exec]	(ipex)		{rxvt -e launch ipex -h}
 		[exec]	(kripp)		{rxvt -e launch kripp -h}
-		[exec]	(nast)		{rxvt -e launch man nast}
+		[exec]	(nast)		{rxvt -e launch nast --help}
 		[exec]	(nstreams)	{rxvt -e launch nstreams -h}
 		[exec]	(passlogd)	{rxvt -e launch passlogd -h}
 		[exec]	(tcptrack)	{rxvt -e launch tcptrack -h}
@@ -436,7 +430,7 @@
 [submenu] (=SECURITY=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 	[submenu] (=ANTIVIR=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(clamav)	{rxvt -e launch clamscan -h}
-		[exec]	(clamtk)	{rxvt -e launch clamtk}		</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
+		[exec]	(clamtk)	{clamtk}		</usr/local/frenzy/icons/fluxbox/app3_16x16.xpm>
 		[separator]
 		[exec]	(chkrootkit)	{rxvt -e launch chkrootkit -h}
 		[exec]	(cops)		{rxvt -e launch /usr/local/cops/cops -h}
@@ -449,7 +443,6 @@
 	[submenu] (=PASSWORD=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[submenu] (=BRUTELOCAL=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 			[exec]	(john)		{rxvt -e launch john}
-			[exec]	(pwl9x)		{rxvt -e launch pwl9x}
 			[exec]	(l0phtcrack)	{rxvt -e launch lc_CLI}
 			[exec]	(mdcrack)	{rxvt -e launch mdcrack -h}
 			[exec]	(slurpie)	{rxvt -e launch slurpie -h}
@@ -730,7 +723,6 @@
 	[submenu] (=GFX=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(GQview)	{gqview}			</usr/local/frenzy/icons/fluxbox/gqview_16x16.xpm>
 		[exec]	(scrot)		{rxvt -e launch scrot -h}	</usr/local/frenzy/icons/fluxbox/screenshot_16x16.xpm>
-		[exec]	(xli)		{rxvt -e launch xli}
 		[exec]	(feh)		{rxvt -e launch feh --help}
 	[end]
 [end]
