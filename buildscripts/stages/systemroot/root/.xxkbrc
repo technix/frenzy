@@ -7,7 +7,8 @@ XXkb.group.base: 1
 XXkb.group.alt: 2
 
 XXkb.mainwindow.enable: yes
-XXkb.mainwindow.in_tray: KDE
+XXkb.mainwindow.type: tray
+XXkb.mainwindow.in_tray: true
 XXkb.mainwindow.appicon: yes
 XXkb.mainwindow.geometry: 16x16
 XXkb.mainwindow.xpm.1: en_16.xpm

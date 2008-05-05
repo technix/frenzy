@@ -18,7 +18,7 @@ mrxvt*backspacekey: "\010"
 mrxvt*deletekey: "\033[3~"
 mrxvt*background: Black
 mrxvt*foreground: White
-mrxvt*font: -xos4-terminus-bold-r-*-*-20-*-*-*-*-*-koi8-r
+mrxvt*font: -xos4-terminus-medium-r-*-*-20-*-*-*-*-*-koi8-r
 mrxvt*saveLines: 500
 
 Xdialog.font: -xos4-terminus-bold-r-*-*-20-*-*-*-*-*-koi8-r
