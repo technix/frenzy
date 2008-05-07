@@ -201,11 +201,11 @@ at-xy ."         `--{__________) [0m"
 : beastie-menu ( -- )
 	0 menuidx !
 	dot menubllt !
-	8 menuY !
+	6 menuY !
 	38 menuX !
 	clear
 	2 4 print-logo
-	45 6 at-xy ." Welcome to Frenzy LiveCD! "
+	45 5 at-xy ." Welcome to Frenzy LiveCD! "
 	printmenuitem ."  Boot Frenzy [default]" bootkey !
 	s" arch-i386" environment? if
 		drop
@@ -225,9 +225,9 @@ at-xy ."         `--{__________) [0m"
 	printmenuitem ."  Boot Frenzy with ATA DMA disabled" bootnoatakey !
 	printmenuitem ."  Escape to loader prompt" escapekey !
 	printmenuitem ."  Reboot" rebootkey !
-	menuX @ 20 at-xy
+	menuX @ 17 at-xy
 	." Select option, [Enter] for default"
-	menuX @ 21 at-xy
+	menuX @ 18 at-xy
 	s" or [Space] to pause timer    " dup 2 - promptwidth !
 	type
 ;
@@ -241,7 +241,7 @@ at-xy ."         `--{__________) [0m"
 				-1
 				exit
 			then
-			menuX @ promptwidth @ + 21 at-xy dup seconds - .
+			menuX @ promptwidth @ + 18 at-xy dup seconds - .
 		then
 		key? if
 			drop
