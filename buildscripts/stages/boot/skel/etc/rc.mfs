@@ -29,7 +29,7 @@ MD_DEV=`/sbin/mdconfig -a -t malloc -o compress -s ${MFS_SIZE}`
 /sbin/newfs -m 0 -n -b 8192 -f 1024 /dev/${MD_DEV} >/dev/null 2>&1
 /sbin/mount -o noatime /dev/${MD_DEV} ${fr_ram}
 
-MEMSHOW = `expr ${MEM} \/ 1024`
+MEMSHOW=`expr ${MEM} \/ 1024`
 printf "$mi ${MSG_memory} ${MEMSHOW}m | ${MSG_ramdisk} ${MFS_SIZE} |"
 MFSLIST="etc var root"
 for d in ${MFSLIST}; do

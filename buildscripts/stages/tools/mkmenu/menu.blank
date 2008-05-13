@@ -100,7 +100,7 @@
 		[exec]	(minicom)	{rxvt -e launch minicom}
 		[exec]	(picocom)	{rxvt -e launch picocom -h}
 		[exec]	(xisp)		{xisp}				</usr/local/frenzy/icons/fluxbox/xisp_16x16.xpm>
-		[exec]	(yawmppp)	{yawmppp}			</usr/local/frenzy/icons/fluxbox/isp_16x16.xpm>
+		[exec]	(yawmppp)	{yawmppp.thin}			</usr/local/frenzy/icons/fluxbox/isp_16x16.xpm>
 		[exec]	(ppptraf)	{rxvt -e launch ppptraf}
 		[separator]
 		[exec]	(birda)		{rxvt -e launch ircomm -h}
@@ -159,16 +159,8 @@
 	[end]
 	[submenu] (=NETPROXY=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(3proxy)	{rxvt -e launch 3proxy -h}
-		[exec]	(6tunnel)	{rxvt -e launch 6tunnel}
-		[exec]	(corkscrew)	{rxvt -e launch corkscrew}
-		[exec]	(datapipe)	{rxvt -e launch datapipe}
-		[exec]	(etunnel)	{rxvt -e launch etunnel}
-		[exec]	(gotthard)	{rxvt -e launch gotthard -h}
 		[exec]	(proxychains)	{rxvt -e launch proxychains}
 		[exec]	(proxycheck)	{rxvt -e launch proxycheck -h}
-		[exec]	(proxytunnel)	{rxvt -e launch proxytunnel -h}
-		[exec]	(prtunnel)	{rxvt -e launch prtunnel -h}
-		[exec]	(ptunnel)	{rxvt -e launch ptunnel -h}
 		[exec]	(pxytest)	{rxvt -e launch pxytest -h}
 		[exec]	(redir)		{rxvt -e launch redir}
 		[exec]	(rfbproxy)	{rxvt -e launch rfbproxy}
@@ -176,14 +168,27 @@
 		[exec]	(stunnel)	{rxvt -e launch stunnel -h}
 		[exec]	(subweb)	{rxvt -e launch subweb}
 		[exec]	(tsocks)	{rxvt -e launch head -n 38 /usr/local/bin/tsocks}
-		[exec]	(udptunnel)	{rxvt -e launch udptunnel -h}
 		[exec]	(urelay)	{rxvt -e launch urelay -h}
+	[end]
+	[submenu] (=NETTUNNEL=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
+		[exec]	(6tunnel)	{rxvt -e launch 6tunnel}
+		[exec]	(corkscrew)	{rxvt -e launch corkscrew}
+		[exec]	(datapipe)	{rxvt -e launch datapipe}		
+		[exec]	(etunnel)	{rxvt -e launch etunnel}
+		[exec]	(gotthard)	{rxvt -e launch gotthard -h}
+		[exec]	(proxytunnel)	{rxvt -e launch proxytunnel -h}
+		[exec]	(prtunnel)	{rxvt -e launch prtunnel -h}
+		[exec]	(ptunnel)	{rxvt -e launch ptunnel -h}
+		[exec]	(udptunnel)	{rxvt -e launch udptunnel -h}
 		[exec]	(zebedee)	{rxvt -e launch zebedee --help}
-		[separator]
+	[end]
+	[submenu] (=NETANONYM=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(tor)		{rxvt -e launch tor -h}
 		[exec]	(dns-proxy-tor)	{rxvt -e launch dns-proxy-tor}
 		[exec]	(privoxy)	{rxvt -e launch privoxy --help}
 	[end]
+
+
 [end]
 
 [submenu] (=NETTOOLS=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
@@ -464,8 +469,8 @@
 		[submenu] (=PASSSTORAGE=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 			[exec]	(apg)		{rxvt -e launch apg -h}
 			[exec]	(gpasman)	{gpasman}			</usr/local/frenzy/icons/fluxbox/password_16x16.xpm>
-			[exec]	(gtkpasman)	{gtkpasman}			</usr/local/frenzy/icons/fluxbox/password_16x16.xpm>
-			[exec]	(pwman)		{rxvt -e launch pwman --help}
+			#[exec]	(gtkpasman)	{gtkpasman}			</usr/local/frenzy/icons/fluxbox/password_16x16.xpm>
+			#[exec]	(pwman)		{rxvt -e launch pwman --help}
 			[exec]	(keychain)	{rxvt -e launch keychain -h}
 		[end]
 	[end]
@@ -510,6 +515,7 @@
 	[submenu] (=DISK=)	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(fdisk)		{rxvt -e launch fdisk -h}
 		[exec]	(fdisk-linux)	{rxvt -e launch fdisk-linux -h}
+		[exec]	(cfgisk-linux)	{rxvt -e launch cfdisk-linux -h}
 		[exec]	(sfdisk)	{rxvt -e launch sfdisk}
 		[exec]	(gpte)		{rxvt -e launch man gpte}
 		[exec]	(gpart)		{rxvt -e launch gpart -h}
@@ -594,7 +600,6 @@
 			[exec]	(thrulay)	{rxvt -e launch thrulay}
 			[exec]	(ttcp)		{rxvt -e launch ttcp}
 			[exec]	(webbench)	{rxvt -e launch webbench -h}
-			[exec]	(oproute)	{rxvt -e launch oproute}
 		[end]
 		[submenu] (=PERFORMANCE=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 			[exec]	(flops)		{rxvt -e launch flops}
@@ -649,7 +654,6 @@
 		[exec]	(chgrep)	{rxvt -e launch chgrep}
 	[end]
 	[submenu] (=LOGTOOLS=)		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
-		[exec]	(abck)		{rxvt -e launch abck -h}
 		[exec]	(ccze)		{rxvt -e launch ccze --help}
 		[exec]	(colorize)	{rxvt -e launch colorize --help}
 		[exec]	(log_analysis)	{rxvt -e launch log_analysis -h}
