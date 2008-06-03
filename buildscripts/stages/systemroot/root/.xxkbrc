@@ -1,7 +1,7 @@
 ! put into /usr/X11R6/lib/X11/app-defaults
 ! XXkb.xpm.path: /usr/X11R6/share/xxkb
 
-XXkb.xpm.path: /usr/local/frenzy/icons/xxkb/16/gray
+XXkb.image.path: /usr/local/frenzy/icons/xxkb/16/gray
 
 XXkb.group.base: 1
 XXkb.group.alt: 2
@@ -11,19 +11,19 @@ XXkb.mainwindow.type: tray
 XXkb.mainwindow.in_tray: true
 XXkb.mainwindow.appicon: yes
 XXkb.mainwindow.geometry: 16x16
-XXkb.mainwindow.xpm.1: en_16.xpm
-! XXkb.mainwindow.xpm.2: ru_16.xpm
-! XXkb.mainwindow.xpm.2: ua_16.xpm
-! XXkb.mainwindow.xpm.2: bg_16.xpm
-! XXkb.mainwindow.xpm.2: cz_16.xpm
-! XXkb.mainwindow.xpm.2: de_16.xpm
-! XXkb.mainwindow.xpm.2: es_16.xpm
-! XXkb.mainwindow.xpm.2: fr_16.xpm
-! XXkb.mainwindow.xpm.2: it_16.xpm
-! XXkb.mainwindow.xpm.2: pl_16.xpm
-! XXkb.mainwindow.xpm.2: sk_16.xpm
-! XXkb.mainwindow.xpm.3: ru_16.xpm
-! XXkb.mainwindow.xpm.3: ua_16.xpm
+XXkb.mainwindow.image.1: en_16.xpm
+! XXkb.mainwindow.image.2: ru_16.xpm
+! XXkb.mainwindow.image.2: ua_16.xpm
+! XXkb.mainwindow.image.2: bg_16.xpm
+! XXkb.mainwindow.image.2: cz_16.xpm
+! XXkb.mainwindow.image.2: de_16.xpm
+! XXkb.mainwindow.image.2: es_16.xpm
+! XXkb.mainwindow.image.2: fr_16.xpm
+! XXkb.mainwindow.image.2: it_16.xpm
+! XXkb.mainwindow.image.2: pl_16.xpm
+! XXkb.mainwindow.image.2: sk_16.xpm
+! XXkb.mainwindow.image.3: ru_16.xpm
+! XXkb.mainwindow.image.3: ua_16.xpm
 
 
 
