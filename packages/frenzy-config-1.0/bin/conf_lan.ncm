@@ -182,9 +182,13 @@ sub save_settings {
 
 sub apply_settings {
     system ("clear");
-    system ("/etc/rc.d/netif restart");
-    system ("/etc/rc.d/routing restart");
-    system ("/etc/rc.d/dhclient restart");
-    system ("/etc/rc.d/netif restart");
+    my @servicelist = ('routing', 'ipfw', 'dhclient', 'netif');
+    my ($service);
+    foreach $service (@servicelist) {
+        system ("/etc/rc.d/$service stop > /dev/null 2>&1")
+    }
+    foreach $service (reverse @servicelist) {
+        system ("/etc/rc.d/$service start > /dev/null 2>&1");
+    }
 }
 
