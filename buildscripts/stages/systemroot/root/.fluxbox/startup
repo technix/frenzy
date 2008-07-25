@@ -1,6 +1,6 @@
 /usr/X11R6/bin/fbsetroot -solid black
 
-fbsetbg /usr/local/frenzy/wallpapers/fusillade.jpg
+fbsetbg /usr/local/frenzy/wallpapers/shards.jpg
 
 conky &
 xxkb &

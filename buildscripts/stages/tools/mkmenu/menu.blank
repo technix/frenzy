@@ -99,7 +99,7 @@
 	[submenu] (=MODEM=) 	</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[exec]	(minicom)	{rxvt -e launch minicom}
 		[exec]	(picocom)	{rxvt -e launch picocom -h}
-		[exec]	(xisp)		{xisp}				</usr/local/frenzy/icons/fluxbox/xisp_16x16.xpm>
+#		[exec]	(xisp)		{xisp}				</usr/local/frenzy/icons/fluxbox/xisp_16x16.xpm>
 		[exec]	(yawmppp)	{yawmppp.thin}			</usr/local/frenzy/icons/fluxbox/isp_16x16.xpm>
 		[exec]	(ppptraf)	{rxvt -e launch ppptraf}
 		[separator]
@@ -443,7 +443,7 @@
 		[separator]
 		[exec]	(aide)		{rxvt -e launch aide -h}
 		[exec]	(integrit)	{rxvt -e launch integrit -h}
-		[exec]	(yafic)		{rxvt -e launch yafic -h}
+#		[exec]	(yafic)		{rxvt -e launch yafic -h}
 	[end]
 	[submenu] (=PASSWORD=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
 		[submenu] (=BRUTELOCAL=) 		</usr/local/frenzy/icons/fluxbox/folder_grey.png>
@@ -775,6 +775,7 @@
 		[exec] (=BGRANDOM=) 		{fbsetbg -R /usr/local/frenzy/wallpapers/}
 		[exec] (=BGPREV=) 		{fbsetbg -l}
 		[separator]
+		[exec] (Shards /Ether/) 		{fbsetbg /usr/local/frenzy/wallpapers/shards.jpg}
 		[exec] (Fussilade /LadyRapid/) 		{fbsetbg /usr/local/frenzy/wallpapers/fusillade.jpg}
 		[exec] (Frenzy orange /techniX/) 		{fbsetbg /usr/local/frenzy/wallpapers/frenzy_orange.jpg}
 		[exec] (Frenzy Lion /Himera/) 		{fbsetbg /usr/local/frenzy/wallpapers/frenzy_lion_yellow.jpg}
