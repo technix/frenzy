@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Network setup</font></h1>
+<div class="level1">
+
+<p>
+ Utility &ldquo;<code>netconf</code>&rdquo; is amed to set up your network .
+</p>
+
+<p>
+<a href="media/mypic/frenzy-netconf.png" class="media" target="_blank" title="mypic:frenzy-netconf.png"><img src="media/mypic/frenzy-netconf.png" class="media" title="Утилита netconf" alt="Утилита netconf" width="320" height="170" /></a>
+</p>
+
+<p>
+Having run &ldquo;<code>netconf</code>&rdquo; without parameters,  a menu to chose the module appears (lan, ppp, vpn, adsl). 
+</p>
+
+</div>
+<!-- SECTION [1-253] -->
+<h2><font color=#990000>netconf lan</font></h2>
+<div class="level2">
+
+<p>
+ Module of local area network settings  After you&rsquo;ve made choice a network interface card you&rsquo;ll need to enter ip address  for it, subnet mask, gateway, <acronym title="Domain Name Server">DNS</acronym>-servers and domain name.
+</p>
+
+<p>
+If some of them were specified earlier they will be  substituted in dialogue box automatically. 
+</p>
+
+<p>
+If you use DHCP then you should enter &ldquo;DHCP&rdquo; instead of  IP address or enter nothing.
+</p>
+
+<p>
+Settings will be saved and applied automatically. 
+</p>
+<ul>
+<li class="level1"><div class="li"> Similar utility was called lan-config in Frenzy 0.3</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [254-754] -->
+<h2><font color=#990000>netconf ppp</font></h2>
+<div class="level2">
+
+<p>
+ Dialup connection settings module.  Creating a new connection you should specify connection name, modem port, authoriation type (login or pap/chap), login and password and phone numbers (you can enter sever numbers one by one , empty line stands for the end of input).
+</p>
+
+<p>
+After connections  saving  a new field &ldquo;Connection with &lt;connection name&gt;&rdquo; will be appeared , having chosen which a call will be executed.  
+</p>
+<ul>
+<li class="level1"><div class="li"> Similar utility was called ppp-config in Frenzy 0.3</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [755-1248] -->
+<h2><font color=#990000>netconf vpn</font></h2>
+<div class="level2">
+
+<p>
+ VPN connection settings module.
+</p>
+
+<p>
+Creating a new connection you should connection name,  VPN server address, login and password and some other options (covpression, encryption, use it as the default gateway). 
+</p>
+
+<p>
+After connections  saving  a new field &ldquo;Connection with &lt;connection name&gt;&rdquo; will be appeared , having chosen which an attempt to set up VPN connection will be performed. 
+</p>
+
+<p>
+<img src="images/smileys/icon_exclaim.gif" align="middle" alt=":!:" />Before setting a VPN connection you have to set up your LAN.  
+</p>
+
+</div>
+<!-- SECTION [1249-1721] -->
+<h2><font color=#990000>netconf adsl</font></h2>
+<div class="level2">
+
+<p>
+ ADSL connection settings module. 
+</p>
+
+<p>
+Creating a new connection you should connection name,  network interface which ADSL-modem is attached to , login and password and some other options (use it as the default gateway, use NAT and <acronym title="Domain Name Server">DNS</acronym>). 
+</p>
+
+<p>
+After connections  saving  a new field &ldquo;Connection with &lt;connection name&gt;&rdquo; will be appeared , having chosen which an attempt to set up ADSL connection will be performed. 
+</p>
+
+</div>
+<!-- SECTION [1722-] --></td></tr></table>
+<br>
+</body>
+</html>

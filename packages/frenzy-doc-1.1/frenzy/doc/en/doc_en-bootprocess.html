@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Frenzy bootstrapping</font></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-36] -->
+<h2><font color=#990000>kernel stage</font></h2>
+<div class="level2">
+
+<p>
+ Bootstrapping starts from that BIOS passes control to cdboot bootmanager which is located in bootable area of CD. cdboot runs BTX loader (/boot/loader). BTX loader reads its configuration files, loads kernel and necessary modules and displays boot menu (with the logo). Then kernel loading and devices identification are run. 
+</p>
+
+<p>
+There is specified in the loader configuration that root file system shouyld be mounted from compressed image /boot/frenzyroot.gz. After loading kernel root file system is mounted from this image and control is passed to /sbin/init process which is run from this place. 
+</p>
+
+</div>
+<!-- SECTION [37-662] -->
+<h2><font color=#990000>frenzyroot stage</font></h2>
+<div class="level2">
+
+<p>
+ frenzyroot image contains several base utilities : 
+</p>
+
+<p>
+<code>cp sh test echo init mdconfig mount mount_cd9660 mount_nullfs umount sleep</code>
+</p>
+
+<p>
+There are several important files in /etc also, including rc-scripts specially written for Frenzy.
+</p>
+
+<p>
+/sbin/init runs /etc/rc. This is a non-standard script which performs all initial tuning and booting LiveCD.
+</p>
+
+</div>
+<!-- SECTION [663-1035] -->
+<h3><font color=#990000>1. Bootable device searching</font></h3>
+<div class="level3">
+
+<p>
+ First we should find and mount the disk the system is booted from. Script looks file frenzy.uzip at every CD-ROM and USB drives in an order. If such file was found the disk that contains in is mounted in /Frenzy/boot directory.
+</p>
+
+</div>
+<!-- SECTION [1036-1304] -->
+<h3><font color=#990000>2. Mounting compressed file system</font></h3>
+<div class="level3">
+
+<p>
+ frenzy.uzip contains compressed file system that will be used as a root. Yet it cannot be mounted over existing root FS we do the following. File system from frenzy.uzip is mounted at /Frenzy/fs directory, after that we use mount_nullfs to mount directories <code>bin, boot, lib, libexec, sbin, usr</code> from compressed image over the existing file system.
+</p>
+
+</div>
+<!-- SECTION [1305-1701] -->
+<h3><font color=#990000>3. Locale setting</font></h3>
+<div class="level3">
+
+<p>
+ Nice font is loaded and screenmap is set up. This is neede to display russian menu.
+</p>
+
+</div>
+<!-- SECTION [1702-1815] -->
+<h3><font color=#990000>4. Calculating the size of RAM-disk</font></h3>
+<div class="level3">
+
+<p>
+ We calculate the volume of system RAM. Hence we set up RAM-disk size by default (10,15,30 and 45 megs).
+</p>
+
+</div>
+<!-- SECTION [1816-1967] -->
+<h3><font color=#990000>5. Boot menu</font></h3>
+<div class="level3">
+
+<p>
+ Boot menu is displayed on screen. We set up boot parameters (its descriptioon see <a href="doc_en-boot.html" class="wikilink1" title="doc_en-boot.html">here</a>).
+</p>
+
+</div>
+<!-- SECTION [1968-2097] -->
+<h3><font color=#990000>6. Creating RAM-disk</font></h3>
+<div class="level3">
+
+<p>
+ We create RAM-disk with specified size and mount it to /Frenzy/ramdisk. Directories <code>etc, root, var, mnt</code> will be stored there. We create them, copy to them files from appropriate directories located in /Frenzy/fs and mount these directories over the directories of root with mount_nullfs. Than settings defined in boot menu are stored in /etc/frenzy.boot
+</p>
+
+</div>
+<!-- SECTION [2098-2488] -->
+<h3><font color=#990000>7. Patches loading</font></h3>
+<div class="level3">
+
+<p>
+ We look through the directory /Frenzy/boot/frenzy.conf. If there are scripts whose names are end with &lsquo;.patch&rsquo; we perform them. This is useful in case if you add some pathes for configuration files but do not want to rebuild compressed image.
+</p>
+
+</div>
+<!-- SECTION [2489-2762] -->
+<h3><font color=#990000>8. 'toram' boot mode (optional)</font></h3>
+<div class="level3">
+
+<p>
+ If the parameter &lsquo;toram&rsquo; was chosen then loading to memory will be performed: 
+</p>
+<ul>
+<li class="level1"><div class="li"> RAM-disk of enough size will be created (size is calculated automatically depending of frenzy.uzip size) and mounted to /Frenzy/mfs.</div>
+</li>
+<li class="level1"><div class="li"> Copy /Frenzy/boot/frenzy/frenzy.uzip there and then remount /Frenzy/fs from this file.</div>
+</li>
+<li class="level1"><div class="li"> Remount file systems from new /Frenzy/fs as described at clause 2.</div>
+</li>
+</ul>
+
+<p>
+ After loading to RAM CD-ROM drive is freed and tray is ejected.
+</p>
+
+</div>
+<!-- SECTION [2763-3249] -->
+<h3><font color=#990000>9. Looking for partitions on HDD</font></h3>
+<div class="level3">
+
+<p>
+ By default are mounted in &ldquo;read only&rdquo; mode. The next menu options are available:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>hdrw</strong> - mount in write mode (FAT/UFS/EXT2FS only)</div>
+</li>
+<li class="level1"><div class="li"> <strong>nohdmnt</strong> - search partitions, create mount points and fstab update but do not mount partitions</div>
+</li>
+<li class="level1"><div class="li"> <strong>nohdd</strong> - search and mount are not performed</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [3250-3585] -->
+<h3><font color=#990000>10. fromhdd boot mode (optional)</font></h3>
+<div class="level3">
+
+<p>
+ If <code>fromhdd</code> parameter was chosen than bootstrapping from HDD will be performed: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Search the file frenzy/frenzy.uzip at every mounted partition.</div>
+</li>
+<li class="level1"><div class="li"> If such file was found than operations described in clause 8 are performed (remounting compressed image and directories).</div>
+</li>
+</ul>
+
+<p>
+ After the bootstrapping from hard disk CD-ROM is freed and its tray is ejected.
+</p>
+
+</div>
+<!-- SECTION [3586-3988] -->
+<h3><font color=#990000>11. Miscellaneous</font></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> /tmp/.frenzy file is created (existence of this file is interpreted by scripts as the sign of CD/Flash bootstrapping).</div>
+</li>
+<li class="level1"><div class="li"> System language is set up by /usr/local/bin/frlang (language is set up during the bootstrapping).</div>
+</li>
+<li class="level1"><div class="li"> Backup settings from diskette/HDD/USB drive/CD are restored (directory frenzy/backup). This step can be cancelled with <strong>nobackup</strong> option.</div>
+</li>
+</ul>
+
+<p>
+ At last, /etc/rc is run.
+</p>
+
+</div>
+<!-- SECTION [3989-4413] -->
+<h2><font color=#990000>base stage</font></h2>
+<div class="level2">
+
+<p>
+ Running  system rc-scripts almost identical to standard FreeBSD&rsquo;s one. But there are some differences : 
+</p>
+
+<p>
+1. Some part of rc-scripts is edited such way to not to run them if <code>/tmp/.frenzy</code> exists. These scripts are used to mount partiotions described in fstab and to check them with fsck (this is not needed when booting from livecd because it is done by other scenarios).
+</p>
+
+<p>
+2. After all rc-scripts are run <code>/etc/rc.d/FRENZY</code> is executed which performs the following: 
+</p>
+<ul>
+<li class="level1"><div class="li"> running mouse detecting utility (<code>/usr/local/bin/mouse-detect</code>)</div>
+</li>
+<li class="level1"><div class="li"> running an utility that gathers system information (if the option <strong>hwinfo</strong> was chosen)</div>
+</li>
+<li class="level1"><div class="li"> enabling autologin at the first terminal (always enabled while booting from CD/Flash)</div>
+</li>
+<li class="level1"><div class="li"> running <acronym title="Graphical User Interface">GUI</acronym> (if <strong>gui</strong> option was chosen)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [4414-] --></td></tr></table>
+<br>
+</body>
+</html>

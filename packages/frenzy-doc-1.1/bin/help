@@ -1,0 +1,15 @@
+#!/bin/sh
+clang=`echo $LANG | awk -F"_" '{print $1}'`
+if [ $clang = "uk" ]; then
+    clang="ru"
+fi
+if [ $clang != "ru" ]; then
+    clang="en"
+fi
+#
+
+if [ -z "$DISPLAY" ]; then
+  elinks /usr/local/frenzy/doc/$clang/index.html
+else
+  dillo /usr/local/frenzy/doc/$clang/index.html
+fi

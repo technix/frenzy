@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Service setup</font></h1>
+<div class="level1">
+
+<p>
+ Utility &ldquo;<code>servconf</code>&rdquo; is used to set up services (sshd, ftpd, httpd, smbd).
+</p>
+
+<p>
+Every module of  servconf allows to run, stop and restart specified service.
+</p>
+
+<p>
+Besides that, some modules have additional options which should be mentioned below about.
+</p>
+
+<p>
+<a href="media/mypic/frenzy-servconf.png" class="media" target="_blank" title="mypic:frenzy-servconf.png"><img src="media/mypic/frenzy-servconf.png" class="media" title="Утилита servconf" alt="Утилита servconf" width="320" height="170" /></a>
+</p>
+
+<p>
+Having called &ldquo;&lsquo;servconf&rsquo;&rdquo; without parameters a menu to chose a modules will appear.
+</p>
+
+</div>
+<!-- SECTION [1-426] -->
+<h2><font color=#990000>servconf sshd</font></h2>
+<div class="level2">
+
+<p>
+ To have an ability to log in to Frenzy box via ssh you have to create a new user. 
+</p>
+
+<p>
+To do that chose &ldquo;Create a user fo ssh&rdquo; in sshd settings module.
+</p>
+
+<p>
+ A new user frenzy will be created eith a random password which will be written into file &ldquo;/root/frenzy.pwd&rdquo;. 
+</p>
+
+<p>
+You change a password for this user &ldquo;<code>passwd frenzy</code>&ldquo;.
+</p>
+
+<p>
+At first time you run sshd a new keys will be generated. It will take some time.
+</p>
+
+</div>
+<!-- SECTION [427-855] -->
+<h2><font color=#990000>servconf ftpd</font></h2>
+<div class="level2">
+
+<p>
+ To enable an anonymous ftp you should chose &ldquo;Create an anonymous ftp account&rdquo;. Directory for anonymous ftp is /var/ftp.
+</p>
+
+</div>
+<!-- SECTION [856-1004] -->
+<h2><font color=#990000>servconf httpd</font></h2>
+<div class="level2">
+
+<p>
+ Configuration file for web server is /usr/local/etc/thttpd.conf
+</p>
+
+</div>
+<!-- SECTION [1005-1097] -->
+<h2><font color=#990000>servconf smbd</font></h2>
+<div class="level2">
+
+<p>
+ At the first run of smbd you should specify a workgroup and NetBIOS name of your machine in a dialog box (enter this name in the capital letters).
+</p>
+
+<p>
+You should create a system user to login to smb also (menu &ldquo;Create user for samba&rdquo;).  
+</p>
+
+</div>
+<!-- SECTION [1098-] --></td></tr></table>
+<br>
+</body>
+</html>

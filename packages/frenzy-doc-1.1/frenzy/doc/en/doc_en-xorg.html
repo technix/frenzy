@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>X Window system</font></h1>
+<div class="level1">
+
+<p>
+ The graphic shell can be started automaticly after boot, if the option <code>gui</code> was set in boot loader menu. It a started up system, <acronym title="Graphical User Interface">GUI</acronym> can be called by typing <code>startx</code>.
+</p>
+
+<p>
+The <code>fluxbox</code> is used as a Windows Manager. The Application Menu is called by pressing right mouse button on the screen.
+</p>
+
+<p>
+Keyboard layouts are switched using <code>Ctrl+Shift</code>. There are two langs available - English and national language, set before the startup (if you have set <code>lang=en</code>, there will be only one language). If not English language is chosen, ScrollLock lites.
+</p>
+
+<p>
+To switch to the text mode use <code>Ctrl+Alt+Fn</code> (F1-F8). To get back to <acronym title="Graphical User Interface">GUI</acronym> press <code>Alt+F9</code>. To &ldquo;kill&rdquo; the <acronym title="Graphical User Interface">GUI</acronym> press <code>Ctrl+Alt+Backspace</code>.
+</p>
+
+</div>
+<!-- SECTION [1-727] -->
+<h2><font color=#990000>Hotkeys</font></h2>
+<div class="level2">
+<table border=1 cellpadding=3 cellspacing=0 class="inline">
+	<tr>
+		<th> Key combination </th><th> Effect </th>
+	</tr>
+	<tr>
+		<td> Alt+F1, Alt+F2, Alt+F3, Alt+F4 </td><td> Desktops switching </td>
+	</tr>
+	<tr>
+		<td> Winkey, Ctrl+Esc </td><td> Applications menu call </td>
+	</tr>
+	<tr>
+		<td> Alt+Esc </td><td> Desktop menu call </td>
+	</tr>
+	<tr>
+		<td> Ctrl+num kayboard arrows</td><td> Move window </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+num keyboard arrows </td><td> Change windows size </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+R </td><td> Application run utility </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+O </td><td> Start Opera </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+L </td><td> Start Sylpheed </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+Q </td><td> Start GQview </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+T </td><td> Start terminal rxvt </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+S </td><td> Take a screenshot (the picture would be saved in /root/MyFiles) </td>
+	</tr>
+	<tr>
+		<td> Ctrl+Alt+Esc </td><td> Call xkill to kill a program </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [728-1307] -->
+<h2><font color=#990000>Startup problems</font></h2>
+<div class="level2">
+
+<p>
+  In case of errors in default startup mode try removing the /etc/X11/xorg.conf file and start xautoconf utility by hands:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>xautoconf safe</strong> - Uses default VESA driver.</div>
+</li>
+<li class="level1"><div class="li"> <strong>xautoconf safemon</strong> - Uses usual videodriver but sets standard monitor settings. It is usefull when monitor has problems with refresh rate.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [1308-] --></td></tr></table>
+<br>
+</body>
+</html>

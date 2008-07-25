@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Filesystems and mounts</font></h1>
+<div class="level1">
+
+<p>
+ Whet Frenzy starts, the discs and USB Flash are mounted automaticly (If the Flash was inserted during the startup). All filesystems are mounted read-only by default.
+</p>
+
+<p>
+Frenzy supports next filesystems: 
+</p>
+<table border=1 cellpadding=3 cellspacing=0 class="inline">
+	<tr>
+		<th class="centeralign">  Filesystem  </th><th class="centeralign">  Read  </th><th class="centeralign">  Write  </th>
+	</tr>
+	<tr>
+		<td> UFS1 </td><td class="centeralign">  +  </td><td class="centeralign">  +  </td>
+	</tr>
+	<tr>
+		<td> UFS2 </td><td class="centeralign">  +  </td><td class="centeralign">  +  </td>
+	</tr>
+	<tr>
+		<td> EXT2FS </td><td class="centeralign">  +  </td><td class="centeralign">  +  </td>
+	</tr>
+	<tr>
+		<td> REISERFS </td><td class="centeralign">  +  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td> FAT </td><td class="centeralign">  +  </td><td class="centeralign">  +  </td>
+	</tr>
+	<tr>
+		<td> NTFS </td><td class="centeralign">  +  </td><td class="centeralign">  +<sup>1</sup>  </td>
+	</tr>
+</table>
+<br />
+
+<p>
+ <sup>1</sup> Partial NTFS write support is done by <strong>ntfsmount</strong> utility - it is only possible to edit, rename, move and delete files. 
+</p>
+
+</div>
+<!-- SECTION [1-555] -->
+<h2><font color=#990000>Mount points</font></h2>
+<div class="level2">
+
+<p>
+  Filesystems are mounted on the /mnt derictory. Frenzy automaticly creates mount point catalogue. There is a next catalogue name format:
+</p>
+
+<p>
+ <code>[disk type][disk number]s[partition number].[filesystem]</code>
+</p>
+
+<p>
+ where disk type is - <code>ad</code> (IDE) or <code>da</code> (<acronym title="Small Computer System Interface">SCSI</acronym>, USB Flash). disc numbers start from 0, partition numbers - from 1. Logical partitions (extended) numbers - from 5.
+</p>
+
+<p>
+Examples:
+</p>
+<ul>
+<li class="level1"><div class="li"> <code>/mnt/ad0s2.ntfs</code> - Second NTFS partition on the firsd IDE harddrive.</div>
+</li>
+<li class="level1"><div class="li"> <code>/mnt/ad1s5.fat</code> - First logical FAT partition on the second IDE harddrive.</div>
+</li>
+</ul>
+
+<p>
+ Discette can be mounted manually on <code>/mnt/floppy</code> by typing mount <code>/mnt/floppy</code>.
+</p>
+
+</div>
+<!-- SECTION [556-1205] -->
+<h2><font color=#990000>Mounting partitions</font></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [1206-1238] -->
+<h3><font color=#990000>Searching for new partitions</font></h3>
+<div class="level3">
+
+<p>
+ If the partitions were not mounted automaticly (for example, you have chosen nohdd option during startup), You can make search and mounting of partitions by typing <strong><code>frmount</code></strong>:
+</p>
+
+<p>
+<code>frmount [options]</code>
+</p>
+
+<p>
+Options for frmount command:
+</p>
+<ul>
+<li class="level1"><div class="li"> auto - find all partitions and mount them</div>
+</li>
+<li class="level1"><div class="li"> rw - mount partitions for read-write</div>
+</li>
+<li class="level1"><div class="li"> v - verbose mode (shows more information)</div>
+</li>
+</ul>
+
+<p>
+ By default, this command searches for new partitions, creates mount points and creates information about new partitions into <code>/etc/fstab</code>.
+</p>
+
+</div>
+<!-- SECTION [1239-1788] -->
+<h3><font color=#990000>Changing mount modes</font></h3>
+<div class="level3">
+
+<p>
+ To change mount modes you can use <strong><code>remount</code></strong> utility. You can change mount modes only for those filesystems, wich support full-featured write by the System.
+</p>
+
+<p>
+Check before you change the mode that no software uses remounting media as current directory nor files from it. Otherwise the partition would not be remounted.
+</p>
+
+</div>
+<!-- SECTION [1789-2144] -->
+<h3><font color=#990000>Unmounting the partition</font></h3>
+<div class="level3">
+
+<p>
+  You can unmount the partition by typing:
+</p>
+
+<p>
+<code>umount [mount point catalogue]</code>
+</p>
+
+<p>
+<img src="images/smileys/icon_exclaim.gif" align="middle" alt=":!:" /> It&rsquo;s highly recommended to unmount partitions mounted for write by hands before you restart or shutdown.
+</p>
+
+</div>
+<!-- SECTION [2145-] --></td></tr></table>
+<br>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Building the distributive</font></h1>
+<div class="level1">
+
+<p>
+ Frenzy is built with a set of building scripts.
+</p>
+
+</div>
+<!-- SECTION [1-93] -->
+<h2><font color=#990000>Building scripts structure</font></h2>
+<div class="level2">
+<table border=1 cellpadding=3 cellspacing=0 class="inline">
+	<tr>
+		<th class="centeralign">  Directory  </th><th class="centeralign">  Description  </th>
+	</tr>
+	<tr>
+		<td> <code>FRENZY/cd</code> </td><td> Frenzy CD content </td>
+	</tr>
+	<tr>
+		<td> <code>FRENZY/fs</code> </td><td> Frenzy root filesystem </td>
+	</tr>
+	<tr>
+		<td> <code><acronym title="International Organization for Standardization">ISO</acronym></code> </td><td> The directory where the <acronym title="International Organization for Standardization">ISO</acronym> image will be created </td>
+	</tr>
+	<tr>
+		<td> <code>packages/FreeBSD.std</code> </td><td> FreeBSD packages, Frenzy standard set </td>
+	</tr>
+	<tr>
+		<td> <code>packages/FreeBSD.ext</code> </td><td> FreeBSD packages, Frenzy extended set </td>
+	</tr>
+	<tr>
+		<td> <code>packages/Frenzy</code> </td><td> Special Frenzy packages </td>
+	</tr>
+	<tr>
+		<td> <code>packages/frenzypkg</code> </td><td> Some Frenzy packages source code </td>
+	</tr>
+	<tr>
+		<td> <code>packages/tools</code> </td><td> Packages building utilities </td>
+	</tr>
+	<tr>
+		<td> <code>stages</code> </td><td> Building scripts main catalogue </td>
+	</tr>
+	<tr>
+		<td> <code>stages/base</code> </td><td> Kernel config file and make.conf for Frenzy build </td>
+	</tr>
+	<tr>
+		<td> <code>stages/boot</code> </td><td> Set of frenzyroot boot image </td>
+	</tr>
+	<tr>
+		<td> <code>stages/iso</code> </td><td> <acronym title="International Organization for Standardization">ISO</acronym> image build files </td>
+	</tr>
+	<tr>
+		<td> <code>stages/lite</code> </td><td> List of files which are deleted from the base system </td>
+	</tr>
+	<tr>
+		<td> <code>stages/patches</code> </td><td> Patches to be applied after the installation of system and packages </td>
+	</tr>
+	<tr>
+		<td> <code>stages/pkglite/files</code> </td><td> Installed packages pathes (deleting and modifying files) </td>
+	</tr>
+	<tr>
+		<td> <code>stages/pkglite/lib</code> </td><td> Unneeded libraries deleting script </td>
+	</tr>
+	<tr>
+		<td> <code>stages/pkglite/locales</code> </td><td> Unneeded locales deleting script </td>
+	</tr>
+	<tr>
+		<td> <code>systemroot</code> </td><td> This files are placed overwriting into root directory <br/>
+ of Frenzy without modification</td>
+	</tr>
+	<tr>
+		<td> <code>tools/mkmenu</code> </td><td> Building fluxbox menu </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [94-1375] -->
+<h2><font color=#990000>Configuration</font></h2>
+<div class="level2">
+
+<p>
+ Build parameters are set using <code>config</code> file. The variables which could be changed are: 
+</p>
+<table border=1 cellpadding=3 cellspacing=0 class="inline">
+	<tr>
+		<th class="centeralign">  Variable  </th><th class="centeralign">  Parameter  </th>
+	</tr>
+	<tr>
+		<td> BLOCKSIZE </td><td> Blocksize for uzip compression. Maximum size is 130560. The bigger the block is, the more compression is, but it will take more time to uncompress the archive on slow machines. </td>
+	</tr>
+	<tr>
+		<td> FRENZY_TYPE </td><td> May be <strong>&ldquo;std&rdquo;</strong> (standard build) or <strong>&ldquo;ext&rdquo;</strong> (extended build). The name of the directory with packages and the fluxbox menu depend on it. </td>
+	</tr>
+	<tr>
+		<td> FRENZY_LANG </td><td> May be <strong>&ldquo;ru&rdquo;</strong> (Russian) or <strong>&ldquo;en&rdquo;</strong> (English). Sets default locale, package list, locales to be deleted list, Translation and view of the menu. </td>
+	</tr>
+	<tr>
+		<td> FRENZY_ISOIMAGE </td><td> The name of Frenzy <acronym title="International Organization for Standardization">ISO</acronym> image. </td>
+	</tr>
+	<tr>
+		<td> FRENZY_VOL </td><td> Frenzy <acronym title="International Organization for Standardization">ISO</acronym> image volume label. </td>
+	</tr>
+	<tr>
+		<td> VERSION </td><td> System version. This message will be shown in the boot loader and after every system login. In order to fit on screen, this message must fit into the &ldquo;|&rdquo; symbols of the ruler over the message. </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [1376-2363] -->
+<h2><font color=#990000>Building process</font></h2>
+<div class="level2">
+
+<p>
+ Building process takes a few stages. Make sure, the application packages and frenzy packages are already built and placed in respective directories (see above).
+</p>
+
+<p>
+The main building script is frbuild. 
+</p>
+<table border=1 cellpadding=3 cellspacing=0 class="inline">
+	<tr>
+		<th> Command </th><th> Action </th>
+	</tr>
+	<tr>
+		<td> ./frbuild build </td><td> Make a build stage </td>
+	</tr>
+	<tr>
+		<td> ./frbuild install </td><td> Make an install stage </td>
+	</tr>
+	<tr>
+		<td> ./frbuild frenzy </td><td> Make a frenzy stage </td>
+	</tr>
+	<tr>
+		<td> ./frbuild iso </td><td> Make an iso stage </td>
+	</tr>
+	<tr>
+		<td> ./frbuild all </td><td> Make all stages </td>
+	</tr>
+</table>
+<br />
+
+<p>
+ You can make any stage by yourself by entering stages directory and running the appropriate script with &ldquo;all&rdquo; parameter.
+</p>
+
+</div>
+<!-- SECTION [2364-2942] -->
+<h3><font color=#990000>FRENZY</font></h3>
+<div class="level3">
+
+<p>
+ First build stage is always performed. During this stage  depending of chosen language preparing of locale list is performed, bootmanager localization and fluxbox menu generation.
+</p>
+
+</div>
+<!-- SECTION [2943-3141] -->
+<h3><font color=#990000>build</font></h3>
+<div class="level3">
+
+<p>
+ Building from kernel and system sources
+</p>
+
+</div>
+
+<h4><font color=#990000>world-build</font></h4>
+<div class="level4">
+
+<p>
+ System build from the sources. Configuration file for building is  <code>stages/base/make.conf</code>
+</p>
+
+</div>
+
+<h4><font color=#990000>kernel-build</font></h4>
+<div class="level4">
+
+<p>
+ Building the kernel from the sources. Kernel configuration file is <code>stages/base/FRENZY</code>. This file is createed by utility <code>stages/base/mkkernel</code> from modules located in <code>stages/base/kernel/</code> directory.
+</p>
+
+</div>
+<!-- SECTION [3142-3545] -->
+<h3><font color=#990000>install</font></h3>
+<div class="level3">
+
+<p>
+ Installing built system and kernel to FRENZY/fs directory.
+</p>
+
+</div>
+
+<h4><font color=#990000>world-install</font></h4>
+<div class="level4">
+
+<p>
+ System installation.
+</p>
+
+</div>
+
+<h4><font color=#990000>kernel-install</font></h4>
+<div class="level4">
+
+<p>
+ Installing kernel and modules.
+</p>
+
+</div>
+<!-- SECTION [3546-3726] -->
+<h3><font color=#990000>frenzy</font></h3>
+<div class="level3">
+
+<p>
+ Building Frenzy itself - adding packages, patches and so on.
+</p>
+
+</div>
+
+<h4><font color=#990000>bootloader</font></h4>
+<div class="level4">
+
+<p>
+ Building MFS bootable image. All necessary files are in <code>stages/boot</code>. After the building you will get a file <code>stages/boot/frenzyroot.gz</code> that contains an image.
+</p>
+
+</div>
+
+<h4><font color=#990000>world-lite</font></h4>
+<div class="level4">
+
+<p>
+ Deleting useless files from base system. File and directory list to delete is stored in file <code>stages/lite/rmfiles</code>.
+</p>
+
+</div>
+
+<h4><font color=#990000>packages-install-frenzy</font></h4>
+<div class="level4">
+
+<p>
+ Installing packages from <code>packages/Frenzy</code> directory.
+</p>
+
+</div>
+
+<h4><font color=#990000>packages-install-freebsd</font></h4>
+<div class="level4">
+
+<p>
+ Installing packages from directory <code>packages/FreeBSD.std</code> or <code>packages/FreeBSD.ext</code> (depends on build type).
+</p>
+
+</div>
+
+<h4><font color=#990000>packages-lite-locales</font></h4>
+<div class="level4">
+
+<p>
+ Deleting useless localizations. Script for deleting and locale list is in <code>stages/pkglite/locales</code>.
+</p>
+
+</div>
+
+<h4><font color=#990000>packages-lite-files</font></h4>
+<div class="level4">
+
+<p>
+ Deleting useless files and directories, creating useful symbolic links depending of package type. Scripts for these operations are in <code>stages/pkglite/files</code>.
+</p>
+
+</div>
+
+<h4><font color=#990000>packages-lite-lib</font></h4>
+<div class="level4">
+
+<p>
+ Deleting useless static link libraries (you need them only for building statically linked applications, we don&rsquo;t need this). Script for this operation is in  <code>stages/pkglite/lib</code>.
+</p>
+
+</div>
+
+<h4><font color=#990000>system-patch</font></h4>
+<div class="level4">
+
+<p>
+Miscellaneous system patches  (creating additional directiries and symbolic links, patches for configuration files, etc). Patches are in <code>stages/patches</code>.
+</p>
+
+</div>
+<!-- SECTION [3727-5085] -->
+<h3><font color=#990000>iso</font></h3>
+<div class="level3">
+
+<p>
+ Building Frenzy iso image
+</p>
+
+</div>
+
+<h4><font color=#990000>iso-prepare</font></h4>
+<div class="level4">
+
+<p>
+ Preparing directory structure on CD in directory <code>FRENZY/cd</code>. Configuration files are in <code>stages/iso</code>.
+</p>
+
+</div>
+
+<h4><font color=#990000>iso-mkuzip</font></h4>
+<div class="level4">
+
+<p>
+ Creating compressed image of root file system. This is a very prolonged process. 
+</p>
+
+</div>
+
+<h4><font color=#990000>iso-build</font></h4>
+<div class="level4">
+
+<p>
+ Building iso image. This image is stored in <acronym title="International Organization for Standardization">ISO</acronym> directory. 
+</p>
+
+</div>
+<!-- SECTION [5086-] --></td></tr></table>
+<br>
+</body>
+</html>

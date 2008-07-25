@@ -232,7 +232,7 @@ XL="cz"
 fi
 
 if [ "${XL}" != "en" ]; then
-XSTRING=`cat ${XXKBRC} | grep "xpm.2" | grep "${SL}_16.xpm" | sed s/\!/\\\!/`
+XSTRING=`cat ${XXKBRC} | grep "image.2" | grep "${SL}_16.xpm" | sed s/\!/\\\!/`
 ZSTRING=`echo ${XSTRING} | sed "s/\! //"`
 cat ${XXKBRC} | sed "s/${XSTRING}/${ZSTRING}/" > ${XXKBRC}.NEW
 mv ${XXKBRC}.NEW ${XXKBRC}

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc.html>doc</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h2><font color=#990000>Модификация Frenzy</font></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [1-43] -->
+<h3><font color=#990000>Разборка образа</font></h3>
+<div class="level3">
+
+<p>
+ 1. Копируем все файлы с компакта в произвольный каталог, например, /usr/frenzy.
+</p>
+
+<p>
+2. Устанавливаем из портов sysutils/cloop-utils 
+</p>
+
+<p>
+3. Выполняем команды: 
+</p>
+<pre class="code">cd /usr/frenzy/frenzy
+extract_compressed_fs frenzy.uzip &gt; frenzyfs.iso </pre>
+
+<p>
+ 4. Монтируем этот iso-образ в созданный нами каталог frenzyfs: 
+</p>
+<pre class="code">mkdir frenzyfs 
+mount_cd9660 /dev/`mdconfig -a -t vnode -f frenzyfs.iso` frenzyfs</pre>
+
+<p>
+ 5. Копируем из него все файлы в каталог, например,
+</p>
+
+<p>
+Теперь делаем туда chroot и ставим пакаджи/редактируем файлы 
+</p>
+
+</div>
+<!-- SECTION [44-795] -->
+<h3><font color=#990000>Сборка образа</font></h3>
+<div class="level3">
+
+<p>
+ 1. Делаем заново iso-образ  
+</p>
+<pre class="code">mkisofs -lRNU -quiet -ldots -o frenzynew.iso frenzyfs</pre>
+
+<p>
+  2. Сжимаем его с помощью утилиты mkuzip: 
+</p>
+<pre class="code">mkuzip -o frenzy.uzip -s 130560 frenzynew.iso </pre>
+
+<p>
+ 3. Получаем новый frenzy.uzip, запихиваем его в исошник вместо старого и делаем образ заново:  
+</p>
+<pre class="code">mkisofs -quiet -b boot/cdboot -no-emul-boot -c boot/boot.catalog -boot-load-size 4 -r -J -D -o frenzy-1.0-patched.iso disr_with_frenzy_isofs</pre>
+
+</div>
+<!-- SECTION [796-] --></td></tr></table>
+<br>
+</body>
+</html>

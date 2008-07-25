@@ -1,4 +1,4 @@
-Frenzy 1.0 (Dreamchild)
+Frenzy 1.1 (Starstruck)
 ------------------------------------------
 
 Frenzy is a "portable system administrator toolkit," 

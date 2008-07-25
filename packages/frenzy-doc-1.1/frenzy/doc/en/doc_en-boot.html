@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Frenzy Boot</font></h1>
+<div class="level1">
+
+<p>
+ First of all you will see the boot loader menu:
+</p>
+
+<p>
+<a href="media/mypic/frenzy-loadermenu.png" class="media" target="_blank" title="mypic:frenzy-loadermenu.png"><img src="media/mypic/frenzy-loadermenu.png" class="media" title="Boot menu" alt="Boot menu" width="360" height="200" /></a>
+</p>
+
+<p>
+In most cases it is enough to press Enter or to wait 5 seconds.
+</p>
+
+<p>
+<img src="images/smileys/icon_exclaim.gif" align="middle" alt=":!:" /> In case of kernel boot errors, wich lead to no bootup,  use the button 2 in boot menu - &ldquo;Boot FreeBSD with ACPI disabled&rdquo;.
+</p>
+
+</div>
+<!-- SECTION [1-321] -->
+<h2><font color=#990000>Boot options</font></h2>
+<div class="level2">
+
+<p>
+ When the kernel is loaded you will see Frenzy menu:
+</p>
+
+<p>
+<a href="media/mypic/frenzy-bootmenu.png" class="media" target="_blank" title="mypic:frenzy-bootmenu.png"><img src="media/mypic/frenzy-bootmenu.png" class="media" title="Frenzy boot menu" alt="Frenzy boot menu" width="360" height="200" /></a>
+</p>
+
+<p>
+Available options:
+</p>
+
+<p>
+<strong>lang</strong> - choose language. The system lang parameters depend on this option.
+</p>
+
+<p>
+<strong>ramdisk</strong> - set the memory disks sizes for /etc, /var, /root, /mnt.  <br/>
+ <img src="images/smileys/icon_exclaim.gif" align="middle" alt=":!:" /> It is recomended to stick to 10-50 <acronym title="Megabyte">MB</acronym>.
+</p>
+
+<p>
+<strong>toram</strong> - full memory load mode, CD-ROM is not needed in this case and can be removed from drive. <br/>
+ <img src="images/smileys/icon_exclaim.gif" align="middle" alt=":!:" /> There must be like 1GB RAM for this mode to work, there are also some problems about this mode still.
+</p>
+
+<p>
+<strong>fromhdd</strong> - boot from compressed image on a hard drive, CD-ROM also releases. The image frenzy.uzip must be in frenzy directory of any harddrive.
+</p>
+
+<p>
+<strong>nohdd</strong> - Do not search and mount HDD partitions. Is this option is set - <strong>fromhdd</strong> would be ignored.
+</p>
+
+<p>
+<strong>nohdmnt</strong> - the partitions search is made, fstab is renewed and mount points are made. No mounts are done. Is this option is set - <strong>fromhdd</strong> would be ignored.
+</p>
+
+<p>
+<strong>hdrw</strong> -  mount partitions in RW mode (writing is supported for UFS1/2, EXT2FS и FAT filesystems, NTFS и REISERFS would be mounted as read-only)
+</p>
+
+<p>
+<strong>nobackup</strong> - Do not automaticly restore settings from diskette, hdd or USB Flash backups.
+</p>
+
+<p>
+<strong>hwinfo</strong> - the hwinfo utility would be run, it will generate <acronym title="HyperText Markup Language">HTML</acronym>-file with a hardware list.
+</p>
+
+<p>
+<strong>gui</strong> - automatically start Graphic Shell.
+</p>
+
+</div>
+<!-- SECTION [322-1689] -->
+<h2><font color=#990000>Logging in</font></h2>
+<div class="level2">
+
+<p>
+ After the boot, the first console will automaticly log you in as root. On the other consoles you should use login <strong>root</strong>, password is not required.
+</p>
+
+</div>
+<!-- SECTION [1690-] --></td></tr></table>
+<br>
+</body>
+</html>

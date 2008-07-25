@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc.html>doc</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Вопросы и ответы по Frenzy</font></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-58] -->
+<h2><font color=#990000>Система</font></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [59-86] -->
+<h3><font color=#990000>Чем отличаются английская и русская версии Frenzy?</font></h3>
+<div class="level3">
+
+<p>
+ В английской версии: 
+</p>
+<ol>
+<li class="level1"><div class="li"> По умолчанию выбирается английский язык для системы, загрузчик тоже на английском.</div>
+</li>
+<li class="level1"><div class="li"> Присутствуют локали для болгарского, чешского, немецкого, испанского, французского, итальянского, польского и словацкого языков. К тому же их можно выбрать как язык системы.</div>
+</li>
+<li class="level1"><div class="li"> Отсутствует русскоязычная документация по FreeBSD (handbook, faq), есть только англоязычная. </div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION [87-862] -->
+<h3><font color=#990000>Как загрузить Frenzy, если компьютер не поддерживает загрузку с CD?</font></h3>
+<div class="level3">
+
+<p>
+ Если вы счастливый обладатель PC, который не умеет загружаться с CD-ROM, то, возможно, вам поможет Smart Boot Manager. Образ дискеты и инструкции по записи ее на дискету можно найти, к примеру, тут:  <a href="http://linux.simple.be/tools/sbm" class="urlextern" title="http://linux.simple.be/tools/sbm"  rel="nofollow">http://linux.simple.be/tools/sbm</a>
+</p>
+
+</div>
+<!-- SECTION [863-1359] -->
+<h3><font color=#990000>Как поместить сохраненные настройки на компакт-диск?</font></h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Загружаемся с livecd, делаем нужные настройки. </div>
+</li>
+<li class="level1"><div class="li"> Сохраняем бэкап куда-нибудь. </div>
+</li>
+<li class="level1"><div class="li"> Открываем в win исошник утилитой UltraISO. </div>
+</li>
+<li class="level1"><div class="li"> Ключевой шаг: закидываем архив бэкапа в папку frenzy/backup на компакт-диске. </div>
+</li>
+<li class="level1"><div class="li"> Сохраняем исошник и записываем его на болванку.</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION [1360-1911] -->
+<h3><font color=#990000>После установки на HDD при аварийном отключении питания не делается проверка fsck</font></h3>
+<div class="level3">
+
+<p>
+ В /etc/fstab сразу после установки нужно заменить 0 на 1 в строке с описанием корневого раздела. Пример:
+</p>
+<pre class="code">/dev/ad0s1a   /   ufs   rw    1       1</pre>
+
+</div>
+<!-- SECTION [1912-2290] -->
+<h3><font color=#990000>Как после установки Frenzy на USB Flash вернуть флешку в исходное состояние?</font></h3>
+<div class="level3">
+
+<p>
+ Предположим, что флешка - /dev/da0. Тогда нужно выполнить следующую команду: 
+</p>
+<pre class="code">dd if=/dev/zero of=/dev/da0 bs=512 count=32 </pre>
+
+<p>
+(т.е. стереть существующую таблицу разделов), после чего отформатировать флешку уже в Windows. 
+</p>
+
+</div>
+<!-- SECTION [2291-2775] -->
+<h3><font color=#990000>Как скопировать все настройки пользователя root для нового пользователя?</font></h3>
+<div class="level3">
+<pre class="code">cd /root 
+tar cf - . | tar xf - -C /home/your_user 
+chown -R your_user /home/your_user</pre>
+
+</div>
+<!-- SECTION [2776-3012] -->
+<h2><font color=#990000>Консоль</font></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [3013-3041] -->
+<h3><font color=#990000>Как установить в консоли разрешение 800х600 и выше?</font></h3>
+<div class="level3">
+
+<p>
+ Воспользуйтесь утилитой <code>gconsole</code>.
+</p>
+
+</div>
+<!-- SECTION [3042-3202] -->
+<h3><font color=#990000>В консоли не вводится символ &quot;[&quot; (Frenzy 1.0)</font></h3>
+<div class="level3">
+
+<p>
+ В файле <code>/root/.tcshrc</code> нужно закомментировать строчку: 
+</p>
+<pre class="code">bindkey [OP run-help </pre>
+
+</div>
+<!-- SECTION [3203-3403] -->
+<h2><font color=#990000>X Window system</font></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [3404-3433] -->
+<h3><font color=#990000>В Opera в меню странный шрифт, как исправить? (Frenzy 1.0)</font></h3>
+<div class="level3">
+
+<p>
+ Поставьте другой шрифт для меню: <br/>
+  Tools - Preferences - Advanced - Fonts - Interface menus - Choose - Arial 10
+</p>
+
+</div>
+<!-- SECTION [3434-3676] -->
+<h3><font color=#990000>Как убрать полосы прокрутки в окнах терминалов?</font></h3>
+<div class="level3">
+
+<p>
+В файле /root/.Xdefaults указать:
+</p>
+<pre class="code">rxvt*scrollBar: false 
+xterm*scrollBar: false</pre>
+
+</div>
+<!-- SECTION [3677-3872] -->
+<h3><font color=#990000>В каком файле указаны приложения, запускающиеся при старте fluxbox?</font></h3>
+<div class="level3">
+
+<p>
+ /root/.fluxbox/startup
+</p>
+
+</div>
+<!-- SECTION [3873-] --></td></tr></table>
+<br>
+</body>
+</html>

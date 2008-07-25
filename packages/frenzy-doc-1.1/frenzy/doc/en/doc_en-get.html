@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Frenzy Handbook</title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body bgcolor=#FFFFFF text=#333333 leftmargin=0 topmargin=0 marginwidth=0 marginheight=1>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr><td width=200><img src="images/frenzy.png" align=left></td>
+<td align=right>
+<big><h1><font color=#990000>Frenzy Handbook</font> &nbsp;&nbsp;&nbsp;</big> </h1>
+</td></tr>
+<tr><td bgcolor=#EEEEEE colspan=2>
+&nbsp;&nbsp; <a href=index.html>start</a>&nbsp;=>&nbsp;<a href=doc_en.html>doc_en</a></br></td></tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=10 width=100%>
+<tr><td>
+
+<h1><font color=#990000>Burning the cd</font></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-32] -->
+<h2><font color=#990000>Burning the distro</font></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [33-64] -->
+<h3><font color=#990000>MS Windows</font></h3>
+<div class="level3">
+
+<p>
+ The <acronym title="International Organization for Standardization">ISO</acronym> CD Image can be burned almost in any CD burning programm. Standard Windows XP built-in CD burner can&rsquo;t do that. 
+</p>
+<ul>
+<li class="level1"><div class="li"> Nero Burning Rom 5: Start, close Wizard, choose menu File - Burn Image, click on <acronym title="International Organization for Standardization">ISO</acronym> file.</div>
+</li>
+<li class="level1"><div class="li"> Nero Burning Rom 6: Start, close Wizard, choose menu Recorder - Burn Image, click on <acronym title="International Organization for Standardization">ISO</acronym> file.</div>
+</li>
+<li class="level1"><div class="li"> If no tool is installed you can download this: <a href="http://www.avtlab.ru/scdwriter.htm" class="urlextern" title="http://www.avtlab.ru/scdwriter.htm"  rel="nofollow">Small CD Writer</a> (380 KB) and burn the image with it.</div>
+</li>
+</ul>
+
+<p>
+ <img src="images/smileys/icon_exclaim.gif" align="middle" alt=":!:" /> DO NOT unpack the image and burn the files from it - this CD will not boot.
+</p>
+
+</div>
+<!-- SECTION [65-626] -->
+<h3><font color=#990000>FreeBSD</font></h3>
+<div class="level3">
+
+<p>
+ <code>burncd -f /dev/acd0 data name-of-<acronym title="International Organization for Standardization">ISO</acronym>-file fixate</code>
+</p>
+
+<p>
+where &ldquo;/dev/acd0&rdquo; - is the name of your CD Burner, &ldquo;name-of-<acronym title="International Organization for Standardization">ISO</acronym>-file&rdquo; - the name of Frenzy <acronym title="International Organization for Standardization">ISO</acronym>
+</p>
+
+</div>
+<!-- SECTION [627-795] -->
+<h2><font color=#990000>Possible problems</font></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Some CD Drives do not support boot form RWs.</div>
+</li>
+<li class="level1"><div class="li"> Sometimes when the image is burned on RW, the system does not boot. To fix that - fully erase CD RW and then burn the image back.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [796-] --></td></tr></table>
+<br>
+</body>
+</html>

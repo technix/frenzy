@@ -1,5 +1,4 @@
 # -- THEME AUTO-WRITTEN DO NOT EDIT
-include "/usr/X11R6/share/themes/Smooth-Orangish/gtk-2.0/gtkrc"
 
 style "user-font"
 {
