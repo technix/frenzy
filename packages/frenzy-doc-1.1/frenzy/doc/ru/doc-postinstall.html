@@ -32,54 +32,7 @@
 После создания swap-файла в указанном каталоге добавьте в /etc/rc.conf строчку:<pre class="code">swapfile=&quot;/path/to/swapfile/frenzy.swap&quot;</pre>
 
 </div>
-<!-- SECTION [46-303] -->
-<h2><font color=#990000>Установка дерева исходных текстов FreeBSD</font></h2>
-<div class="level2">
-<pre class="code">wget -c ftp://ftp.frenzy.org.ua/pub/Frenzy/1.0/sdk/cd1/src.tgz
-tar xzvf src.tgz -C /usr</pre>
- 
-</div>
-<!-- SECTION [304-480] -->
-<h2><font color=#990000>Установка дерева портов FreeBSD</font></h2>
-<div class="level2">
-<pre class="code">wget -c ftp://ftp.frenzy.org.ua/pub/Frenzy/1.0/sdk/cd1/ports.tgz
-tar xzvf ports.tgz -C /usr</pre>
-
-</div>
-<!-- SECTION [481-645] -->
-<h2><font color=#990000>Перекомпиляция ядра</font></h2>
-<div class="level2">
-
-<p>
-1. Скачиваем и устанавливаем исходники системы и ядра (см. <a href="doc-postinstall.html#ustanovka_dereva_isxodnyx_tekstov_freebsd" class="wikilink1" title="doc-postinstall.html">Установка исходных текстов FreeBSD</a>)
-</p>
-
-<p>
-2. Скачиваем сборочные скрипты: 
-</p>
-<pre class="code">wget -c ftp://ftp.frenzy.org.ua/pub/Frenzy/1.0/sdk/cd1/buildscripts-1.0.tgz </pre>
-
-<p>
-Конфиг ядра лежит в них: <code>buildscripts/stages/base/FRENZY</code> 
-</p>
-
-<p>
-3. Копируем файл FRENZY в каталог <code>/usr/src/sys/i386/conf</code>, редактируем по вкусу :) 
-</p>
-
-<p>
-4. Собираем и устанавливаем ядро: 
-</p>
-<pre class="code">cd /usr/src 
-make buildkernel KERNCONF=FRENZY 
-make installkernel KERNCONF=FRENZY </pre>
-
-<p>
- 5. Перезагружаемся. 
-</p>
-
-</div>
-<!-- SECTION [646-] --></td></tr></table>
+<!-- SECTION [46-] --></td></tr></table>
 <br>
 </body>
 </html>
