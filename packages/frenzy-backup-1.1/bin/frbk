@@ -51,7 +51,7 @@ $msg{'quit'} = gettext("Exit");
 
 # copy config file
 if (!(-e "$excludelist")) {
-system ("cp /usr/local/etc/frbackup/frbackup-exclude.frbk.BASE $excludelist");
+system ("cp /usr/local/etc/frbackup/frbackup-exclude.frbk $excludelist");
 }
 
 my $dlg = new UI::Dialog::Backend::CDialog (backtitle => $msg{'backtitle'}, title => " $msg{'title'} ");
