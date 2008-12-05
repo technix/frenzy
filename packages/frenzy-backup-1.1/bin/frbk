@@ -73,7 +73,7 @@ while ($flag_exit == 0) {
     if ($flag_exit == 0) {
 	if ($action eq "backup") {
         system ("clear");
-        my $bfile = `./frbk-create batch`;
+        my $bfile = `frbk-create batch`;
 		&export_backup ($bfile);
 	}
 	if ($action eq "restore") {
@@ -168,7 +168,7 @@ $backup_fname =~ s/\n//g;
 $backup_name = $backup_namef[$#backup_namef];
 
 $file_size = `/usr/bin/stat -f "%z" $backup_fname`;
-$file_size_mb = int($file_size / 1024);
+$file_size_mb = int($file_size / 1048576);
 
 my @menu;
 push @menu, "floppy"; push @menu, $msg{'menu_backup_floppy'};
