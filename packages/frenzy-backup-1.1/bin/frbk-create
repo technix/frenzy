@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# name    : Frenzy backup script - create backup
+# version : 3.0
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+TMP="/var/tmp"			# temporary dir
+RAMFS="/Frenzy/ramdisk"		# ram disk
+
+ARCHDIR="${TMP}/backup_arch"
+ARCHNAME=`date "+frbk_%Y%m%d_%H%M"`
+ARCHIVE="${ARCHDIR}/${ARCHNAME}.tbz"
+EXCLUDE="frbackup-exclude.frbk"
+
+
+
+# create backup directory if not exist
+if [ ! -d ${ARCHDIR} ]; then
+mkdir ${ARCHDIR}
+fi
+
+# copy exclude file if not exist
+if [ ! -e ${TMP}/${EXCLUDE} ]; then
+cp /usr/local/etc/frbackup/${EXCLUDE} ${TMP} > /dev/null 2>&1
+fi
+
+if [ "$1" != "batch" ]; then
+printf "[i] Making archive... "
+fi
+tar cjpf ${ARCHIVE} -X ${TMP}/${EXCLUDE} -C ${RAMFS} . > /dev/null 2>&1
+if [ "$1" != "batch" ]; then
+printf "done.\n";
+printf "Backup file: ${ARCHIVE}\n";
+fi
+
+if [ "$1" = "batch" ]; then
+printf ${ARCHIVE}
+fi

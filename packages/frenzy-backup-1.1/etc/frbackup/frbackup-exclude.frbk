@@ -1,0 +1,11 @@
+fem
+mnt
+etc/csh.cshrc
+etc/frenzy.boot
+etc/fstab
+etc/ttys
+etc/profile
+root/.opera/cache4
+var/tmp
+etc/X11
+var/log

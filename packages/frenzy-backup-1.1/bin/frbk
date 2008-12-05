@@ -1,0 +1,266 @@
+#!/usr/local/bin/perl
+#
+# name    : Frenzy backup creation
+# version : 0.3
+# author  : Mozhaisky Sergei (technix@frenzy.org.ua)
+#
+
+use strict;
+use UI::Dialog::Backend::CDialog;
+use Locale::gettext;
+use POSIX;
+
+my (%msg, $exitlabel, $flag_exit);
+my ($srvstate, $confstate);
+
+my $VERSION="0.3";
+
+my $fstab="/etc/fstab";
+
+my $excludelist = "/var/tmp/frbackup-exclude.frbk";
+
+$exitlabel = "<--";
+
+textdomain("frbk");
+$msg{'backtitle'} = gettext("Frenzy backup") . " $VERSION";
+$msg{'title'} = gettext("Backup files and settings");
+$msg{'menu_backup'} = gettext("Create and save backup");
+$msg{'menu_restore'} = gettext("Restore files from backup");
+$msg{'menu_configure'} = gettext("Choose files for backup");
+$msg{'menu_save'} = gettext("Select where to save backup");
+$msg{'menu_backup_floppy'} = gettext("Copy to floppy disk");
+$msg{'menu_backup_hdd'} = gettext("Copy to HDD");
+$msg{'menu_backup_ssh'} = gettext("Transfer via SSH");
+$msg{'menu_select_partition'} = gettext("Select HDD partition");
+
+$msg{'menu_backup_floppy_insert'} = gettext("Please insert floppy");
+
+$msg{'backup_ssh_host'} = gettext("Host for SSH backup");
+$msg{'backup_ssh_path'} = gettext("Path on remote host");
+$msg{'backup_ssh_login'} = gettext("Login on remote host");
+$msg{'backup_ssh_do'} = gettext("Making SSH backup.");
+
+$msg{'backup_etc'} = gettext("Main configs (/etc)");
+$msg{'backup_localetc'} = gettext("Local packages (/usr/local/etc)");
+$msg{'backup_xorg'} = gettext("X.org (/etc/X11)");
+$msg{'backup_root'} = gettext("Home directory (/root)");
+$msg{'backup_logs'} = gettext("Log files (/var/log)");
+
+
+$msg{'quit'} = gettext("Exit");
+
+# copy config file
+if (!(-e "$excludelist")) {
+system ("cp /usr/local/etc/frbackup/frbackup-exclude.frbk.BASE $excludelist");
+}
+
+my $dlg = new UI::Dialog::Backend::CDialog (backtitle => $msg{'backtitle'}, title => " $msg{'title'} ");
+
+my @menu;
+
+push @menu, "backup"; push @menu, $msg{'menu_backup'};
+push @menu, "restore"; push @menu, $msg{'menu_restore'};
+push @menu, "-"; push @menu, "-------";
+push @menu, "config"; push @menu, $msg{'menu_configure'};
+push @menu, "-"; push @menu, "-------";
+push @menu, "$exitlabel"; push @menu, $msg{'quit'};
+
+$flag_exit = 0;
+while ($flag_exit == 0) {
+
+    my $action = $dlg->menu (text => "$msg{'main'}", list => [@menu], width => 60, height => 15, listheight => 7);
+    if (($action =~ m/^\d+$/)||($action eq $exitlabel)) {$flag_exit = 1}
+    if ($flag_exit == 0) {
+	if ($action eq "backup") {
+        system ("clear");
+        my $bfile = `./frbk-create batch`;
+		&export_backup ($bfile);
+	}
+	if ($action eq "restore") {
+	    system ("frmount auto");
+	    system ("frbk-restore");
+	}
+	if ($action eq "config") {
+		&backup_config;
+	}
+    }
+}
+exit;
+
+
+sub backup_config {
+my (@backupcfg, %bcfg, $key, $key2, $newlines);
+
+my %backups = (
+                    'etc'  => {
+                     'ord'           => '1',
+                     'path'           => 'etc',
+                     },
+                    'localetc'  => {
+                     'ord'           => '2',
+                     'path'           => 'usr/local/etc',
+                     },
+                    'xorg'  => {
+                     'ord'           => '3',
+                     'path'           => 'etc/X11',
+                     },
+                    'root'  => {
+                     'ord'           => '4',
+                     'path'           => 'root',
+                     },
+                    'logs'  => {
+                     'ord'           => '5',
+                     'path'           => 'var/log',
+                     },
+				);
+
+# read config parameters
+#open (XL, $excludelist);
+#while (<XL>) {
+#if ($_ =~ m/^etc$/) {$bcfg{'etc'} = -1;}
+#if ($_ =~ m/^root$/) {$bcfg{'root'} = -1;}
+#if ($_ =~ m/^etc\/X11$/) {$bcfg{'xorg'} = -1;}
+#if ($_ =~ m/^var\/log$/) {$bcfg{'logs'} = -1;}
+#if ($_ =~ m/^usr\/local\/etc$/) {$bcfg{'localetc'} = -1;}
+#}
+#close (XL);
+
+# create menu
+foreach $key (sort {$backups{$a}{'ord'} <=> $backups{$b}{'ord'}} keys %backups) {
+$bcfg{$key} = 0;
+my $tmsg = $msg{"backup_${key}"};
+push @backupcfg, $key; push @backupcfg, [ "$tmsg", $bcfg{$key} ];
+}
+
+my @selection = $dlg->checklist( text => "$msg{''}", list => [@backupcfg], width => 60, height => 15, listheight => 7);
+
+# parsing output
+foreach $key (sort {$backups{$a}{'ord'} <=> $backups{$b}{'ord'}} keys %backups) {
+	$bcfg{$key} = 0;
+	foreach $key2 (@selection) {
+		if ($key eq $key2) {$bcfg{$key} = 1}
+	}
+	print " \n";
+}
+
+# FIXME if not changed, returns all zeroes, no matter what is default
+
+system ("cp /usr/local/etc/frbackup/backup-exclude.frbk.BASE $excludelist");
+open (XL, ">> $excludelist");
+foreach $key (sort {$backups{$a}{'ord'} <=> $backups{$b}{'ord'}} keys %backups) {
+print "$key | $bcfg{$key} | $backups{$key}{'path'} \n";
+if ($bcfg{$key} == 0) {
+print XL "$backups{$key}{'path'}\n";
+}
+}
+close (XL);
+
+}
+
+sub export_backup
+{
+
+my ($backup_fname, @backup_namef, $backup_name, $file_size, $file_size_mb, $cmd);
+
+$backup_fname = $_[0];
+$backup_fname =~ s/\n//g;
+@backup_namef = split ("/", $backup_fname);
+$backup_name = $backup_namef[$#backup_namef];
+
+$file_size = `/usr/bin/stat -f "%z" $backup_fname`;
+$file_size_mb = int($file_size / 1024);
+
+my @menu;
+push @menu, "floppy"; push @menu, $msg{'menu_backup_floppy'};
+push @menu, "hdd"; push @menu, $msg{'menu_backup_hdd'};
+push @menu, "ssh"; push @menu, $msg{'menu_backup_ssh'};
+
+my $action = $dlg->menu (text => "$msg{'menu_save'}\n $backup_name ($file_size_mb Mb)", list => [@menu], width => 50, height => 15, listheight => 7);
+
+	if ($action eq "floppy") {
+    
+    $dlg->msgbox (text => "\n $msg{'menu_backup_floppy_insert'}", height => 7, width => 60);
+	system ("mount /mnt/floppy > /dev/null 2>&1");
+	system ("mkdir /mnt/floppy/frenzy > /dev/null 2>&1");
+	system ("mkdir /mnt/floppy/frenzy/backup > /dev/null 2>&1");
+	$cmd="cp $backup_fname /mnt/floppy/frenzy/backup";
+	system ("clear");
+	system ("echo \"# $cmd\"");
+	system ("$cmd");
+	system ("umount /mnt/floppy > /dev/null 2>&1");
+
+	}
+
+	if ($action eq "hdd") {
+	system ("frmount auto");
+	my $fsbackup = &read_fstab;
+	system "remountp $fsbackup rw";
+	system ("mkdir $fsbackup/frenzy > /dev/null 2>&1");
+	system ("mkdir $fsbackup/frenzy/backup > /dev/null 2>&1");
+	$cmd="cp $backup_fname $fsbackup/frenzy/backup";
+	system ("clear");
+	system ("echo \"# $cmd\"");
+	system ("$cmd");
+	system ("remountp $fsbackup ro");
+	}
+
+	if ($action eq "ssh") {
+	my ($ssh_host, $ssh_login, $ssh_path);
+	($ssh_host) = &enter_param ($msg{'backup_ssh_host'}, "host");
+	if ($ssh_host == -1) {exit;}
+	($ssh_login) = &enter_param ($msg{'backup_ssh_login'}, "user");
+	if ($ssh_login == -1) {exit;}
+	($ssh_path) = &enter_param ($msg{'backup_ssh_path'}, "/home/user");
+	if ($ssh_path == -1) {exit;}
+	$cmd="scp $backup_fname $ssh_login\@$ssh_host:$ssh_path";
+	system ("clear");
+	system ("printf \"$msg{'backup_ssh_do'}\\n\\n\"");
+	system ("echo \"# $cmd\"");
+	system ("$cmd");
+	}
+
+}
+
+
+
+
+
+sub read_fstab
+{
+open (FT, "$fstab");
+my @fstab_part=<FT>;
+close (FT);
+my $ft;
+my @menuitems;
+foreach $ft (@fstab_part) {
+    my @partinfo = split (" ", $ft);
+    if ($partinfo[0] eq "#") {next;}
+    if ($partinfo[0] eq "") {next;}
+    if ($partinfo[1] eq "none") {next;}
+    if ($partinfo[0] =~ m/md0/) {next;}
+    if ($partinfo[0] =~ m/fd0/) {next;}
+    if ($partinfo[0] =~ m/cd[0-9]/) {next;}
+    if ($partinfo[0] =~ m/proc/) {next;}
+    if ($partinfo[2] =~ m/ntfs/) {next;}
+    if ($partinfo[2] =~ m/reiserfs/) {next;}
+    if ($partinfo[2] =~ m/ntfs/) {next;}
+    if ($partinfo[2] =~ m/procfs/) {next;}
+
+    push @menuitems, $partinfo[1];
+	push @menuitems, $partinfo[2];
+}
+my $fsbackup = $dlg->menu (text => "$msg{'menu_select_partition'}\n", list => [@menuitems], width => 50, height => 15, listheight => 7);
+return $fsbackup;
+}
+
+
+sub enter_param {
+    my $message = $_[0]; my $defvalue = $_[1];
+    my $value;
+	$value = $dlg->inputbox (text => $message, width => 70, height => 19, entry => $defvalue);
+    if (($value =~ m/^\d+$/)&&($value == 0)) {
+	return -1;
+    } else {
+        return $value;
+    }
+}
