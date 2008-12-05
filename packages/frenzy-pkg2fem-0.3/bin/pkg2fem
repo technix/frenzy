@@ -1,0 +1,121 @@
+#!/bin/sh
+#
+# Name    : Convert FreeBSD package to Frenzy extension module
+# Version : 0.3
+# Author  : Sergei Mozhaisky (technix@frenzy.org.ua)
+#
+
+echo pkg2fem version 0.3
+echo Usage: pkg2fem PKGDIR [FEMNAME]
+echo
+
+
+DIRPKG=$1
+FEMNAME=$2
+
+if [ "${DIRPKG}" = "" ]; then
+echo "No package dir specified!"
+exit
+fi
+
+if [ "${FEMNAME}" = "" ]; then
+FEMNAME=${DIRPKG}
+fi
+
+#FEMNAME="joe"
+#DIRPKG="pkg"
+DIRFEM="fem"
+FEMDESC_FILE="femdesc"
+
+CURRDIR=`pwd`
+BLOCKSIZE="130560"
+
+
+# stage 1 - installing packages
+echo "==> Installing packages for FEM module."
+cd ${DIRPKG}
+mkdir ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
+
+mkdir ${FEMNAME}.${DIRFEM}/fs > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/desc > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/scripts > /dev/null 2>&1
+
+mkdir ${FEMNAME}.${DIRFEM}/fs/usr > /dev/null 2>&1
+
+FEM_PKGLIST=""
+for pkgtype in tgz tbz
+do
+for pkgn in `ls *${pkgtype} 2>/dev/null`
+do
+echo "[*] ${pkgn}"
+EXTR="xzf"
+if [ "${pkgtype}" = "tbz" ]; then
+EXTR="xjf"
+fi
+tar ${EXTR} ${pkgn} \+CONTENTS
+PKGSUBDIR=`cat \+CONTENTS | grep "@cwd" | sed "s/@cwd \/usr\///g" | sed "s/@cwd .//g" | head -1`
+rm \+CONTENTS > /dev/null 2>&1
+mkdir ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR} > /dev/null 2>&1
+PKGNAME=`echo ${pkgn} | sed "s/\.${pkgtype}//g"`
+FEM_PKGLIST="
+${FEM_PKGLIST}${PKGNAME}"
+PKGDEPENDS=`pkg_info -r ${pkgn} | grep "Dependency"`
+FEM_PKGDEPENDS="${FEM_PKGDEPENDS}${PKGDEPENDS}
+"
+
+tar ${EXTR} ${pkgn} -C ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}
+
+MCDIR=`pwd`
+cd ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}
+cat +CONTENTS | grep "@exec" > contentz 
+mv contentz +CONTENTS
+tar cjf ${PKGNAME}.tbz +* 
+rm ./+*
+cd ${MCDIR}
+
+mv ${FEMNAME}.${DIRFEM}/fs/usr/${PKGSUBDIR}/${PKGNAME}.tbz ${FEMNAME}.${DIRFEM}/scripts
+done
+done
+
+# stage 2 - configuring FEM module
+echo "==> Configuring FEM module."
+
+# generating description file
+echo -n "[i] Enter name of this FEM package [${FEMNAME}]: "
+read FEMD_NAME
+if [ "$FEMD_NAME" = "" ]; then
+FEMD_NAME="${FEMNAME}"
+fi
+echo "[i] Enter short description of this FEM package: "
+read FEMD_DESC
+echo "[i] Enter category of this FEM package: "
+read FEMD_CATEGORY
+
+# Generating FEM description
+echo "
+# NAME
+${FEMD_NAME}
+# CATEGORY
+${FEMD_CATEGORY}
+# DESCRIPTION
+${FEMD_DESC}
+# PACKAGES
+${FEM_PKGLIST}
+# DEPENDS
+${FEM_PKGDEPENDS}
+" > ${FEMNAME}.${DIRFEM}/${FEMDESC_FILE}
+
+
+# stage 3 - building ISO and compressed FEM
+ISOFEM="${FEMNAME}.${DIRFEM}.iso"
+echo "==> Creating temporary ISO."
+mkisofs -lRNU -quiet -ldots -o ${ISOFEM} ${FEMNAME}.${DIRFEM}  > /dev/null 2>&1
+echo "==> Compressing ISO."
+mkuzip -o ../${FEMNAME}.${DIRFEM} -s ${BLOCKSIZE} ${ISOFEM}  > /dev/null 2>&1
+chmod 644 ../${FEMNAME}.${DIRFEM}
+echo "==> Removing temporary data."
+rm -f ${ISOFEM} > /dev/null 2>&1
+rm -rf ${FEMNAME}.${DIRFEM} > /dev/null 2>&1
+echo "==> Done."
+cd ..
+
