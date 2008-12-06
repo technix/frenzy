@@ -160,7 +160,7 @@ close (XL);
 sub export_backup
 {
 
-my ($backup_fname, @backup_namef, $backup_name, $file_size, $file_size_mb, $cmd);
+my ($backup_fname, @backup_namef, $backup_name, $file_size, $file_size_s, $file_size_x, $cmd);
 
 $backup_fname = $_[0];
 $backup_fname =~ s/\n//g;
@@ -168,14 +168,21 @@ $backup_fname =~ s/\n//g;
 $backup_name = $backup_namef[$#backup_namef];
 
 $file_size = `/usr/bin/stat -f "%z" $backup_fname`;
-$file_size_mb = int($file_size / 1048576);
+$file_size_s = int($file_size / 1048576);
+if ($file_size_s == 0) {
+$file_size_s = int($file_size / 1024);
+$file_size_x = $file_size_s . " Kb";
+} else {
+$file_size_x = $file_size_s . " Mb";
+}
+
 
 my @menu;
 push @menu, "floppy"; push @menu, $msg{'menu_backup_floppy'};
 push @menu, "hdd"; push @menu, $msg{'menu_backup_hdd'};
 push @menu, "ssh"; push @menu, $msg{'menu_backup_ssh'};
 
-my $action = $dlg->menu (text => "$msg{'menu_save'}\n $backup_name ($file_size_mb Mb)", list => [@menu], width => 50, height => 15, listheight => 7);
+my $action = $dlg->menu (text => "$msg{'menu_save'}\n $backup_name ($file_size_x)", list => [@menu], width => 50, height => 15, listheight => 7);
 
 	if ($action eq "floppy") {
     
