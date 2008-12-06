@@ -4,13 +4,13 @@
 get_mfs_size ()
 {
 MEM=`sysctl -n hw.physmem`
-MFS_SIZE="35m"
+MFS_SIZE="65m"
 MSIZE=128000000  # <128Mb - needs MFS size reduction
 M2SIZE=64000000  # <64Mb - more MFS reduction
 M3SIZE=40000000  # <40Mb - more MFS reduction
 
 if [ ${MEM} -lt ${MSIZE} ]; then
-    MFS_SIZE="25m"
+    MFS_SIZE="35m"
 fi
 if [ ${MEM} -lt ${M2SIZE} ]; then
     MFS_SIZE="10m"
@@ -29,7 +29,7 @@ MD_DEV=`/sbin/mdconfig -a -t malloc -o compress -s ${MFS_SIZE}`
 /sbin/newfs -m 0 -n -b 8192 -f 1024 /dev/${MD_DEV} >/dev/null 2>&1
 /sbin/mount -o noatime /dev/${MD_DEV} ${fr_ram}
 
-MEMSHOW=`expr ${MEM} \/ 1024`
+MEMSHOW=`expr ${MEM} \/ 1048576`
 printf "$mi ${MSG_memory} ${MEMSHOW}m | ${MSG_ramdisk} ${MFS_SIZE} |"
 MFSLIST="etc var root"
 for d in ${MFSLIST}; do
