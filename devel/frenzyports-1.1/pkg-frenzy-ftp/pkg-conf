@@ -1,0 +1,7 @@
+BATCH=YES
+# curl
+WITH_NTLM=YES
+# gftp
+#WITH_GTK2=YES
+
+

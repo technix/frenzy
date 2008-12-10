@@ -1,0 +1,5 @@
+BATCH=YES
+# opera
+WITHOUT_ASPELL=YES
+
+

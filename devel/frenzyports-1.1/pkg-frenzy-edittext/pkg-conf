@@ -1,0 +1,10 @@
+BATCH=YES
+# vim
+WITH_PERL=YES
+WITH_PYTHON=YES
+# vim, scite
+WITH_GTK2=YES
+# aspell
+ASPELL_EN=YES
+# wv
+WITHOUT_SSL=YES

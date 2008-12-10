@@ -1,0 +1,30 @@
+--- Xvnc/config/cf/FreeBSD.cf.orig	2000-06-11 21:00:51.000000000 +0900
++++ Xvnc/config/cf/FreeBSD.cf	2007-09-04 17:11:16.000000000 +0900
+@@ -253,11 +253,17 @@
+ #endif
+ 
+ #ifdef i386Architecture
+-# define OptimizedCDebugFlags DefaultGcc2i386Opt
++# define OptimizedCDebugFlags -O -pipe
+ #else
+-# define OptimizedCDebugFlags -O2
++# define OptimizedCDebugFlags -O -pipe
+ #endif
+ 
++#ifdef x86_64Architecture 
++# define OptimizedCDebugFlags    -O -pipe
++# define ServerOSDefines         XFree86ServerOSDefines -DDDXTIME 
++# define ServerExtraDefines      GccGasOption XFree86ServerDefines -D_XSERVER64 
++#endif /* x86_64Architecture */ 
++
+ #ifndef PreIncDir
+ # define PreIncDir	/usr/include
+ #endif
+@@ -359,6 +366,5 @@
+ 
+ #include <bsdLib.rules>
+ 
+-#ifdef i386Architecture
+ #include <xfree86.cf>
+-#endif
++

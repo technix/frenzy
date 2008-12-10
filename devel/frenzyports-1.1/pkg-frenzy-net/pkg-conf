@@ -1,0 +1,12 @@
+BATCH=YES
+#
+# ethereal
+WITHOUT_ADNS=YES
+# gq
+#WITH_JPEG=NO
+#OPTIONS="JPEG=NO"
+# samba
+WITHOUT_CUPS=YES
+# swig
+SWIG_LANGUAGES="perl python"
+
