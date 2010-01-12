@@ -1,17 +1,18 @@
 
 # Default build options
-buildopts -DNOPAM -DRELEASE_CRUNCH -DCRUNCHED_BINARY -DNOSECURE -DNOCRYPT -DNONETGRAPH -DNOIPSEC
+buildopts -DNO_PAM -DRELEASE_CRUNCH -DCRUNCHED_BINARY -DNO_SECURE -DNO_CRYPT -DNO_NETGRAPH -DNO_IPSEC
 
-progs cp sh test echo init mdconfig
+progs cp sh test echo init mdconfig newfs printf
 progs mount mount_msdosfs mount_ntfs mount_cd9660 mount_nullfs mount_unionfs umount sleep
 # DEBUG
 # progs ls kldstat
 
 libs -ll -lutil -lkvm -lmd -lz
-libs -ldisk -lufs -lkiconv 
-libs -ledit 
+libs -ldisk -lufs -lkiconv
+libs -ledit
 libs -lncurses
 libs -lcrypt
+libs -lgeom -lbsdxml -lsbuf
 
 #libs -lmytinfo -lipx -lz -lpcap -lalias -lwrap
 #libs -ledit -lutil -lmd -lcrypt -lmp -lm -lkvm
