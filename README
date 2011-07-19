@@ -1,0 +1,5 @@
+Frenzy - a FreeBSD-based LiveCD
+
+Frenzy is a "portable system administrator toolkit," LiveCD based on FreeBSD.
+It generally contains software for hardware tests, file system check,
+security check and network setup and analysis.
