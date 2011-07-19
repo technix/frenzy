@@ -1,4 +1,4 @@
-# $FreeBSD: src/etc/root/dot.cshrc,v 1.29 2004/04/01 19:28:00 krion Exp $
+# $FreeBSD: src/etc/root/dot.cshrc,v 1.30.10.1.2.1 2009/10/25 01:10:29 kensmith Exp $
 #
 # .cshrc - csh resource script, read at beginning of execution by each shell
 #
@@ -10,11 +10,16 @@ alias j		jobs -l
 alias la	ls -a
 alias lf	ls -FA
 alias ll	ls -lA
+alias ls	ls -FG
+alias df	df -m
 
 # A righteous umask
 umask 22
 
-set path = (/sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin /usr/local/bin /usr/X11R6/bin $HOME/bin)
+set path = (/sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin /usr/local/bin $HOME/bin)
+
+set autolist
+set nobeep
 
 setenv	EDITOR	ee
 setenv	PAGER	more
@@ -22,7 +27,7 @@ setenv	BLOCKSIZE	K
 
 if ($?prompt) then
 	# An interactive shell -- set some stuff up
-	set prompt = "`/bin/hostname -s`# "
+	set prompt = "%{^[[40;35;1m%}`/bin/hostname -s`:%{^[[40;31;1m%}%/@%{^[[40;33;1m%}%B[%T]%b # "
 	set filec
 	set history = 100
 	set savehist = 100

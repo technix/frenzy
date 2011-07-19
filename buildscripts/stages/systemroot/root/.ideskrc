@@ -1,0 +1,30 @@
+table Config
+  FontName: verdana
+  FontSize: 9
+  FontColor: #ffffff
+  Locked: true
+  Transparency: 0
+  Shadow: true
+  ShadowColor: #000000
+  ShadowX: 1
+  ShadowY: 2
+  Bold: false
+  ClickDelay: 200
+  IcanSnap: true
+  SnapWidth: 55
+  SnapHeight: 100
+  SnapOrigin: BottomRight
+  SnapShadow: true
+  SnapShadowTrans: 200
+  CaptionOnHover: true
+end
+
+table Actions
+  Lock: control right doubleClk
+  Reload: middle doubleClk
+  Drag: left hold
+  EndDrag: lefg singleClk
+  Execute[0]: left doubleClk
+  Execute[1]: right doubleClk
+end
+

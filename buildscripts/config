@@ -7,17 +7,17 @@ BUILDDATE=`date "+%Y%m%d%H%M"`
 BD=`date "+%d.%m.%Y %H:%M"`
 
 #FRENZY_TYPE="lite"
-FRENZY_TYPE="std"
+FRENZY_TYPE="lite"
 FRENZY_LANG="ru"
 #FRENZY_LANG="en"
 
 
-#FRENZY_ISOIMAGE="frenzy-1.1-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
-FRENZY_ISOIMAGE="frenzy-1.1-${FRENZY_TYPE}-${FRENZY_LANG}-BETA3.iso"
-FRENZY_VOL="frenzy-1.1-${FRENZY_TYPE}-${FRENZY_LANG}"
+FRENZY_ISOIMAGE="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
+#FRENZY_ISOIMAGE="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}.iso"
+FRENZY_VOL="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}"
 
 #       |---------+---------+---------+---------+---------+---------+--|------+
-VERSION="Frenzy 1.1-standard (Starstruck) - RC1                [ ${BD} ]"
+VERSION="Frenzy 1.2 (reincarnation)                          [ ${BD} ]"
 
 
 # ADDITIONAL PATCHES
@@ -30,11 +30,12 @@ POSTPATCHES="create config patch final"
 
 
 # === PLEASE DO NOT EDIT BELOW THIS LINE IF YOU ARE NOT SURE ===
-# === ποφαμυκστα ξε ςεδαλτιςυκτε δαμεε εσμι χω ξε υχεςεξω ===
+# ===         ===
 
 
 KERNCONFNAME="FRENZY"   # kernel config file
 MAKECONF="make.conf"    # make.conf file
+MAKECONFINSTALL="make.conf.install"    # make.conf file for installworld
 MAKE_OPTIONS=""
 RMFILE="rmfiles"        # what will be removed from base sys
 
@@ -47,7 +48,7 @@ SRCDIR="${FRENZY_DIR}/src"		# main source dir
 FRENZY_ISO="ISO"        		# path to ISO image
 
 
-PKG_FREEBSD="packages/FreeBSD.${FRENZY_TYPE}"
+PKG_FREEBSD="packages/FreeBSD"
 PKG_FRENZY="packages/Frenzy"
 
 LOG_DIR="log"

@@ -14,7 +14,7 @@ export __MAKE_CONF=${BASEDIR}/${MAKECONF}
 export MAKEOBJDIRPREFIX="${CURRDIR}/../${FRENZY_BUILD}"
 
 cd ${SOURCEDIR}
-make buildworld ${MAKE_OPTIONS}
+make -j3 buildworld ${MAKE_OPTIONS}
 
 stage_done
 

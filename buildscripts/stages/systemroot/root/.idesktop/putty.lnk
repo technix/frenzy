@@ -1,0 +1,9 @@
+table Icon
+  Caption: putty
+  Icon: /root/icons/putty.png
+  X: 260
+  Y: 50
+  Command[0]: putty
+  Command[1]: 
+end
+

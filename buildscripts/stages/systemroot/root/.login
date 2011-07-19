@@ -10,9 +10,3 @@
 
 echo
 
-if ( -e /tmp/.xautostart ) then
-rm /tmp/.xautostart
-startx
-else
-#
-endif

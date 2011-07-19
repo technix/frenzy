@@ -1,0 +1,10 @@
+table Icon
+  Caption: wireshark
+  CaptionTip: Powerfull shiffer!
+  Icon: /root/icons/wireshark.png
+  X: 340
+  Y: 55
+  Command[0]: wireshark
+  Command[1]: 
+end
+

@@ -22,7 +22,7 @@ cd ${CURRDIR}
 fi
 
 cd ${SOURCEDIR}
-make buildkernel KERNCONF=${KERNCONFNAME}
+make -j3 buildkernel KERNCONF=${KERNCONFNAME}
 
 stage_done
 

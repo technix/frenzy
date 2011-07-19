@@ -29,6 +29,7 @@ done
 
 # add version info
 echo "$VERSION" > ../${FRENZY_FS}/etc/motd
+echo "Adjusted by Dorlas (vershinin.e@gmail.com)" >> ../${FRENZY_FS}/etc/motd
 
 stage_done
 

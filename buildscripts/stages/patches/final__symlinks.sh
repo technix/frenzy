@@ -149,10 +149,9 @@ ln -s w uptime
 rm pgrep > /dev/null 2>&1
 ln -s pkill pgrep
 
-cd /usr/sbin
-rm pkg_sign > /dev/null 2>&1
-ln -s pkg_check pkg_sign
 
+cd /usr/local/bin
+ln -s elinks links
 
 
 

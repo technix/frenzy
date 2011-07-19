@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <deviceinfo version="0.2">
+   <device>
+     <match key="info.capabilities" contains="input.keyboard">
+       <merge key="input.x11_driver"  type="string">kbd</merge>
+       <merge key="input.xkb.Model"   type="string">pc105</merge>
+       <merge key="input.xkb.Layout"  type="string">us,ru(winkeys)</merge>
+       <merge key="input.xkb.Rules"   type="string">xorg</merge>
+       <merge key="input.xkb.Options" type="string">grp:ctrl_shift_toggle,ctrl:ctrl_aa,grp_led:scroll</merge>
+       <merge key="input.xkb.Variant" type="string">nodeadkeys</merge>
+     </match>
+   </device>
+</deviceinfo>

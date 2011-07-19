@@ -1,0 +1,9 @@
+table Icon
+  Caption: opera
+  Icon: /root/icons/Opera.png
+  X: 190
+  Y: 50
+  Command[0]: opera
+  Command[1]: 
+end
+

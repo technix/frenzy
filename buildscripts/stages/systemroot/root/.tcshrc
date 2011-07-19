@@ -1,6 +1,6 @@
 #
-# File   : tcsh config for Frenzy 1.0
-# Author : Sergei Mozhaisky (technix@frenzy.org.ua)
+# File   : tcsh config for Frenzy 1.2
+# Authors : Sergei Mozhaisky (technix@frenzy.org.ua), Vershinin Egor (vershinin.e@gmail.com)
 # 
 
 setenv	EDITOR		ee
@@ -20,7 +20,7 @@ set ellipsis
 set nobeep
 set listjobs
 set rmstar
-set prompt = "`hostname -s`:%.04%B%#%b "
+set prompt = "%{^[[40;35;1m%}`/bin/hostname -s`:%{^[[40;31;1m%}%/@%{^[[40;33;1m%}%B[%T]%b # "
 set prompt2 = "%R?"
 set history = 100
 set savehist = 100
@@ -28,6 +28,9 @@ set inputmode = insert
 set symlinks = chase
 limit coredumpsize 0
 unset autologout
+
+## Fix HAL CD-ROM Polling:
+#/usr/local/bin/hal-disable-polling --device /dev/cd0
 
 ## Alias section
 alias today     "date '+%Y%m%d'"
@@ -38,7 +41,8 @@ alias j 	'jobs -l'
 alias la	'ls -a'
 alias lf	'ls -FA'
 alias ll	'ls -lA'
-
+alias ls	'ls -FG'
+alias df	'df -m'
 
 # enter command name and press F1 to see man on this prog
 alias helpcommand man

@@ -1,0 +1,7 @@
+<device>
+    <match key="storage.bus" string="ide">
+       <match key="block.device" string="/dev/cd0">
+         <merge key="storage.media_check_enabled" type="bool">false</merge>
+       </match>
+     </match>
+</device>

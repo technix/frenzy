@@ -1,0 +1,9 @@
+table Icon
+  Caption: mplayer
+  Icon: /root/icons/mplayer.png
+  X: 50
+  Y: 50
+  Command[0]: gmplayer
+  Command[1]: 
+end
+

@@ -6,7 +6,7 @@
 toram ()
 {
 FS_SIZE=`du -m ${fc_uzip} | awk '{print $1}'`
-FS_SIZE=`expr ${FS_SIZE} + 10`
+FS_SIZE=`expr ${FS_SIZE} + 50`
 # Create MFS for compressed image
 
 ### using MFS

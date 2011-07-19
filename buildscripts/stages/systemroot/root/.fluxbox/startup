@@ -1,7 +1,10 @@
 /usr/X11R6/bin/fbsetroot -solid black
 
-fbsetbg /usr/local/frenzy/wallpapers/shards.jpg
+#fbsetbg /usr/local/frenzy/wallpapers/shards.jpg
+
+fbsetbg /root/wall.jpg
 
 conky &
 xxkb &
+idesk &
 exec /usr/X11R6/bin/fluxbox

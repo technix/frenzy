@@ -1,0 +1,9 @@
+table Icon
+  Caption: xmms
+  Icon: /root/icons/xmms.png
+  X: 120
+  Y: 50
+  Command[0]: xmms
+  Command[1]: 
+end
+

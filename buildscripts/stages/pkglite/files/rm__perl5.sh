@@ -2,6 +2,7 @@
 # perl 5
 
 P="/usr/local/lib/perl5"
+PV="5.10.1"
 
 # Removing POD documentation
 if [ -d ${P} ]; then
@@ -12,7 +13,7 @@ rm $i
 done
 fi
 
-#P="/usr/local/lib/perl5/5.8.8/mach/auto"
+#P="/usr/local/lib/perl5/${PV}/mach/auto/Encode"
 #if [ -d ${P} ]; then
 #cd ${P}
 #for i in `find . -name "*.so"`
@@ -29,7 +30,7 @@ rm $i
 done
 fi
 
-rm -rf ${P}/5.8.8/perl/man/man3 > /dev/null 2>&1
+rm -rf ${P}/${PV}/perl/man/man3 > /dev/null 2>&1
 
 
 
@@ -47,8 +48,16 @@ done
 
 for i in TW KR JP CN
 do
-rm -f ${P}/5.8.8/mach/auto/Encode/${i}/*.so > /dev/null 2>&1
+rm -f ${P}/${PV}/mach/auto/Encode/${i}/*.so > /dev/null 2>&1
 done
 
-rm -f ${P}/5.8.8/man/man3/Gtk* > /dev/null 2>&1
-rm -f ${P}/5.8.8/man/man3/Glib* > /dev/null 2>&1
+rm -f ${P}/${PV}/man/man3/Gtk* > /dev/null 2>&1
+rm -f ${P}/${PV}/man/man3/Glib* > /dev/null 2>&1
+
+
+
+rm -rf ${P}/${PV}/CPAN > /dev/null 2>&1
+rm -f ${P}/${PV}/CPAN.pm > /dev/null 2>&1
+rm -rf ${P}/${PV}/CPANPLUS > /dev/null 2>&1
+rm -f ${P}/${PV}/CPANPLUS.pm > /dev/null 2>&1
+rm -f ${P}/${PV}/perl5db.pl > /dev/null 2>&1

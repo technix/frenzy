@@ -15,7 +15,6 @@ boot/screen.4th
 boot/frames.4th
 boot/beastie.4th
 boot/loader.rc
-boot/pxeboot
 boot/kernel/kernel
 boot/kernel/linker.hints
 boot/kernel/acpi.ko
@@ -37,3 +36,4 @@ boot/kernel/mac_portacl.ko
 boot/kernel/mac_seeotheruids.ko
 boot/kernel/mac_stub.ko
 boot/kernel/mac_test.ko
+boot/kernel/geom_uzip.ko

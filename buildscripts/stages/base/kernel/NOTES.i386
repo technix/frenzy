@@ -1,0 +1,276 @@
+
+# AGP GART support
+device		agp
+
+# AGP debugging.
+options 	AGP_DEBUG
+
+# To include support for VGA VESA video modes
+options 	VESA
+
+# Turn on extra debugging checks and output for VESA support.
+options 	VESA_DEBUG
+
+# Video card driver for VGA adapters.
+device		vga
+
+# The cpufreq(4) driver provides support for non-ACPI CPU frequency control
+device		cpufreq
+
+#
+# Network interfaces:
+#
+
+# ath:  Atheros a/b/g WiFi adapters (requires ath_hal and wlan)
+# ce:   Cronyx Tau-PCI/32 sync single/dual port G.703/E1 serial adaptor
+#       with 32 HDLC subchannels (requires sppp (default), or NETGRAPH if
+#       NETGRAPH_CRONYX is configured)
+# cp:   Cronyx Tau-PCI sync single/dual/four port
+#       V.35/RS-232/RS-530/RS-449/X.21/G.703/E1/E3/T3/STS-1
+#       serial adaptor (requires sppp (default), or NETGRAPH if
+#       NETGRAPH_CRONYX is configured)
+# cs:   IBM Etherjet and other Crystal Semi CS89x0-based adapters
+# ctau: Cronyx Tau sync dual port V.35/RS-232/RS-530/RS-449/X.21/G.703/E1
+#       serial adaptor (requires sppp (default), or NETGRAPH if
+#       NETGRAPH_CRONYX is configured)
+# ed:   Western Digital and SMC 80xx; Novell NE1000 and NE2000; 3Com 3C503
+#       HP PC Lan+, various PC Card devices
+#       (requires miibus)
+# ie:   AT&T StarLAN 10 and EN100; 3Com 3C507; unknown NI5210;
+#       Intel EtherExpress
+# ipw:	Intel PRO/Wireless 2100 IEEE 802.11 adapter
+# iwi:	Intel PRO/Wireless 2200BG/2225BG/2915ABG IEEE 802.11 adapters
+# iwn:	Intel Wireless WiFi Link 4965AGN 802.11 network adapters
+# nfe:	nVidia nForce MCP on-board Ethernet Networking (BSD open source)
+# nve:	nVidia nForce MCP on-board Ethernet Networking
+# ral:	Ralink Technology IEEE 802.11 wireless adapter
+# sbni: Granch SBNI12-xx ISA and PCI adapters
+# wl:   Lucent Wavelan (ISA card only).
+# wpi:	Intel 3945ABG Wireless LAN controller
+
+# Order for ISA/EISA devices is important here
+
+device		ath		# Atheros pci/cardbus NIC's
+device		ath_hal		# pci/cardbus chip support
+#device		ath_ar5210	# AR5210 chips
+#device		ath_ar5211	# AR5211 chips
+#device		ath_ar5212	# AR5212 chips
+#device		ath_rf2413
+#device		ath_rf2417
+#device		ath_rf2425
+#device		ath_rf5111
+#device		ath_rf5112
+#device		ath_rf5413
+#device		ath_ar5416	# AR5416 chips
+options 	AH_SUPPORT_AR5416	# enable AR5416 tx/rx descriptors
+device		ath_rate_sample	# SampleRate tx rate control for ath
+device		ce
+device		cp
+device		cs
+hint.cs.0.at="isa"
+hint.cs.0.port="0x300"
+device		ctau
+hint.ctau.0.at="isa"
+hint.ctau.0.port="0x240"
+hint.ctau.0.irq="15"
+hint.ctau.0.drq="7"
+#options 	NETGRAPH_CRONYX		# Enable NETGRAPH support for Cronyx adapter(s)
+device		ed
+options 	ED_3C503
+options 	ED_HPP
+options 	ED_SIC
+hint.ed.0.at="isa"
+hint.ed.0.port="0x280"
+hint.ed.0.irq="5"
+hint.ed.0.maddr="0xd8000"
+device		ie			# Hints only required for Starlan
+hint.ie.2.at="isa"
+hint.ie.2.port="0x300"
+hint.ie.2.irq="5"
+hint.ie.2.maddr="0xd0000"
+device		iwi
+device		iwn
+device		ipw
+# Hint for the i386-only ISA front-end of le(4).
+hint.le.0.at="isa"
+hint.le.0.port="0x280"
+hint.le.0.irq="10"
+hint.le.0.drq="0"
+device		nfe		# nVidia nForce MCP on-board Ethernet Networking
+device		nve		# nVidia nForce MCP on-board Ethernet Networking
+device		ral
+device		sbni
+hint.sbni.0.at="isa"
+hint.sbni.0.port="0x210"
+hint.sbni.0.irq="0xefdead"
+hint.sbni.0.flags="0"
+device		wl
+hint.wl.0.at="isa"
+hint.wl.0.port="0x300"
+options 	WLCACHE		# enables the signal-strength cache
+options 	WLDEBUG		# enables verbose debugging output
+device		wpi
+
+#
+# ATA raid adapters
+#
+device		pst
+
+#
+# Areca 11xx and 12xx series of SATA II RAID controllers.
+# CAM is required.
+#
+device		arcmsr		# Areca SATA II RAID
+
+#
+# 3ware 9000 series PATA/SATA RAID controller driver and options.
+# The driver is implemented as a SIM, and so, needs the CAM infrastructure.
+#
+options 	TWA_DEBUG		# 0-10; 10 prints the most messages.
+options 	TWA_FLASH_FIRMWARE	# firmware image bundled when defined.
+device		twa			# 3ware 9000 series PATA/SATA RAID
+
+#
+# SCSI host adapters:
+#
+# ncv: NCR 53C500 based SCSI host adapters.
+# nsp: Workbit Ninja SCSI-3 based PC Card SCSI host adapters.
+# stg: TMC 18C30, 18C50 based SCSI host adapters.
+
+device		ncv
+device		nsp
+device		stg
+hint.stg.0.at="isa"
+hint.stg.0.port="0x140"
+hint.stg.0.port="11"
+
+#
+# Adaptec FSA RAID controllers, including integrated DELL controllers,
+# the Dell PERC 2/QC and the HP NetRAID-4M
+device		aac
+device		aacp	# SCSI Passthrough interface (optional, CAM required)
+
+# The 'asr' driver provides support for current DPT/Adaptec SCSI RAID
+# controllers (SmartRAID V and VI and later).
+# These controllers require the CAM infrastructure.
+#
+device		asr
+
+#
+# Highpoint RocketRAID 182x.
+device		hptmv
+
+#
+# Highpoint RocketRAID.  Supports RR172x, RR222x, RR2240, RR232x, RR2340,
+# RR2210, RR174x, RR2522, RR231x, RR230x.
+device		hptrr
+
+#
+# Highpoint RocketRaid 3xxx series SATA RAID
+device		hptiop
+
+#
+# IBM (now Adaptec) ServeRAID controllers
+device		ips
+
+#
+# SafeNet crypto driver: can be moved to the MI NOTES as soon as
+# it's tested on a big-endian machine
+#
+device		safe		# SafeNet 1141
+options 	SAFE_DEBUG	# enable debugging support: hw.safe.debug
+options 	SAFE_RNDTEST	# enable rndtest support
+
+#
+# glxsb is a driver for the Security Block in AMD Geode LX processors.
+# Requires 'device crypto'.
+#
+device		glxsb		# AMD Geode LX Security Block
+
+#####################################################################
+
+#
+# Miscellaneous hardware:
+#
+# apm: Laptop Advanced Power Management (experimental)
+# ipmi: Intelligent Platform Management Interface
+# smapi: System Management Application Program Interface driver
+# smbios: DMI/SMBIOS entry point
+# vpd: Vital Product Data kernel interface
+# pmtimer: Adjust system timer at wakeup time
+# pbio: Parallel (8255 PPI) basic I/O (mode 0) port (e.g. Advantech PCL-724)
+# spic: Sony Programmable I/O controller (VAIO notebooks)
+# asmc: Apple System Management Controller
+# si: Specialix International SI/XIO or SX intelligent serial card driver
+
+# Notes on APM
+#  The flags takes the following meaning for apm0:
+#    0x0020  Statclock is broken.
+
+# Notes on the Specialix SI/XIO driver:
+#  The host card is memory, not IO mapped.
+#  The Rev 1 host cards use a 64K chunk, on a 32K boundary.
+#  The Rev 2 host cards use a 32K chunk, on a 32K boundary.
+#  The cards can use an IRQ of 11, 12 or 15.
+
+# Notes on the Sony Programmable I/O controller
+#  This is a temporary driver that should someday be replaced by something
+#  that hooks into the ACPI layer.  The device is hooked to the PIIX4's
+#  General Device 10 decoder, which means you have to fiddle with PCI
+#  registers to map it in, even though it is otherwise treated here as
+#  an ISA device.  At the moment, the driver polls, although the device
+#  is capable of generating interrupts.  It largely undocumented.
+#  The port location in the hint is where you WANT the device to be
+#  mapped.  0x10a0 seems to be traditional.  At the moment the jogdial
+#  is the only thing truly supported, but apparently a fair percentage
+#  of the Vaio extra features are controlled by this device.
+
+device		apm
+hint.apm.0.flags="0x20"
+device		ipmi
+device		smapi
+device		smbios
+device		vpd
+device		pmtimer
+device		pbio
+hint.pbio.0.at="isa"
+hint.pbio.0.port="0x360"
+device		spic
+hint.spic.0.at="isa"
+hint.spic.0.port="0x10a0"
+device		asmc
+#device		si
+
+#
+# I2C Bus
+#
+# Philips i2c bus support is provided by the `iicbus' device.
+#
+# Supported interfaces:
+# pcf	Philips PCF8584 ISA-bus controller
+#
+device		pcf
+hint.pcf.0.at="isa"
+hint.pcf.0.port="0x320"
+hint.pcf.0.irq="5"
+
+#
+# Hardware watchdog timers:
+#
+# ichwd: Intel ICH watchdog timer
+#
+device		ichwd
+
+#
+# Temperature sensors:
+#
+# coretemp: on-die sensor on Intel Core and newer CPUs
+#
+device		coretemp
+
+#
+# CPU control pseudo-device. Provides access to MSRs, CPUID info and
+# microcode update feature.
+#
+device		cpuctl
+

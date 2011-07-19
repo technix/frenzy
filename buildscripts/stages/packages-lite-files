@@ -14,9 +14,9 @@ LOCALES="pkglite/locales"
 echo "[*] Patching installed packages."
 
 # exporting GCC
-cd ${SCRIPTDIR}/../export_gcc
-./export_gcc.sh
-cd ${CURRDIR}
+#cd ${SCRIPTDIR}/../export_gcc
+#./export_gcc.sh
+#cd ${CURRDIR}
 # done
 
 cp ${LOCALES}/locales ../${FRENZY_FS}
