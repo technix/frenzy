@@ -13,7 +13,6 @@ FRENZY_LANG="ru"
 
 
 FRENZY_ISOIMAGE="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
-#FRENZY_ISOIMAGE="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}.iso"
 FRENZY_VOL="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}"
 
 #       |---------+---------+---------+---------+---------+---------+--|------+
