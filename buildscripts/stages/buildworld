@@ -1,0 +1,26 @@
+#!/bin/sh
+# PROVIDE: buildworld
+# REQUIRE: FRENZY
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "build" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+[ -f "${SRCDIR}/Makefile" ] || err 1 "No FreeBSD sources"
+
+BASEDIR="${CURRDIR}/base"
+#export __MAKE_CONF=${BASEDIR}/${MAKECONF}
+
+for d in bin sbin usr.bin gnu/usr.bin usr.sbin libexec
+do
+make -C ${SRCDIR}/${d} clean
+done
+
+make -C ${SRCDIR}  buildworld ${MAKE_OPTIONS}
+[ $? -eq 0 ] || err 1 "Error for ${0}"
+
+fi
+
+stage_done

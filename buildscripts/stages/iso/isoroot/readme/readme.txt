@@ -1,4 +1,3 @@
-Frenzy 1.2 (Lifeforce)
+Frenzy 9.0
 
-This is highly experimental distribution :)
 You may use it "AS IS" without any warranty.

@@ -12,9 +12,8 @@ BASEDIR="${CURRDIR}/lite"
 
 for i in `cat ${BASEDIR}/${RMFILE}` 
 do
-rm -R ${CURRDIR}/../${FRENZY_FS}/${i} > /dev/null 2>&1
+[ ! -d "${FRENZY_FS}/${i}" ] || rm -rf ${FRENZY_FS}/${i}
 done
+fi
 
 stage_done
-
-fi

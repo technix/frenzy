@@ -10,29 +10,45 @@ stage_check
 
 MTREE="iso/cd.mtree"
 FLIST="iso/cd.filelist"
-ISOROOT="iso/isoroot"
-FCD="../${FRENZY_CD}"
-FFS="../${FRENZY_FS}"
+ISODIR="isoroot"
+ISOROOT="iso/${ISODIR}"
 
+#[ ! -d "${FRENZY_CD}" ] || chflags -R noschg ${FRENZY_CD} && rm -rf ${FRENZY_CD}
+[ -d "${FRENZY_CD}" ]  || err 1 "No such CD dir"
+
+#mkdir ${FRENZY_CD}
 # creating directory structure
-mtree -eU -f ${MTREE} -p ${FCD} > /dev/null 2>&1
+mtree -eU -f ${MTREE} -p ${FRENZY_CD} > /dev/null 2>&1
 # copying boot files
 for i in `cat ${FLIST}`
-do
-cp ${FFS}/${i} ${FCD}/${i}
+    do
+	if [ -f "${FRENZY_FS}/${i}" ]; then
+	    cp ${FRENZY_FS}/${i} ${FRENZY_CD}/${i}
+#	else
+#	    echo "ISO-PREPARE WARNING: No such ${i} file in ${FRENZY_FS}"
+	fi
+
+#Override from Frenzy templates
+[ ! -f "${ISOROOT}/${i}" ] || cp ${ISOROOT}/${i} ${FRENZY_CD}/${i}
+
 done
 
-# Copy boot loader
-cp boot/frenzyroot.gz ${FCD}/boot
 # Copy Frenzy patches for ISO
-cp -R ${ISOROOT}/* ${FCD}
+cp -R ${ISOROOT} ${TMPDIR}
+find ${TMPDIR}/${ISODIR} -type d -name .svn -exec rm -rf {} \; >> /dev/null 2>&1
+rsync -avzd ${TMPDIR}/${ISODIR}/* ${FRENZY_CD}
+# Copy boot loader
+[ -f "${TMPDIR}/frenzyroot.gz" ] || err 1 "No such ${TMPDIR}/frenzyroot.gz from bootloader stage"
+cp ${TMPDIR}/frenzyroot.gz ${FRENZY_CD}/boot
+
+
 # gzipping kernel
-gzip ${FCD}/boot/kernel/kernel
+gzip -9 -f ${FRENZY_CD}/boot/kernel/kernel
+gzip -9 -f ${FRENZY_CD}/boot/kernel/*.ko
 
-printf "$VERSION" > ${FFS}/boot/frenzy.version
-
+printf "$VERSION" > ${FRENZY_FS}/boot/frenzy.version
 echo "[*] File structure for Frenzy ISO created."
 
-stage_done
-
 fi
+
+stage_done

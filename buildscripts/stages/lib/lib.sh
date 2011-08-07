@@ -19,4 +19,21 @@ stage_done ()
 {
 #cd ${CURRDIR}
 #touch ${PROGCOOKIE}
+err 0 ""
+}
+
+# fatal error. Print message end quit with exitval
+err()
+{
+    exitval=$1
+    shift
+    echo "$*"
+    exit $exitval
+#Here is good place for flush error messge to LOG FILE
+}
+
+# create if not exist with all parents
+prepdir()
+{
+    [ -d "${1}" ] || mkdir -p "${1}"
 }

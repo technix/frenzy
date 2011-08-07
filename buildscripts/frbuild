@@ -2,9 +2,29 @@
 PROGRESS=".progress"
 PARAM=$1
 
-# Parameters: build install frenzy iso
+PARAMLS="build install frenzy iso all"
 
-for EXEC in `cd ./stages && rcorder -s nostart *`
+usage()
+{
+echo "${0} <targets>"
+echo "where targets one of:"
+echo "${PARAMLS}"
+}
+
+
+# Parameters: build install frenzy iso all
+if [ $# -eq 0 ]; then
+usage
+exit
+fi
+
+STAGES=`realpath stages`
+
+for EXEC in `cd ${STAGES} && rcorder -s nostart *`
 do
-(cd ./stages && ./$EXEC $PARAM)
+cd ${STAGES}
+/bin/sh ./$EXEC $PARAM
+if [ $? -eq 1 ]; then
+err 1 "Stage ${EXEC} incomplete"
+fi
 done

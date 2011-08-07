@@ -1,0 +1,29 @@
+#!/bin/sh
+# PROVIDE: buildkernel
+# REQUIRE: installworld
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "build" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+[ -f "${SRCDIR}/Makefile" ] || err 1 "No FreeBSD sources"
+
+BASEDIR="${CURRDIR}/base"
+
+#export __MAKE_CONF=${BASEDIR}/${MAKECONF}
+
+CONFPATH="${SOURCEDIR}/sys/`uname -m`/conf"
+GENERICFILE="${CONFPATH}/GENERIC"
+[ -f "${GENERICFILE}" ] || err 1 "No such ${GENERICFILE} config file"
+
+MYCONF="${BASEDIR}/kernel/${KERNCONFNAME}.`uname -m`"
+[ -f "${MYCONF}" ] || err 1 "No such ${MYCONF} template"
+
+cp ${MYCONF} ${CONFPATH}/${KERNCONFNAME}
+make -C ${SRCDIR} -j${JOBNUM} buildkernel KERNCONF=${KERNCONFNAME} ${MAKE_OPTIONS}
+[ $? -eq 0 ] || err 1 "Error for ${0}"
+fi
+stage_done
+

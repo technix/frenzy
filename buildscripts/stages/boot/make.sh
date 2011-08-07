@@ -1,68 +1,76 @@
 #!/bin/sh
 DEV=5
-BLDDIR=`pwd`
-DIR=${BLDDIR}/fs
+MYDIR=`pwd`
+DIR=${FRENZY_DIR}/mnt
 CRBIN=frenzy_loader
 
 . ../../config
+. ../lib/lib.sh
 
 # removing old frenzyroot
-rm frenzyroot.gz > /dev/null 2>&1
+[ ! -f "${TMPDIR}/frenzyroot.gz" ] || rm -f ${TMPDIR}/frenzyroot.gz
 
+## TODO By olevole
+# all job must rewrite to ${TMPDIR}
+###
 echo -n "[*] Loader stage:"
-if [ ! -e crunch/${CRBIN} ]; then
-echo -n " build crunch,"
-cd crunch
+prepdir ${FRENZY_DIR}/crunch
+if [ ! -e ${FRENZY_DIR}/crunch/${CRBIN} ]; then
+    echo -n " build crunch,"
+    cd ${FRENZY_DIR}/crunch
+    [ ! -f "crunch.conf" ] || rm -f crunch.conf
 
-rm crunch.conf > /dev/null 2>&1
-SOURCEDIR="${BLDDIR}/../../${SRCDIR}"
 for d in bin sbin usr.bin gnu/usr.bin usr.sbin libexec
 do
-echo "srcdirs ${SOURCEDIR}/$d" >> crunch.conf
+echo "srcdirs `realpath ${SRCDIR}/${d}`" >> crunch.conf
+make -C ${SRCDIR}/${d} clean
 done
+#
 echo "" >> crunch.conf
-cat crunch.conf.default >> crunch.conf
+cat ${MYDIR}/crunch/crunch.conf.default >> crunch.conf
+crunchgen crunch.conf
+make -f crunch.mk
 
-crunchgen crunch.conf > /dev/null 2>&1
-make -f crunch.mk > /dev/null 2>&1
-cp crunch ${CRBIN} > /dev/null 2>&1
-make clean -f crunch.mk > /dev/null 2>&1
-rm -f crunch.c > /dev/null 2>&1
-rm -f crunch.cache > /dev/null 2>&1
-rm -f crunch.mk > /dev/null 2>&1
-cd ..
+[ $? -ne "1" ] || err 1 "Error with crunch stage"
+mv crunch ${TMPDIR}/${CRBIN}
+make clean -f crunch.mk
+rm -f crunch.c crunch.cache crunch.mk
+cd ${MYDIR}
 fi
 
-BC=4096
-#BC=1536
+#BC=4096
+BC=8192
 BS=8192
-dd if=/dev/zero of=frenzyroot count=${BC} bs=1k  > /dev/null 2>&1
-mdconfig -a -t vnode -f frenzyroot -u ${DEV} > /dev/null 2>&1
-bsdlabel -w md${DEV} auto  > /dev/null 2>&1
-newfs -n -i ${BS} -m 0 -o space /dev/md${DEV}  > /dev/null 2>&1
-mount /dev/md${DEV} ${DIR}
-
+dd if=/dev/zero of=${TMPDIR}/frenzyroot count=${BC} bs=1k
+DEV=`mdconfig -a -t vnode -f ${TMPDIR}/frenzyroot`
+bsdlabel -w /dev/${DEV} auto
+newfs -n -i ${BS} -m 0 -o space /dev/${DEV}
+prepdir ${DIR}
+mount /dev/${DEV} ${DIR}
 echo -n " dirs"
 rm -r ${DIR}/* 2>/dev/null
-mtree -eU -f rootfs.mtree -p ${DIR} > /dev/null 2>&1
+mtree -eU -f rootfs.mtree -p ${DIR}
 
 echo -n ", links"
 cd ${DIR}
-cp ${BLDDIR}/crunch/${CRBIN} ${DIR}/sbin
-rm ${BLDDIR}/crunch/${CRBIN}
-for i in `crunchgen -l ${BLDDIR}/crunch/crunch.conf`
+cp ${TMPDIR}/${CRBIN} ${DIR}/sbin
+rm -f ${TMPDIR}/${CRBIN}
+
+for i in `crunchgen -l ${FRENZY_DIR}/crunch/crunch.conf`
 do
 ln sbin/${CRBIN} sbin/${i}
 done
 ln sbin/sh bin/sh  # symlink for sh
 echo -n ", files"
-(cd ${BLDDIR}/skel && find . -xdev | cpio -pdum --quiet ${DIR})
-cd ..
+(cd ${MYDIR}/skel && find . -xdev | cpio -pdum --quiet ${DIR})
+cd ${MYDIR}
+
+cp ${FRENZY_DIR}/boot/skel/etc/rc ${DIR}/etc
 
 echo -n ", gzip"
 umount ${DIR}
 mdconfig -d -u ${DEV}
-gzip frenzyroot
+gzip ${TMPDIR}/frenzyroot
 echo ". All done."
 
 

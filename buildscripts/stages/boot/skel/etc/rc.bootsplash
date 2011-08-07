@@ -83,6 +83,7 @@ echo "FR_AUTOLOGIN=1 " >> ${conf}
 
 if [ -n "${FR_GUI}" ]; then
     echo "FR_GUI=1 " >> ${conf}
+    touch /tmp/.xautostart
     echo 'dbus_enable="YES"' >> /etc/rc.conf.local
     echo 'hald_enable="YES"' >> /etc/rc.conf.local
     /usr/bin/at now + 1 minute -f /root/MyFiles/hal.sh

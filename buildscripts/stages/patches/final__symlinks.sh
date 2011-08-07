@@ -2,151 +2,151 @@
 # simlinks
 
 cd /bin
-rm csh > /dev/null 2>&1
+rm csh
 ln -s tcsh csh
-rm red > /dev/null 2>&1
+rm red
 ln -s ed red
 #rm unlink
 #ln -s rm unlink
-rm link > /dev/null 2>&1
+rm link
 ln -s ln link
 
 cd /sbin
-rm fsck_ffs > /dev/null 2>&1
+rm fsck_ffs
 ln -s fsck_ufs fsck_ffs
-rm fsck_4.2bsd > /dev/null 2>&1
+rm fsck_4.2bsd
 ln -s fsck_ufs fsck_4.2bsd
-rm rrestore > /dev/null 2>&1
+rm rrestore
 ln -s restore rrestore
-rm rdump > /dev/null 2>&1
+rm rdump
 ln -s dump rdump
-rm bsdlabel > /dev/null 2>&1
+rm bsdlabel
 ln -s disklabel bsdlabel
 
-rm gshsec > /dev/null 2>&1
+rm gshsec
 ln -s geom gshsec
-rm gmirror > /dev/null 2>&1
+rm gmirror
 ln -s geom gmirror
-rm gnop > /dev/null 2>&1
+rm gnop
 ln -s geom gnop
-rm graid3 > /dev/null 2>&1
+rm graid3
 ln -s geom graid3
-rm glabel > /dev/null 2>&1
+rm glabel
 ln -s geom glabel
-rm gstripe > /dev/null 2>&1
+rm gstripe
 ln -s geom gstripe
-rm geli > /dev/null 2>&1
+rm geli
 ln -s geom geli
-rm gconcat > /dev/null 2>&1
+rm gconcat
 ln -s geom gconcat
-rm mdmfs > /dev/null 2>&1
+rm mdmfs
 ln -s mount_mfs mdmfs
 
 cd /usr/bin
-rm nview > /dev/null 2>&1
+rm nview
 ln -s vi nview
-rm nex > /dev/null 2>&1
+rm nex
 ln -s vi nex
-rm ex > /dev/null 2>&1
+rm ex
 ln -s vi ex
-rm view > /dev/null 2>&1
+rm view
 ln -s vi view
-rm nvi > /dev/null 2>&1
+rm nvi
 ln -s vi nvi
 
-rm nawk > /dev/null 2>&1
+rm nawk
 ln -s awk nawk
 
-rm pftp > /dev/null 2>&1
+rm pftp
 ln -s ftp pftp
-rm gate-ftp > /dev/null 2>&1
+rm gate-ftp
 ln -s ftp gate-ftp
 
-rm slogin > /dev/null 2>&1
+rm slogin
 ln -s ssh slogin
 
-rm less > /dev/null 2>&1
+rm less
 ln -s more less
 
-rm zgrep > /dev/null 2>&1
+rm zgrep
 ln -s grep zgrep
-rm zegrep > /dev/null 2>&1
+rm zegrep
 ln -s grep zegrep
-rm bzfgrep > /dev/null 2>&1
+rm bzfgrep
 ln -s grep bzfgrep
-rm zfgrep > /dev/null 2>&1
+rm zfgrep
 ln -s grep zfgrep
-rm bzegrep > /dev/null 2>&1
+rm bzegrep
 ln -s grep bzegrep
-rm bzgrep > /dev/null 2>&1
+rm bzgrep
 ln -s grep bzgrep
-rm egrep > /dev/null 2>&1
+rm egrep
 ln -s grep egrep
-rm fgrep > /dev/null 2>&1
+rm fgrep
 ln -s grep fgrep
 
-rm Mail > /dev/null 2>&1
+rm Mail
 ln -s mail Mail
-rm mailx > /dev/null 2>&1
+rm mailx
 ln -s mail mailx
 
-rm ree > /dev/null 2>&1
+rm ree
 ln -s ee ree
-rm edit > /dev/null 2>&1
+rm edit
 ln -s ee edit
 
-rm atrm > /dev/null 2>&1
+rm atrm
 ln -s at atrm
-rm atq > /dev/null 2>&1
+rm atq
 ln -s at atq
-rm batch > /dev/null 2>&1
+rm batch
 ln -s at batch
 
-rm hd > /dev/null 2>&1
+rm hd
 ln -s hexdump hd
-rm od > /dev/null 2>&1
+rm od
 ln -s hexdump od
 
-rm tip > /dev/null 2>&1
+rm tip
 ln -s cu tip
 
-rm gunzip > /dev/null 2>&1
+rm gunzip
 ln -s gzip gunzip
-rm gzcat > /dev/null 2>&1
+rm gzcat
 ln -s gzip gzcat
-rm zcat > /dev/null 2>&1
+rm zcat
 ln -s gzip zcat
 
-rm bunzip2 > /dev/null 2>&1
+rm bunzip2
 ln -s bzip2 bunzip2
-rm bzcat > /dev/null 2>&1
+rm bzcat
 ln -s bzip2 bzcat
 
 
-#rm chsh > /dev/null 2>&1
+#rm chsh
 #ln -s chpass chsh
-#rm chfn > /dev/null 2>&1
+#rm chfn
 #ln -s chpass chfn
 
-rm ncal > /dev/null 2>&1
+rm ncal
 ln -s cal ncal
 
-rm sendbug > /dev/null 2>&1
+rm sendbug
 ln -s send-pr sendbug
 
-rm reset > /dev/null 2>&1
+rm reset
 ln -s tset reset
 
-rm readlink > /dev/null 2>&1
+rm readlink
 ln -s stat readlink
 
-rm uncompress > /dev/null 2>&1
+rm uncompress
 ln -s compress uncompress
 
-rm uptime > /dev/null 2>&1
+rm uptime
 ln -s w uptime
 
-rm pgrep > /dev/null 2>&1
+rm pgrep
 ln -s pkill pgrep
 
 

@@ -9,24 +9,28 @@ stage_init
 stage_check
 
 SORT="stages/iso/iso_sort"
-FRENZY_TMP_ISO="${FRENZY_CD}/frenzy/frenzy.iso"
-FRENZY_UZIP="${FRENZY_CD}/frenzy/frenzy.uzip"
+FRENZY_TMP_ISO="${TMPDIR}/frenzy.iso"
+FRENZY_FRENZYDIR="${FRENZY_CD}/frenzy"
+FRENZY_UZIP="${FRENZY_FRENZYDIR}/frenzy.uzip"
 FRENZY_KERNELD="${FRENZY_FS}/boot/kernel"
 
 cd ..
 # saving kernel
-mv ${FRENZY_KERNELD}/kernel .
+mv ${FRENZY_KERNELD}/kernel ${TMPDIR}
 #
 echo "[*] Creating temporary ISO. Please wait..."
-mkisofs -lRNU -quiet -ldots -sort ${SORT} -o ${FRENZY_TMP_ISO} ${FRENZY_FS} > /dev/null 2>&1
+mkisofs -lRNU -quiet -ldots -sort ${SORT} -o ${FRENZY_TMP_ISO} ${FRENZY_FS}
+#makefs -t ffs -o version=2 /tmp/out.iso ${FRENZY_CD}
+#makefs -t ffs ${FRENZY_TMP_ISO} ${FRENZY_FS}
 echo "[*] Done."
 echo "[*] Making compressed image. Please wait..."
-mkuzip -o ${FRENZY_UZIP} -s ${BLOCKSIZE} ${FRENZY_TMP_ISO} > /dev/null 2>&1
+prepdir ${FRENZY_FRENZYDIR}
+mkuzip -o ${FRENZY_UZIP} -s ${BLOCKSIZE} ${FRENZY_TMP_ISO}
 echo "[*] Done."
-rm -f ${FRENZY_TMP_ISO} > /dev/null 2>&1
+rm -f ${FRENZY_TMP_ISO}
 # restoring kernel
-mv kernel ${FRENZY_KERNELD}
+mv ${TMPDIR}/kernel ${FRENZY_KERNELD}
 #
-stage_done
-
 fi
+
+stage_done

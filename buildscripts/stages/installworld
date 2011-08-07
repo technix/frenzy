@@ -1,0 +1,21 @@
+#!/bin/sh
+# PROVIDE: installworld
+# REQUIRE: buildworld
+. ../config
+. lib/lib.sh
+
+if [ "$1" = "install" -o "$1" = "all" ]; then
+stage_init
+stage_check
+
+[ -f "${SRCDIR}/Makefile" ] || err 1 "No FreeBSD sources"
+
+BASEDIR="${CURRDIR}/base"
+#export __MAKE_CONF=${BASEDIR}/${MAKECONF}
+
+make -C ${SRCDIR} installworld distribution DESTDIR=${FRENZY_FS}
+[ $? -eq 0 ] || err 1 "Error for ${0}"
+
+fi
+
+stage_done

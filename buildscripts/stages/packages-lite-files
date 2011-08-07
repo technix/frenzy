@@ -13,27 +13,19 @@ LOCALES="pkglite/locales"
 
 echo "[*] Patching installed packages."
 
-# exporting GCC
-#cd ${SCRIPTDIR}/../export_gcc
-#./export_gcc.sh
-#cd ${CURRDIR}
-# done
-
-cp ${LOCALES}/locales ../${FRENZY_FS}
+cp ${FRENZY_DIR}/pkglite/locales/locales ${FRENZY_FS}
 for patchtype in ${PATCHES}
 do
 echo -n "${patchtype}: ["
 for i in `cd ${SCRIPTDIR} && ls -1 $patchtype*`
 do
-cp ${SCRIPTDIR}/${i} ../${FRENZY_FS}
-chroot ../${FRENZY_FS} sh /${i}
-rm ../${FRENZY_FS}/${i}
+cp ${SCRIPTDIR}/${i} ${FRENZY_FS}
+chroot ${FRENZY_FS} sh /${i}
+rm ${FRENZY_FS}/${i}
 echo -n "."
 done
 echo "]"
 done
-rm ../${FRENZY_FS}/locales
-
-stage_done
-
+rm ${FRENZY_FS}/locales
 fi
+stage_done

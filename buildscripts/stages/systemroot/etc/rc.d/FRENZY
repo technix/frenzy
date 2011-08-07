@@ -4,7 +4,7 @@
 # REQUIRE: LOGIN 
 # KEYWORD: FreeBSD
 
-PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:/usr/X11R6/sbin"
+PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
 
 # frenzy scripts before login
 
@@ -81,3 +81,4 @@ if [ ${FR_AUTOLOGIN} -eq 1 ]; then
     /usr/bin/awk '{if ($1 == "ttyv0") print $1, $2, "alroot\"", $4, $5, $6; else print $0 }' ${X} > ${X}.new
     /bin/mv ${X}.new ${X}
 fi
+

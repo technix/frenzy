@@ -10,15 +10,13 @@ stage_check
 
 SCRIPTDIR="pkglite/locales"
 
-cp ${SCRIPTDIR}/rmlocales.sh ../${FRENZY_FS}
-cp ${SCRIPTDIR}/locales ../${FRENZY_FS}
+cp ${SCRIPTDIR}/rmlocales.sh ${FRENZY_FS}
+cp ${FRENZY_DIR}/pkglite/locales/locales ${FRENZY_FS}
 echo -n "[*] Removing locales from installed packages... "
-chroot ../${FRENZY_FS} sh /rmlocales.sh /usr/local/share/locale
-chroot ../${FRENZY_FS} sh /rmlocales.sh /usr/X11R6/share/locale
+chroot ${FRENZY_FS} sh /rmlocales.sh /usr/local/share/locale
+chroot ${FRENZY_FS} sh /rmlocales.sh /usr/local/lib/X11/locale
 echo "done."
-rm ../${FRENZY_FS}/rmlocales.sh
-rm ../${FRENZY_FS}/locales
-
-stage_done
-
+rm ${FRENZY_FS}/rmlocales.sh
+rm ${FRENZY_FS}/locales
 fi
+stage_done

@@ -10,7 +10,7 @@ stage_check
 
 # install new system files
 SYSTEMROOT="systemroot"
-(cd ${SYSTEMROOT} && pax -rw . ../../${FRENZY_FS})
+(cd ${SYSTEMROOT} && pax -rw . ${FRENZY_FS})
 
 # do extra patches
 PATCHDIR="patches"
@@ -20,17 +20,15 @@ echo -n "${tpe} ["
 for i in `cd ${PATCHDIR} && ls -1 $tpe*`
 do
 echo -n "."
-cp ${PATCHDIR}/${i} ../${FRENZY_FS}
-chroot ../${FRENZY_FS} sh /${i}
-rm ../${FRENZY_FS}/${i}
+cp ${PATCHDIR}/${i} ${FRENZY_FS}
+chroot ${FRENZY_FS} sh /${i}
+rm ${FRENZY_FS}/${i}
 done
 echo "]"
 done
 
 # add version info
-echo "$VERSION" > ../${FRENZY_FS}/etc/motd
-echo "Adjusted by Dorlas (vershinin.e@gmail.com)" >> ../${FRENZY_FS}/etc/motd
-
-stage_done
-
+echo "$VERSION" > ${FRENZY_FS}/etc/motd
+echo "Adjusted by Dorlas (vershinin.e@gmail.com) and Frenzy community ;-)" >> ${FRENZY_FS}/etc/motd
 fi
+stage_done

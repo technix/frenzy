@@ -13,16 +13,17 @@ echo "[*] Installing Frenzy packages."
 echo -n "["
 cd ../${PKG_FRENZY}
 FAILEDPKG=""
-xcmd="ls";
+xcmd="ls |grep tbz$";
 if [ "$FRENZY_LANG" != "ru" ]; then
-xcmd="ls | grep -v RU"
+xcmd="ls | grep -v RU |grep tbz$"
 fi
 
 for pkg in `eval "$xcmd"`
 do
-cat ${pkg} | chroot ../../${FRENZY_FS} pkg_add -f - > /dev/null 2>&1
+cat ${pkg} | chroot ${FRENZY_FS} pkg_add -f -
 if [ $? -eq 1 ]; then
 FAILEDPKG="${FAILEDPKG} ${pkg}"
+echo "!${pkg}!"
 fi
 echo -n "."
 done
@@ -30,14 +31,13 @@ done
 # installing failed packages
 for pkg in `echo ${FAILEDPKG}`
 do
-cat ${pkg} | chroot ../../${FRENZY_FS} pkg_add -f - > /dev/null 2>&1
+cat ${pkg} | chroot ${FRENZY_FS} pkg_add -f -
 echo -n ":"
 done
 
 echo "]"
 
-rm -rf ../../${FRENZY_FS}/var/tmp/* > /dev/null 2>&1
+rm -rf ${FRENZY_FS}/var/tmp/*
+fi
 
 stage_done
-
-fi

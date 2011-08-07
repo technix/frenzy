@@ -3,23 +3,38 @@
 echo "Build process started"
 
 . ../config
+. lib/lib.sh
+
+[ -f "/usr/local/bin/rsync" ] || err 1 "Please install rsync packages"
+
+# prepare dir
+for _dir in $FRENZY_DIR $FRENZY_CD $FRENZY_FS $FRENZY_BUILD $SRCDIR ${OBJDIR} ${BOOTDIR} ${TMPDIR} ${FRENZY_ISO}; do
+prepdir ${_dir}
+done
+
+prepdir ${FRENZY_DIR}/boot/skel/etc
+prepdir ${FRENZY_DIR}/pkglite/locales
 
 # prepare locale
 if [ ${FRENZY_LANG} = "en" ]; then
-cp pkglite/locales/locales.en pkglite/locales/locales
-cp boot/skel/etc/rc_en boot/skel/etc/rc
+rsync -avz pkglite/locales/locales.en ${FRENZY_DIR}/pkglite/locales/locales
+rsync -avz boot/skel/etc/rc_en ${FRENZY_DIR}/boot/skel/etc/rc
 fi
 
 if [ ${FRENZY_LANG} = "ru" ]; then
-cp pkglite/locales/locales.ru pkglite/locales/locales
-cp boot/skel/etc/rc_ru boot/skel/etc/rc
+rsync -avz pkglite/locales/locales.ru ${FRENZY_DIR}/pkglite/locales/locales
+rsync -avz boot/skel/etc/rc_ru ${FRENZY_DIR}/boot/skel/etc/rc
 fi
 
+prepdir ${FRENZY_DIR}/systemroot/root/.fluxbox
 # translating menu
 for lng in en ru
 do
-(cd tools/mkmenu && ./mkmenu ${lng} ${FRENZY_TYPE} > menu.${lng})
-mv tools/mkmenu/menu.${lng} systemroot/root/.fluxbox/
+(cd tools/mkmenu && ./mkmenu ${lng} ${FRENZY_TYPE} > ${TMPDIR}/menu.${lng})
+mv ${TMPDIR}/menu.${lng} ${FRENZY_DIR}/systemroot/root/.fluxbox/
 done
 
-cp systemroot/root/.fluxbox/menu.${FRENZY_LANG} systemroot/root/.fluxbox/menu
+prepdir ${FRENZY_DIR}/root/.fluxbox
+rsync -avz ${FRENZY_DIR}/systemroot/root/.fluxbox/menu.${FRENZY_LANG} ${FRENZY_DIR}/systemroot/root/.fluxbox/menu
+
+stage_done

@@ -14,11 +14,12 @@ echo -n "["
 cd ../${PKG_FREEBSD}
 
 FAILEDPKG=""
-for pkg in `ls` 
+for pkg in `ls |grep tbz$`
 do
-cat ${pkg} | chroot ../../${FRENZY_FS} pkg_add -f - > /dev/null 2>&1
+cat ${pkg} | chroot ${FRENZY_FS} pkg_add -f -
 if [ $? -eq 1 ]; then
 FAILEDPKG="${FAILEDPKG} ${pkg}"
+echo "!${pkg}!"
 fi
 echo -n "."
 done
@@ -26,14 +27,14 @@ done
 # installing failed packages (they may require smth)
 for pkg in `echo ${FAILEDPKG}`
 do
-cat ${pkg} | chroot ../../${FRENZY_FS} pkg_add -f - > /dev/null 2>&1
+cat ${pkg} | chroot ${FRENZY_FS} pkg_add -f -
 echo -n ":"
 done
 
 echo "]"
 
-rm -rf ../../${FRENZY_FS}/var/tmp/* > /dev/null 2>&1
+rm -rf ${FRENZY_FS}/var/tmp/*
+fi
 
 stage_done
 
-fi

@@ -1,4 +1,6 @@
 #!/bin/sh
+BASE="9.0"
+EDITION="reincarnation"
 #BLOCKSIZE="32768"	# uzip block size
 #BLOCKSIZE="65536"	# uzip block size
 BLOCKSIZE="130560"	# uzip block size
@@ -12,11 +14,12 @@ FRENZY_LANG="ru"
 #FRENZY_LANG="en"
 
 
-FRENZY_ISOIMAGE="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
-FRENZY_VOL="frenzy-1.2-${FRENZY_TYPE}-${FRENZY_LANG}"
+#FRENZY_ISOIMAGE="frenzy-${BASE}-${FRENZY_TYPE}-${FRENZY_LANG}-${BUILDDATE}.iso"
+FRENZY_ISOIMAGE="frenzy-${BASE}-${FRENZY_TYPE}-${FRENZY_LANG}-`uname -m`.iso"
+FRENZY_VOL="frenzy-${BASE}-${FRENZY_TYPE}-${FRENZY_LANG}"
 
 #       |---------+---------+---------+---------+---------+---------+--|------+
-VERSION="Frenzy 1.2 (reincarnation)                          [ ${BD} ]"
+VERSION="Frenzy ${BASE} (${EDITION})                          [ ${BD} ]"
 
 
 # ADDITIONAL PATCHES
@@ -35,20 +38,27 @@ POSTPATCHES="create config patch final"
 KERNCONFNAME="FRENZY"   # kernel config file
 MAKECONF="make.conf"    # make.conf file
 MAKECONFINSTALL="make.conf.install"    # make.conf file for installworld
-MAKE_OPTIONS=""
+MAKE_OPTIONS="-DNO_CLEAN"
 RMFILE="rmfiles"        # what will be removed from base sys
 
-FRENZY_DIR="frenzybuild"
+FRENZY_DIR="/usr/local/frenzybuild"
 FRENZY_CD="${FRENZY_DIR}/cd"		# path to Frenzy CD files
 FRENZY_FS="${FRENZY_DIR}/fs"		# path to Frenzy file system
 FRENZY_BUILD="${FRENZY_DIR}/build"	# path to build dir
-#SRCDIR="/usr/src"       		# main source dir
 SRCDIR="${FRENZY_DIR}/src"		# main source dir
-FRENZY_ISO="ISO"        		# path to ISO image
-
+OBJDIR="${FRENZY_DIR}/obj"		# main obj dir
+BOOTDIR="${FRENZY_DIR}/boot"		# path to boot dir
+TMPDIR="${FRENZY_DIR}/tmp"
+FRENZY_ISO="${FRENZY_DIR}/ISO"        		# path to ISO image
 
 PKG_FREEBSD="packages/FreeBSD"
 PKG_FRENZY="packages/Frenzy"
 
 LOG_DIR="log"
 
+# maximum number of jobs that make may have running at any one time.
+# static:
+#JOBNUM="-4"
+# or auto tuning
+JOBNUM="`sysctl -n hw.ncpu`"
+export MAKEOBJDIRPREFIX="${OBJDIR}"

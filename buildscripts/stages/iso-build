@@ -13,14 +13,10 @@ echo "[*] Creating Frenzy ISO."
 
 # add version info
 printf "${VERSION}" > ${FRENZY_CD}/boot/frenzy.version
-
-mkisofs -quiet -b boot/cdboot -no-emul-boot -c boot/boot.catalog \
--boot-load-size 4 \
--r -J -D -V ${FRENZY_VOL} -o ${FRENZY_ISO}/${FRENZY_ISOIMAGE} ${FRENZY_CD}
+makefs -t cd9660 -o "bootimage=i386;/boot/cdboot" -o rockridge -o no-emul-boot -o label=frenzy ${FRENZY_ISO}/${FRENZY_ISOIMAGE} ${FRENZY_CD}
 
 echo "[*] Done."
 
-stage_done
-
 fi
 
+stage_done
